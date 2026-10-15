@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { Badge, Card, ProgressBar, SegmentedControl, Toggle, buttonClasses } from '@/components/ui/primitives';
 import { Icon } from '@/components/ui/Icon';
+import { prefetchVexFlowForOffline } from '@/components/notation/vexflow-loader';
 import { formatSeconds } from '@/lib/format';
 import { describeAnswer, describeExpected } from '@/lib/exercises/check';
 import type { DifficultyOption, ExerciseGenerator } from '@/lib/exercises/generators';
@@ -72,6 +73,8 @@ export function QuizLab({ labId, exercises, difficulties, measures, renderTools 
   const [paused, setPaused] = useState<QuizState | null>(null);
   const [saveResult, setSaveResult] = useState<WriteResult | null>(null);
   const weakRef = useRef<Record<string, number>>({});
+
+  useEffect(() => prefetchVexFlowForOffline(), []);
 
   useEffect(() => {
     const saved = readJson(settingsKey(labId), (v): v is Partial<QuizSettings> => typeof v === 'object' && v !== null);

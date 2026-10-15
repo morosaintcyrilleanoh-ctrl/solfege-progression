@@ -223,6 +223,26 @@ async function main() {
   await off.goto(`${baseUrl}/laboratoires/lecture-des-notes`);
   await off.reload(); // page désormais contrôlée par le service worker
   await off.getByRole('button', { name: /Commencer l’entraînement/ }).waitFor();
+  // Le moteur de portée est préchargé en tâche de fond (police chargée), et
+  // chaque fichier utilisé par la page doit être dans le cache du service worker.
+  let offlineReady = false;
+  for (let i = 0; i < 80 && !offlineReady; i++) {
+    offlineReady = await off.evaluate(async () => {
+      if (!document.fonts.check('40px Bravura')) return false;
+      const cache = await caches.open('sp-v1');
+      const used = performance
+        .getEntriesByType('resource')
+        .map((e) => new URL(e.name))
+        .filter((u) => u.origin === location.origin && u.pathname.startsWith('/_next/static/'));
+      const hits = await Promise.all(used.map((u) => cache.match(u.href)));
+      return used.length > 0 && hits.every(Boolean);
+    });
+    if (!offlineReady) await off.waitForTimeout(250);
+  }
+  check(offlineReady, 'fichiers du laboratoire absents du cache hors connexion');
+  // Sans le cache HTTP du navigateur, seul le service worker peut servir les fichiers.
+  const cdp = await offlineCtx.newCDPSession(off);
+  await cdp.send('Network.setCacheDisabled', { cacheDisabled: true });
   await offlineCtx.setOffline(true);
   await off.reload();
   await off.getByRole('button', { name: /Commencer l’entraînement/ }).click();

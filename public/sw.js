@@ -25,6 +25,15 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+/**
+ * Met une copie de la réponse en cache. La copie doit être faite AVANT de
+ * rendre la réponse à la page (sinon son contenu est déjà lu et la copie échoue).
+ */
+function keep(event, key, res) {
+  const copy = res.clone();
+  event.waitUntil(caches.open(VERSION).then((c) => c.put(key, copy)));
+}
+
 function isPublicPage(url) {
   return PUBLIC_PAGES.includes(url.pathname);
 }
@@ -42,7 +51,7 @@ self.addEventListener('fetch', (event) => {
         (hit) =>
           hit ||
           fetch(req).then((res) => {
-            if (res.ok) caches.open(VERSION).then((c) => c.put(req, res.clone()));
+            if (res.ok) keep(event, req, res);
             return res;
           }),
       ),
@@ -55,7 +64,7 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(req)
         .then((res) => {
-          if (res.ok) caches.open(VERSION).then((c) => c.put(url.pathname, res.clone()));
+          if (res.ok) keep(event, url.pathname, res);
           return res;
         })
         .catch(() => caches.match(url.pathname).then((hit) => hit || caches.match('/laboratoires'))),

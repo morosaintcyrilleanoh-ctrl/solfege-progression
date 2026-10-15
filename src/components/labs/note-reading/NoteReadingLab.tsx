@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { PianoKeyboard, type KeyStatus } from '@/components/instruments/PianoKeyboard';
 import { Staff, type StaffStatus } from '@/components/notation/Staff';
+import { prefetchVexFlowForOffline } from '@/components/notation/vexflow-loader';
 import { Badge, ProgressBar, buttonClasses } from '@/components/ui/primitives';
 import { Icon } from '@/components/ui/Icon';
 import { isAudioSupported, playTone } from '@/lib/audio/synth';
@@ -64,6 +65,8 @@ export function NoteReadingLab() {
   const [saveResult, setSaveResult] = useState<WriteResult | null>(null);
   const historyRef = useRef<StoredSession[]>([]);
   const topRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => prefetchVexFlowForOffline(), []);
 
   // Lecture du stockage local après le montage (le serveur ne le connaît pas).
   useEffect(() => {

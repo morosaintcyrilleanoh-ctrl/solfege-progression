@@ -35,3 +35,20 @@ export function makeResponsive(host: HTMLElement, width: number, height: number)
   svg.style.height = 'auto';
   svg.style.display = 'block';
 }
+
+/**
+ * Charge VexFlow en tâche de fond quand le navigateur est inactif, pour que le
+ * service worker le garde en cache : les portées s'affichent alors même si la
+ * connexion coupe avant le premier exercice. Seulement quand un service worker
+ * contrôle la page (sinon le chargement attend le premier besoin).
+ */
+export function prefetchVexFlowForOffline() {
+  if (!('serviceWorker' in navigator) || !navigator.serviceWorker.controller) return () => undefined;
+  const run = () => void loadVexFlow().catch(() => undefined);
+  if ('requestIdleCallback' in window) {
+    const id = window.requestIdleCallback(run, { timeout: 4000 });
+    return () => window.cancelIdleCallback(id);
+  }
+  const id = setTimeout(run, 1500);
+  return () => clearTimeout(id);
+}
