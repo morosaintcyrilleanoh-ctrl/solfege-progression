@@ -3,8 +3,10 @@ import type { Question, QuestionAnswer, QuestionCheck } from './types';
 /** Minuscules, sans accents ni ponctuation superflue, espaces réduits ; ♯/♭ écrits en toutes lettres. */
 export function normalizeText(s: string): string {
   return s
-    .replace(/♯/g, ' diese')
+    .replace(/♯|#/g, ' diese')
     .replace(/♭/g, ' bemol')
+    .replace(/𝄪/g, ' double diese')
+    .replace(/𝄫/g, ' double bemol')
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
     .toLowerCase()

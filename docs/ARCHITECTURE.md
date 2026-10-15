@@ -94,6 +94,29 @@ scripts/
 - Les exercices théoriques sont présentés comme tels : ils n'évaluent pas
   l'exécution d'un rythme.
 
+## 4 ter. Modules 3 et 4 — Tonalités, gammes, intervalles (terminés)
+
+- **Orthographe musicale** (`lib/music/scales.ts`) : chaque degré prend la
+  lettre suivante, l'altération est déduite des demi-tons. Testé sur les
+  30 tonalités du cycle des quintes : chaque gamme utilise les 7 lettres une
+  fois et ses altérations sont exactement celles de l'armure. Mineures
+  naturelle, harmonique (sensible élevée), mélodique (6e et 7e élevées à la
+  montée, forme naturelle à la descente). Tonalités théoriques signalées.
+- **Intervalles** (`intervals.ts`) : nombre par les lettres, qualité par les
+  demi-tons ; construction d'un intervalle bien orthographié ; ton, demi-ton
+  diatonique et chromatique.
+- **Accords** (`chords.ts`) : triades, renversements (reconnus par la basse),
+  accords des degrés (mineur harmonique), fonctions, cadences.
+- **Laboratoire des tonalités** : exercices (8 types), explorateur de gammes
+  (notation française / internationale, degrés, tons et demi-tons, armure,
+  relatif, écoute) et cycle des quintes interactif.
+- **Module 4** : intervalles, accords, renversements, fonctions, lecture
+  mélodique, cadences. **Accès réservé** : test de positionnement de niveau
+  intermédiaire ou évaluation du module 3 réussie (≥ 70 %). Avec les comptes,
+  le formateur pourra débloquer le module (contrôle côté serveur).
+- **Test de positionnement** : 15 questions sur les quatre domaines, niveau
+  estimé par des règles simples, domaines prioritaires indiqués.
+
 ## 5. Plan de développement
 
 | Étape | Contenu | État |
@@ -103,7 +126,7 @@ scripts/
 | 3 | Interface responsive (accueil, navigation, tableau de bord) | ✅ sans données fictives |
 | 4 | Laboratoire de lecture des notes | ✅ testé |
 | 5 | Laboratoire rythmique (durées en fractions exactes, métronome Web Audio) | ✅ testé |
-| 6 | Tonalités et gammes (orthographe par degrés, armures, cycle des quintes) | à faire |
+| 6 | Tonalités et gammes (orthographe par degrés, armures, cycle des quintes) + module 4 | ✅ testé |
 | 7 | Supabase : authentification, rôles, migrations, RLS, synchronisation de l'historique local | à faire |
 | 8 | Cours, ressources, devoirs, lives | à faire |
 | 9 | Statistiques formateur, tests de permissions | à faire |

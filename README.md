@@ -15,7 +15,8 @@ et ordinateur.
 | **Module 1 — Laboratoire de lecture des notes** | ✅ terminé et testé |
 | Historique, score par clé, notes à revoir, reprise d'évaluation | ✅ (sur l'appareil) |
 | **Module 2 — Laboratoire rythmique** (exercices, métronome, pulsation) | ✅ |
-| Modules 3 et 4 (tonalités, intervalles) | 🔜 |
+| **Module 3 — Tonalités et gammes** (exercices, explorateur de gammes, cycle des quintes) | ✅ |
+| **Module 4 — Intervalles et théorie** (accès selon le niveau) et **test de positionnement** | ✅ |
 | Comptes (administrateur, formateur, élève), Supabase, cours, devoirs, lives | 🔜 étape 7–8 |
 
 Pour l'instant, **aucun compte n'est nécessaire** : les résultats sont

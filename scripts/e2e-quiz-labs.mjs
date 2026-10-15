@@ -68,6 +68,18 @@ async function main() {
   page.on('pageerror', (e) => errors.push(e.message));
   page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
 
+  // Le module 4 est verrouillé pour un nouvel élève…
+  await page.goto(baseUrl + '/laboratoires/intervalles');
+  await page.getByText('Module avancé').waitFor();
+  check(!(await page.getByRole('button', { name: /Commencer l’entraînement/ }).count()), 'module 4 accessible sans niveau');
+  // …et s'ouvre avec un test de positionnement de niveau intermédiaire.
+  await page.evaluate(() =>
+    localStorage.setItem(
+      'solfege-progression:placement:v1',
+      JSON.stringify({ v: 1, level: 'intermediaire', takenAt: new Date().toISOString(), scores: {} }),
+    ),
+  );
+
   for (const lab of labs) {
     const levels = await (async () => {
       await page.goto(baseUrl + lab);

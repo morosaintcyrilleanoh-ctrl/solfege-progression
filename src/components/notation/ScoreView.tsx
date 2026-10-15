@@ -180,6 +180,14 @@ function keySpecToFifths(spec: string): number {
   return fifthsOf({ tonic: { letter: m[1] as Pitch['letter'], accidental: m[2] === '#' ? 1 : m[2] === 'b' ? -1 : 0 }, mode: 'major' });
 }
 
+/** Largeur logique minimale pour que les notes (et leurs noms) ne se chevauchent pas. */
+function minimumWidth(notation: Notation): number {
+  if (notation.kind !== 'notes' || notation.layout === 'harmonic') return 0;
+  const signature = notation.keySignature ? 70 : 0;
+  const perNote = (notation.labels?.length ? 38 : 30) + (notation.notes.some((n) => n.accidental !== 0) ? 12 : 0);
+  return 70 + signature + notation.notes.length * perNote;
+}
+
 type RenderState = { kind: 'loading' } | { kind: 'ready' } | { kind: 'error' };
 
 export function ScoreView({ notation, label, className = '' }: { notation: Notation; label: string; className?: string }) {
@@ -208,7 +216,8 @@ export function ScoreView({ notation, label, className = '' }: { notation: Notat
         if (cancelled) return;
         host.replaceChildren();
         const zoom = zoomFor(width) * (notation.kind === 'rhythm' ? 0.85 : 1);
-        const logicalWidth = Math.max(200, width / zoom);
+        // Si les notes ne tiennent pas, on élargit la zone de dessin (la partition est alors réduite) plutôt que de la couper.
+        const logicalWidth = Math.max(200, width / zoom, minimumWidth(notation));
         const renderer = new VF.Renderer(host, VF.Renderer.Backends.SVG);
         // Hauteur provisoire, ajustée après le dessin.
         renderer.resize(logicalWidth, 600);
