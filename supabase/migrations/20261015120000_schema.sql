@@ -374,11 +374,17 @@ $$;
 create function app.handle_new_user() returns trigger
 language plpgsql security definer set search_path = '' as $$
 begin
-  insert into public.profiles (id, first_name, last_name)
+  insert into public.profiles (id, first_name, last_name, weekly_goal)
   values (
     new.id,
     left(btrim(coalesce(new.raw_user_meta_data ->> 'first_name', '')), 80),
-    left(btrim(coalesce(new.raw_user_meta_data ->> 'last_name', '')), 80)
+    left(btrim(coalesce(new.raw_user_meta_data ->> 'last_name', '')), 80),
+    -- Objectif par défaut réglé par l'administrateur.
+    coalesce((
+      select least(greatest((s.value #>> '{}')::integer, 10), 2000)
+      from public.platform_settings s
+      where s.key = 'student.default_weekly_goal' and jsonb_typeof(s.value) = 'number'
+    ), 100)
   );
   return new;
 end;

@@ -56,6 +56,7 @@ insert into auth.users (id, email, raw_user_meta_data) values
   ('00000000-0000-0000-0000-0000000000e3', 'eleve3@test.local', '{"first_name":"Fatou"}');
 
 select tests.ok((select count(*) = 6 from public.profiles), 'un profil est créé pour chaque compte');
+select tests.ok((select bool_and(weekly_goal = 100) from public.profiles), 'objectif hebdomadaire par défaut appliqué');
 select tests.ok((select role = 'student' from public.profiles where id = '00000000-0000-0000-0000-0000000000e1'),
   'le rôle demandé dans les métadonnées d''inscription est ignoré (toujours élève)');
 
@@ -141,6 +142,8 @@ select tests.ok(app.parse_number('abc') is null and app.parse_number('1/0') is n
 set role anon;
 select tests.refused('select * from public.profiles', 'un visiteur non connecté ne lit aucun profil');
 select tests.refused('select * from public.exercise_attempts', 'un visiteur non connecté ne lit aucun résultat');
+select tests.ok((select count(*) = 2 from public.platform_settings), 'un visiteur ne lit que les réglages publics');
+select tests.refused('select public.admin_list_users()', 'un visiteur n''accède pas à la liste des comptes');
 reset role;
 
 -- ---------------------------------------------------------------- Élève S1
@@ -196,6 +199,7 @@ select tests.refused($$insert into public.enrollments (course_id, user_id) value
 select tests.ok(tests.affected($$insert into public.enrollments (course_id, user_id) values ('c0000000-0000-0000-0000-000000000004', auth.uid())$$) = 1, 'S1 s''inscrit à un cours ouvert');
 
 select tests.refused($$select public.admin_overview()$$, 'S1 n''a pas accès aux statistiques générales');
+select tests.refused($$select * from public.admin_list_users()$$, 'S1 n''accède pas aux e-mails des comptes');
 select tests.refused($$select public.set_user_role(auth.uid(), 'admin')$$, 'S1 ne peut pas changer de rôle par la fonction');
 select tests.refused($$insert into public.courses (owner_id, title, slug) values (auth.uid(), 'Mon cours', 'mon-cours')$$, 'un élève ne crée pas de cours');
 
@@ -265,6 +269,9 @@ set role authenticated;
 set request.jwt.claim.sub = '00000000-0000-0000-0000-0000000000a1';
 select tests.ok((select count(*) = 6 from public.profiles), 'l''admin voit tous les comptes');
 select tests.ok((select (public.admin_overview() ->> 'students')::int = 3), 'statistiques générales');
+select tests.ok((select count(*) = 6 and max(total) = 6 from public.admin_list_users()), 'l''admin liste les comptes avec leur e-mail');
+select tests.ok((select count(*) = 1 from public.admin_list_users('eleve2')), 'recherche par e-mail');
+select tests.ok((select count(*) = 2 from public.admin_list_users('', 'trainer')), 'filtre par rôle');
 select public.set_user_role('00000000-0000-0000-0000-0000000000e3', 'trainer');
 select tests.ok((select role = 'trainer' from public.profiles where id = '00000000-0000-0000-0000-0000000000e3'), 'l''admin attribue un rôle');
 select tests.refused($$select public.set_user_role(auth.uid(), 'student')$$, 'impossible de retirer le dernier administrateur');

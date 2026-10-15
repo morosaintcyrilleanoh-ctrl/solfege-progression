@@ -294,6 +294,10 @@ export type Database = {
       enroll_student: { Args: { p_course: string; p_email: string }; Returns: string };
       enroll_group: { Args: { p_course: string; p_group: string }; Returns: number };
       admin_overview: { Args: never; Returns: Json };
+      admin_list_users: {
+        Args: { p_search?: string; p_role?: AppRole | null; p_limit?: number; p_offset?: number };
+        Returns: { id: string; email: string; first_name: string; last_name: string; role: AppRole; level: LearnerLevelDb; is_active: boolean; created_at: string; total: number }[];
+      };
     };
     Enums: {
       app_role: AppRole;

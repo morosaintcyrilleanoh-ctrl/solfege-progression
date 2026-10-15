@@ -307,7 +307,27 @@ begin
 end;
 $$;
 
+-- Liste des comptes avec leur e-mail (administrateurs uniquement), avec recherche et pagination.
+create function public.admin_list_users(p_search text default '', p_role public.app_role default null, p_limit integer default 50, p_offset integer default 0)
+returns table (id uuid, email text, first_name text, last_name text, role public.app_role, level public.learner_level, is_active boolean, created_at timestamptz, total bigint)
+language plpgsql stable security definer set search_path = '' as $$
+begin
+  if not app.is_admin() then
+    raise exception 'Réservé aux administrateurs.' using errcode = '42501';
+  end if;
+  return query
+    select p.id, u.email::text, p.first_name, p.last_name, p.role, p.level, p.is_active, p.created_at, count(*) over ()
+    from public.profiles p join auth.users u on u.id = p.id
+    where (p_role is null or p.role = p_role)
+      and (coalesce(p_search, '') = '' or u.email ilike '%' || p_search || '%'
+           or (p.first_name || ' ' || p.last_name) ilike '%' || p_search || '%')
+    order by p.created_at desc
+    limit least(greatest(p_limit, 1), 200) offset greatest(p_offset, 0);
+end;
+$$;
+
 revoke execute on all functions in schema public from anon;
+grant execute on function public.admin_list_users(text, public.app_role, integer, integer) to authenticated;
 grant execute on function public.submit_exercise_attempt(uuid, jsonb, uuid) to authenticated;
 grant execute on function public.set_user_role(uuid, public.app_role) to authenticated;
 grant execute on function public.set_user_active(uuid, boolean) to authenticated;

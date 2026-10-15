@@ -474,5 +474,8 @@ create policy comments_update on public.pedagogical_comments for update to authe
 create policy comments_delete on public.pedagogical_comments for delete to authenticated using (author_id = auth.uid() or app.is_admin());
 
 create policy settings_select on public.platform_settings for select to authenticated using (true);
+-- Avant connexion, seuls les réglages publics sont lisibles (ex. inscriptions ouvertes).
+grant select on public.platform_settings to anon;
+create policy settings_select_public on public.platform_settings for select to anon using (key in ('site.name', 'signup.open'));
 create policy settings_write on public.platform_settings for all to authenticated
   using (app.is_admin()) with check (app.is_admin());

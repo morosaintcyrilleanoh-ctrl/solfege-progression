@@ -33,6 +33,9 @@ export async function signUpAction(_prev: ActionResult | null, formData: FormDat
   if (!parsed.success) return { ok: false, fieldErrors: fieldErrors(parsed.error), values: keepValues(formData) };
   const supabase = await createSupabaseServerClient();
   if (!supabase) return NOT_CONFIGURED;
+  // Réglage de la plateforme (à doubler par le réglage « Allow new users to sign up » de Supabase Auth).
+  const { data: setting } = await supabase.from('platform_settings').select('value').eq('key', 'signup.open').maybeSingle();
+  if (setting && setting.value === false) return { ok: false, message: 'Les inscriptions sont fermées pour le moment. Contacte ton formateur.' };
   const { email, password, first_name, last_name } = parsed.data;
   const { data, error } = await supabase.auth.signUp({
     email,
