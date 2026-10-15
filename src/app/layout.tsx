@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import { MobileNav } from '@/components/layout/MobileNav';
+import { ServiceWorker } from '@/components/layout/ServiceWorker';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 import './globals.css';
 
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </footer>
         <MobileNav />
+        <ServiceWorker />
       </body>
     </html>
   );

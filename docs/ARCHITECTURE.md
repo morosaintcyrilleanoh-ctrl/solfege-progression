@@ -25,7 +25,7 @@
 | Notation | VexFlow 5 (`vexflow/core`, import dynamique) + police Bravura locale | `public/fonts/bravura.woff2` (OFL) |
 | Son | Web Audio API (`src/lib/audio/synth.ts`) | aucun fichier à télécharger |
 | Tests | Vitest (logique) + script Playwright/Chromium (bout en bout) | |
-| Données (étape 7) | Supabase : Auth, Postgres, RLS, Storage | migrations SQL dans `supabase/migrations` |
+| Données | Supabase : Auth, Postgres, RLS, Storage | migrations SQL dans `supabase/migrations`, testées par `npm run test:db` |
 | Hébergement | Vercel | |
 
 ## 3. Arborescence
@@ -75,6 +75,48 @@ scripts/
 - **Limite assumée** : l'exercice mesure la reconnaissance visuelle des notes,
   pas la justesse, le rythme ni l'oreille ; c'est écrit à l'élève.
 
+## 4 bis. Moteur d'exercices et module 2 — Rythme (terminé)
+
+- **Moteur générique** (`src/lib/exercises`) : questions QCM, réponse courte
+  (texte normalisé sans accents, ou nombre : « 1,5 », « 3/2 »), association.
+  Séance entraînement / évaluation (réducteur pur), historique local par
+  laboratoire, statistiques par compétence. Les laboratoires suivants et les
+  exercices créés par les formateurs utilisent ce même format.
+- **Durées exactes** : `lib/music/fraction.ts` ; une croche de triolet vaut
+  exactement 1/12 de ronde. `checkMeasure` vérifie la somme de chaque mesure
+  et les n-olets incomplets ; `pulse` donne la pulsation (simple / composée).
+- **Exercices théoriques** : durée des figures, équivalences, compléter la
+  mesure, trouver la mesure fausse, mesures et pulsation, syncopes, tempo.
+- **Métronome** programmé sur l'horloge audio (pas de dérive), battement
+  visuel sans le son, « taper le tempo ».
+- **Pulsation** : exercice de frappe, écart mesuré en millisecondes, présenté
+  comme indicatif et non enregistré comme évaluation.
+- Les exercices théoriques sont présentés comme tels : ils n'évaluent pas
+  l'exécution d'un rythme.
+
+## 4 ter. Modules 3 et 4 — Tonalités, gammes, intervalles (terminés)
+
+- **Orthographe musicale** (`lib/music/scales.ts`) : chaque degré prend la
+  lettre suivante, l'altération est déduite des demi-tons. Testé sur les
+  30 tonalités du cycle des quintes : chaque gamme utilise les 7 lettres une
+  fois et ses altérations sont exactement celles de l'armure. Mineures
+  naturelle, harmonique (sensible élevée), mélodique (6e et 7e élevées à la
+  montée, forme naturelle à la descente). Tonalités théoriques signalées.
+- **Intervalles** (`intervals.ts`) : nombre par les lettres, qualité par les
+  demi-tons ; construction d'un intervalle bien orthographié ; ton, demi-ton
+  diatonique et chromatique.
+- **Accords** (`chords.ts`) : triades, renversements (reconnus par la basse),
+  accords des degrés (mineur harmonique), fonctions, cadences.
+- **Laboratoire des tonalités** : exercices (8 types), explorateur de gammes
+  (notation française / internationale, degrés, tons et demi-tons, armure,
+  relatif, écoute) et cycle des quintes interactif.
+- **Module 4** : intervalles, accords, renversements, fonctions, lecture
+  mélodique, cadences. **Accès réservé** : test de positionnement de niveau
+  intermédiaire ou évaluation du module 3 réussie (≥ 70 %). Avec les comptes,
+  le formateur pourra débloquer le module (contrôle côté serveur).
+- **Test de positionnement** : 15 questions sur les quatre domaines, niveau
+  estimé par des règles simples, domaines prioritaires indiqués.
+
 ## 5. Plan de développement
 
 | Étape | Contenu | État |
@@ -83,14 +125,14 @@ scripts/
 | 2 | Architecture et plan (ce document) | ✅ |
 | 3 | Interface responsive (accueil, navigation, tableau de bord) | ✅ sans données fictives |
 | 4 | Laboratoire de lecture des notes | ✅ testé |
-| 5 | Laboratoire rythmique (durées en fractions exactes, métronome Web Audio) | à faire |
-| 6 | Tonalités et gammes (orthographe par degrés, armures, cycle des quintes) | à faire |
-| 7 | Supabase : authentification, rôles, migrations, RLS, synchronisation de l'historique local | à faire |
-| 8 | Cours, ressources, devoirs, lives | à faire |
-| 9 | Statistiques formateur, tests de permissions | à faire |
-| 10 | Déploiement et documentation finale | à faire |
+| 5 | Laboratoire rythmique (durées en fractions exactes, métronome Web Audio) | ✅ testé |
+| 6 | Tonalités et gammes (orthographe par degrés, armures, cycle des quintes) + module 4 | ✅ testé |
+| 7 | Supabase : authentification, rôles, migrations, RLS, import de l'historique local | ✅ |
+| 8 | Cours, ressources, exercices, devoirs, lives, annonces | ✅ |
+| 9 | Administration, statistiques, tests de sécurité et des espaces | ✅ |
+| 10 | Hors connexion, déploiement, documentation | ✅ |
 
-## 6. Modèle de données prévu (étape 7)
+## 6. Modèle de données (supabase/migrations)
 
 Tables : `profiles` (rôle : `admin` · `trainer` · `student`), `courses`,
 `modules`, `lessons`, `lesson_resources`, `exercises`, `exercise_questions`,
@@ -107,8 +149,23 @@ Règles d'accès principales (RLS) :
   `security definer`), jamais par l'utilisateur lui-même ;
 - ressources privées et replays : Storage privé + URL signées générées côté serveur.
 
-Le format de `StoredSession` (`src/lib/note-reading/history.ts`) correspond
-déjà à `exercise_attempts` pour importer l'historique local à la première connexion.
+Les séances faites sans compte s'importent dans `exercise_attempts`
+(identifiant de séance unique : pas de doublon). Détail des règles :
+`docs/SECURITE.md`.
+
+## 7. Espaces connectés
+
+- `src/proxy.ts` (Next.js 16) : rafraîchit la session et redirige les
+  visiteurs non connectés des routes privées ; chaque page appelle aussi
+  `requireUser` / `requireRole` (`src/lib/auth/session.ts`).
+- Actions serveur par domaine (`src/app/**/actions.ts`) : rôle vérifié, données
+  validées (zod), écriture avec la session de l'utilisateur (RLS), succès
+  annoncé seulement si la base confirme.
+- Fichiers : envoi direct du navigateur vers un compartiment privé (droits
+  vérifiés par les politiques de stockage), téléchargement par lien signé.
+- Dates : saisies et affichées dans le fuseau horaire de l'appareil.
+- Hors connexion : `public/sw.js` met en cache les pages publiques et les
+  fichiers statiques, jamais les espaces connectés.
 
 Solfège Progression utilise son **propre projet Supabase**, indépendant de tout
 autre projet.

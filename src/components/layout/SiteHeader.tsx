@@ -5,9 +5,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import logo from './logo.svg';
 import { NAV_ITEMS, isActive } from './nav-items';
+import { useIsSignedIn } from './useAccount';
 
 export function SiteHeader() {
   const pathname = usePathname();
+  const signedIn = useIsSignedIn();
+  const items = NAV_ITEMS.map((i) => (i.href === '/espace' && signedIn === false ? { ...i, href: '/connexion', label: 'Connexion', short: 'Connexion' } : i));
   return (
     <header className="sticky top-0 z-30 border-b border-white/10 bg-night-900/95 text-white backdrop-blur supports-[backdrop-filter]:bg-night-900/80">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4 sm:h-16">
@@ -20,8 +23,8 @@ export function SiteHeader() {
         </Link>
         <nav aria-label="Navigation principale" className="hidden md:block">
           <ul className="flex items-center gap-1">
-            {NAV_ITEMS.map((item) => {
-              const active = isActive(pathname, item.href);
+            {items.map((item) => {
+              const active = isActive(pathname, item.href === '/connexion' ? '/espace' : item.href);
               return (
                 <li key={item.href}>
                   <Link
