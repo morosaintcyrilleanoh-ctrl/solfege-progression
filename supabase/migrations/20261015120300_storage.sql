@@ -9,11 +9,15 @@
 --   replays/{live_session_id}/{fichier}               replays des lives
 -- =============================================================================
 
-insert into storage.buckets (id, name, public) values
-  ('course-files', 'course-files', false),
-  ('submissions', 'submissions', false),
-  ('replays', 'replays', false)
-on conflict (id) do update set public = false;
+-- Tailles maximales et types de fichiers acceptés (contrôlés aussi par Supabase lors de l'envoi).
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types) values
+  ('course-files', 'course-files', false, 26214400,
+   array['application/pdf', 'audio/mpeg', 'audio/mp4', 'audio/ogg', 'audio/wav', 'audio/x-wav', 'image/jpeg', 'image/png', 'image/webp',
+         'video/mp4', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'text/plain']),
+  ('submissions', 'submissions', false, 10485760,
+   array['application/pdf', 'audio/mpeg', 'audio/mp4', 'audio/ogg', 'audio/wav', 'audio/x-wav', 'audio/webm', 'image/jpeg', 'image/png', 'image/webp', 'text/plain']),
+  ('replays', 'replays', false, 524288000, array['video/mp4', 'audio/mpeg', 'audio/mp4'])
+on conflict (id) do update set public = false, file_size_limit = excluded.file_size_limit, allowed_mime_types = excluded.allowed_mime_types;
 
 -- Ressources de leçons ----------------------------------------------------------
 create policy course_files_read on storage.objects for select to authenticated using (
