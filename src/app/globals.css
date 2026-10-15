@@ -1,0 +1,96 @@
+@import 'tailwindcss';
+
+/* Police musicale SMuFL (Bravura, SIL Open Font License) servie localement. */
+@font-face {
+  font-family: 'Bravura';
+  src: url('/fonts/bravura.woff2') format('woff2');
+  font-display: block;
+}
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* Bleu nuit */
+  --color-night-950: #070b1d;
+  --color-night-900: #0b1230;
+  --color-night-800: #121b45;
+  --color-night-700: #1c2760;
+  --color-night-600: #2a3780;
+
+  /* Violet (accent) */
+  --color-accent-300: #c4b5fd;
+  --color-accent-400: #a78bfa;
+  --color-accent-500: #8b5cf6;
+  --color-accent-600: #7c3aed;
+  --color-accent-700: #6d28d9;
+
+  /* Bleu électrique (interactions) */
+  --color-electric-300: #93c5fd;
+  --color-electric-400: #4f9bff;
+  --color-electric-500: #2f7bff;
+  --color-electric-600: #1f63e6;
+  --color-electric-700: #194fb8;
+
+  /* Réussite */
+  --color-success-50: #ecfdf3;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+  --color-success-700: #15803d;
+
+  /* Erreur */
+  --color-danger-50: #fef2f2;
+  --color-danger-500: #ef4444;
+  --color-danger-600: #dc2626;
+  --color-danger-700: #b91c1c;
+
+  /* Surfaces claires */
+  --color-paper: #ffffff;
+  --color-mist: #f3f5fb;
+  --color-ink: #0f172a;
+
+  --animate-pop: pop 260ms ease-out;
+  --animate-fade-in: fade-in 220ms ease-out;
+  --animate-shake: shake 320ms ease-in-out;
+
+  @keyframes pop {
+    0% { transform: scale(0.96); opacity: 0.4; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    text-size-adjust: 100%;
+  }
+  body {
+    background-color: var(--color-mist);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-electric-400);
+    outline-offset: 2px;
+  }
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
