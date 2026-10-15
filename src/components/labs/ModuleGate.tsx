@@ -4,14 +4,29 @@ import Link from 'next/link';
 import { type ReactNode, useEffect, useState } from 'react';
 import { Card, buttonClasses } from '@/components/ui/primitives';
 import { Icon } from '@/components/ui/Icon';
+import { advancedAccessForAccountAction } from '@/app/espace/actions';
 import { type ModuleAccess, localAccessToAdvanced } from '@/lib/access/learner-level';
 
 /** Affiche le contenu seulement si l'élève a accès au module avancé. */
 export function ModuleGate({ children }: { children: ReactNode }) {
   const [access, setAccess] = useState<ModuleAccess | null>(null);
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- lecture unique du stockage du navigateur
-    setAccess(localAccessToAdvanced());
+    const local = localAccessToAdvanced();
+    if (local.allowed) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- lecture unique du stockage du navigateur
+      setAccess(local);
+      return;
+    }
+    // Sinon, le compte (niveau ou déblocage par le formateur) peut ouvrir le module.
+    let cancelled = false;
+    advancedAccessForAccountAction()
+      .then((account) => {
+        if (!cancelled) setAccess(account.allowed ? { allowed: true, reason: account.reason ?? '' } : local);
+      })
+      .catch(() => !cancelled && setAccess(local));
+    return () => {
+      cancelled = true;
+    };
   }, []);
   if (!access) return <p className="py-12 text-center text-slate-500">Vérification de ton parcours…</p>;
   if (access.allowed) {

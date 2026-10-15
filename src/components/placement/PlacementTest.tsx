@@ -10,10 +10,11 @@ import { AREA_LABELS, AREA_LINKS, type Area, PLACEMENT_LENGTH, areaOf, buildPlac
 import { type QuizState, createQuiz, currentQuizQuestion, quizReducer } from '@/lib/exercises/session';
 import type { QuestionAnswer } from '@/lib/exercises/types';
 import { writeErrorMessage } from '@/lib/storage/safe-storage';
+import { recordPlacementOnAccountAction } from '@/app/espace/actions';
 
 export function PlacementTest() {
   const [quiz, setQuiz] = useState<QuizState | null>(null);
-  const [result, setResult] = useState<{ placement: PlacementResult; saveError: string | null } | null>(null);
+  const [result, setResult] = useState<{ placement: PlacementResult; saveError: string | null; account: { saved: boolean; message?: string } | null } | null>(null);
 
   const start = () => {
     setResult(null);
@@ -41,7 +42,11 @@ export function PlacementTest() {
           if (i.correct) s.correct += 1;
         }
         const placement: PlacementResult = { v: 1, level: levelFromScores(scores), takenAt: new Date().toISOString(), scores };
-        setResult({ placement, saveError: writeErrorMessage(savePlacement(placement)) });
+        setResult({ placement, saveError: writeErrorMessage(savePlacement(placement)), account: null });
+        // Si l'élève est connecté, le résultat est aussi enregistré sur son compte.
+        recordPlacementOnAccountAction({ level: placement.level, takenAt: placement.takenAt, scores })
+          .then((r) => r.message && setResult((prev) => (prev ? { ...prev, account: r } : prev)))
+          .catch(() => undefined);
       }
       return next;
     });
@@ -82,6 +87,11 @@ export function PlacementTest() {
           <p className="rounded-xl bg-danger-50 p-3 text-sm text-danger-700" role="alert">{saveError}</p>
         ) : (
           <p className="text-center text-xs text-slate-500">✓ Résultat enregistré sur cet appareil.</p>
+        )}
+        {result.account?.message && (
+          <p role="status" className={`text-center text-xs ${result.account.saved ? 'text-success-700' : 'text-danger-700'}`}>
+            {result.account.message}
+          </p>
         )}
         <Card>
           <h2 className="font-bold text-night-800">Par où commencer ?</h2>
