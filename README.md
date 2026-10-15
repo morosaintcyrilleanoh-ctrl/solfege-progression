@@ -70,6 +70,8 @@ Sans variables Supabase, le site fonctionne en mode « laboratoires sans compte 
 | `npm run test:e2e:labs` | laboratoires rythme, tonalités, intervalles (tous niveaux, évaluation, accès au module 4) |
 | `npm run test:e2e:espaces` | toutes les pages élève / formateur / administrateur avec un faux serveur Supabase |
 
+Ces vérifications sont relancées automatiquement par GitHub Actions à chaque pull request (`.github/workflows/ci.yml`).
+
 Les tests `test:e2e*` nécessitent `npm run build` (sauf `test:e2e:espaces`, qui
 compile lui-même) et Chromium (variable `CHROMIUM_PATH` si besoin).
 

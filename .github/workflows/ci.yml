@@ -1,0 +1,54 @@
+name: Vérifications
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verifications:
+    name: Lint, types, tests unitaires et sécurité de la base
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - name: Tests de sécurité (PostgreSQL)
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq postgresql-16 >/dev/null
+          npm run test:db
+      - run: npm run build
+
+  navigateur:
+    name: Tests dans le navigateur (mobile)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Installer Chromium
+        run: npx playwright-core install --with-deps chromium
+      - name: Espaces connectés (faux serveur Supabase)
+        run: npm run test:e2e:espaces
+      - name: Compilation sans Supabase
+        run: npm run build
+      - name: Lecture des notes
+        run: npm run test:e2e
+      - name: Rythme, tonalités, intervalles
+        run: npm run test:e2e:labs -- /laboratoires/rythme /laboratoires/tonalites /laboratoires/intervalles
