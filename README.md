@@ -14,7 +14,8 @@ et ordinateur.
 | Accueil, navigation (barre mobile en bas d'écran), tableau de bord élève | ✅ |
 | **Module 1 — Laboratoire de lecture des notes** | ✅ terminé et testé |
 | Historique, score par clé, notes à revoir, reprise d'évaluation | ✅ (sur l'appareil) |
-| Modules 2 à 4 (rythme, tonalités, intervalles) | 🔜 |
+| **Module 2 — Laboratoire rythmique** (exercices, métronome, pulsation) | ✅ |
+| Modules 3 et 4 (tonalités, intervalles) | 🔜 |
 | Comptes (administrateur, formateur, élève), Supabase, cours, devoirs, lives | 🔜 étape 7–8 |
 
 Pour l'instant, **aucun compte n'est nécessaire** : les résultats sont
@@ -56,6 +57,7 @@ Supabase sont déjà documentées dans [`.env.example`](.env.example).
 | `npm run typecheck` | vérification TypeScript |
 | `npm test` | tests unitaires Vitest (règles musicales, correction, séances, stockage) |
 | `npm run test:e2e` | test de bout en bout dans Chromium (après `npm run build`) |
+| `npm run test:e2e:labs` | test de bout en bout des laboratoires à questions |
 
 Le test de bout en bout joue 120 questions sur téléphone (360 px) : il relit
 chaque note **dans le dessin SVG** (position de la tête de note par rapport aux

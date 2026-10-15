@@ -75,6 +75,25 @@ scripts/
 - **Limite assumée** : l'exercice mesure la reconnaissance visuelle des notes,
   pas la justesse, le rythme ni l'oreille ; c'est écrit à l'élève.
 
+## 4 bis. Moteur d'exercices et module 2 — Rythme (terminé)
+
+- **Moteur générique** (`src/lib/exercises`) : questions QCM, réponse courte
+  (texte normalisé sans accents, ou nombre : « 1,5 », « 3/2 »), association.
+  Séance entraînement / évaluation (réducteur pur), historique local par
+  laboratoire, statistiques par compétence. Les laboratoires suivants et les
+  exercices créés par les formateurs utilisent ce même format.
+- **Durées exactes** : `lib/music/fraction.ts` ; une croche de triolet vaut
+  exactement 1/12 de ronde. `checkMeasure` vérifie la somme de chaque mesure
+  et les n-olets incomplets ; `pulse` donne la pulsation (simple / composée).
+- **Exercices théoriques** : durée des figures, équivalences, compléter la
+  mesure, trouver la mesure fausse, mesures et pulsation, syncopes, tempo.
+- **Métronome** programmé sur l'horloge audio (pas de dérive), battement
+  visuel sans le son, « taper le tempo ».
+- **Pulsation** : exercice de frappe, écart mesuré en millisecondes, présenté
+  comme indicatif et non enregistré comme évaluation.
+- Les exercices théoriques sont présentés comme tels : ils n'évaluent pas
+  l'exécution d'un rythme.
+
 ## 5. Plan de développement
 
 | Étape | Contenu | État |
@@ -83,7 +102,7 @@ scripts/
 | 2 | Architecture et plan (ce document) | ✅ |
 | 3 | Interface responsive (accueil, navigation, tableau de bord) | ✅ sans données fictives |
 | 4 | Laboratoire de lecture des notes | ✅ testé |
-| 5 | Laboratoire rythmique (durées en fractions exactes, métronome Web Audio) | à faire |
+| 5 | Laboratoire rythmique (durées en fractions exactes, métronome Web Audio) | ✅ testé |
 | 6 | Tonalités et gammes (orthographe par degrés, armures, cycle des quintes) | à faire |
 | 7 | Supabase : authentification, rôles, migrations, RLS, synchronisation de l'historique local | à faire |
 | 8 | Cours, ressources, devoirs, lives | à faire |

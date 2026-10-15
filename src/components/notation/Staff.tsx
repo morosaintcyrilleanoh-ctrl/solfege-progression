@@ -11,27 +11,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Pitch } from '@/lib/music/pitch';
 import { type Clef, staffStep } from '@/lib/music/staff';
-
-type VexFlowModule = typeof import('vexflow/core');
-
-let loader: Promise<VexFlowModule> | null = null;
-
-function loadVexFlow(): Promise<VexFlowModule> {
-  loader ??= (async () => {
-    const [mod] = await Promise.all([
-      import('vexflow/core'),
-      // La police doit être prête avant de mesurer et dessiner les symboles.
-      document.fonts?.load('40px Bravura') ?? Promise.resolve(),
-    ]);
-    if (!document.fonts?.check('40px Bravura')) throw new Error('Police musicale indisponible');
-    mod.VexFlow.setFonts('Bravura');
-    return mod;
-  })().catch((e: unknown) => {
-    loader = null; // Permet de réessayer (connexion instable).
-    throw e;
-  });
-  return loader;
-}
+import { loadVexFlow, makeResponsive, zoomFor } from './vexflow-loader';
 
 export type StaffStatus = 'neutral' | 'correct' | 'wrong';
 
@@ -94,7 +74,7 @@ export function Staff({ clef, pitch, status = 'neutral', label, range, className
         if (cancelled) return;
         host.replaceChildren();
         // Plus l'écran est petit, plus on agrandit la portée pour qu'elle reste lisible.
-        const zoom = width < 420 ? 1.8 : width < 700 ? 1.9 : 2;
+        const zoom = zoomFor(width);
         const logicalWidth = Math.max(180, width / zoom);
         // Hauteur juste suffisante pour les lignes supplémentaires du niveau choisi.
         const top = Math.max(MIN_MARGIN, ((maxStep - 8) * SPACING) / 2 + 12);
@@ -142,17 +122,7 @@ export function Staff({ clef, pitch, status = 'neutral', label, range, className
           delete host.dataset.step;
         }
 
-        const svg = host.querySelector('svg');
-        if (svg) {
-          svg.setAttribute('viewBox', `0 0 ${logicalWidth} ${logicalHeight}`);
-          svg.setAttribute('width', '100%');
-          svg.removeAttribute('height');
-          svg.setAttribute('aria-hidden', 'true');
-          // VexFlow fixe une taille en pixels : on la remplace pour que la portée suive son conteneur.
-          svg.style.width = '100%';
-          svg.style.height = 'auto';
-          svg.style.display = 'block';
-        }
+        makeResponsive(host, logicalWidth, logicalHeight);
         setState({ kind: 'ready' });
       })
       .catch(() => {

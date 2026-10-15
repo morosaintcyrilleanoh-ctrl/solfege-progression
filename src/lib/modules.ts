@@ -22,8 +22,8 @@ export const MODULES: ModuleInfo[] = [
     number: 2,
     title: 'Rythme, temps et mesures',
     description: 'Figures de notes, silences, métronome, mesures simples et composées.',
-    href: null,
-    status: 'planned',
+    href: '/laboratoires/rythme',
+    status: 'available',
   },
   {
     id: 'tonalites',

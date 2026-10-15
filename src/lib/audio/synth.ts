@@ -3,22 +3,7 @@
  * Toutes les fonctions échouent silencieusement si l'audio n'est pas disponible :
  * l'application reste utilisable sans son.
  */
-let ctx: AudioContext | null = null;
-
-function audioContext(): AudioContext | null {
-  if (typeof window === 'undefined') return null;
-  try {
-    if (!ctx) {
-      const Ctor = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
-      if (!Ctor) return null;
-      ctx = new Ctor();
-    }
-    if (ctx.state === 'suspended') void ctx.resume();
-    return ctx;
-  } catch {
-    return null;
-  }
-}
+import { getAudioContext } from './context';
 
 export function isAudioSupported(): boolean {
   return typeof window !== 'undefined' && ('AudioContext' in window || 'webkitAudioContext' in window);
@@ -26,7 +11,7 @@ export function isAudioSupported(): boolean {
 
 /** Joue une note (fréquence en Hz) avec une enveloppe douce, proche d'un piano électrique. */
 export function playTone(frequency: number, durationSec = 0.9, volume = 0.25): boolean {
-  const ac = audioContext();
+  const ac = getAudioContext();
   if (!ac) return false;
   try {
     const t = ac.currentTime;
