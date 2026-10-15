@@ -35,7 +35,17 @@ export default function HomePage() {
               Mon tableau de bord
             </Link>
           </div>
-          <p className="mt-4 text-xs text-white/50">Fonctionne sur téléphone, sans son et sans création de compte pour l’instant.</p>
+          <p className="mt-4 text-sm text-white/70">
+            Nouveau ?{' '}
+            <Link href="/test-de-positionnement" className="font-semibold text-electric-300 underline">
+              Passe le test de positionnement
+            </Link>{' '}
+            · Déjà élève ?{' '}
+            <Link href="/espace" className="font-semibold text-electric-300 underline">
+              Mon espace
+            </Link>
+          </p>
+          <p className="mt-2 text-xs text-white/50">Fonctionne sur téléphone, sans le son et même hors connexion pour les laboratoires.</p>
         </div>
       </section>
 

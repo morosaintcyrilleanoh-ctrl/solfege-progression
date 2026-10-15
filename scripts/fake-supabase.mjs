@@ -158,6 +158,10 @@ export function startFakeSupabase(port) {
       if (!user) return send(res, 401, { code: 'bad_jwt', message: 'invalid JWT' });
       return send(res, 200, { id: user.id, aud: 'authenticated', role: 'authenticated', email: user.email, app_metadata: {}, user_metadata: {}, created_at: iso(-500) });
     }
+    if (url.pathname === '/auth/v1/admin/users' && req.method === 'POST') {
+      const id = randomUUID();
+      return send(res, 200, { id, email: body?.email, aud: 'authenticated', role: 'authenticated', user_metadata: body?.user_metadata ?? {}, app_metadata: {} });
+    }
     if (url.pathname.startsWith('/auth/v1/')) return send(res, 200, {});
 
     if (url.pathname.startsWith('/storage/v1/object/sign/')) {
@@ -172,6 +176,7 @@ export function startFakeSupabase(port) {
     }
 
     const m = url.pathname.match(/^\/rest\/v1\/(\w+)$/);
+    if (m && !(m[1] in db) && req.method !== 'GET') db[m[1]] = [];
     if (!m || !(m[1] in db)) return send(res, 404, { message: 'not found' });
     const table = db[m[1]];
     const single = (req.headers.accept ?? '').includes('vnd.pgrst.object');

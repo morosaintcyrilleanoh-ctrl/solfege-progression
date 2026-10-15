@@ -1,40 +1,50 @@
 # Solfège Progression
 
-> **Apprendre la musique** — plateforme interactive d'apprentissage du solfège,
-> avec le Formateur Anoh Cyrille.
+> **Apprendre la musique** — plateforme interactive d’apprentissage du solfège
+> et de la théorie musicale, avec le Formateur Anoh Cyrille.
 
-Application web en français, pensée d'abord pour les smartphones Android et
-les connexions limitées (Afrique francophone), utilisable aussi sur tablette
-et ordinateur.
+Application web en français, pensée d’abord pour les smartphones Android et les
+connexions limitées (Afrique francophone), utilisable aussi sur tablette et ordinateur.
 
-## État actuel
+## Ce que fait la plateforme
 
-| Fonctionnalité | État |
+### Sans compte (dès maintenant, même hors connexion)
+
+| Laboratoire | Contenu |
 |---|---|
-| Accueil, navigation (barre mobile en bas d'écran), tableau de bord élève | ✅ |
-| **Module 1 — Laboratoire de lecture des notes** | ✅ terminé et testé |
-| Historique, score par clé, notes à revoir, reprise d'évaluation | ✅ (sur l'appareil) |
-| **Module 2 — Laboratoire rythmique** (exercices, métronome, pulsation) | ✅ |
-| **Module 3 — Tonalités et gammes** (exercices, explorateur de gammes, cycle des quintes) | ✅ |
-| **Module 4 — Intervalles et théorie** (accès selon le niveau) et **test de positionnement** | ✅ |
-| Comptes (administrateur, formateur, élève), Supabase, cours, devoirs, lives | 🔜 étape 7–8 |
+| **1. Lecture des notes** | Clé de sol et de fa, lignes supplémentaires, octaves, altérations ; réponse par boutons ou clavier de piano ; entraînement et évaluation |
+| **2. Rythme, temps et mesures** | Figures, silences, figures pointées, triolets, mesures simples et composées, syncopes, tempo ; métronome ; exercice de pulsation |
+| **3. Tonalités et gammes** | Tons et demi-tons, armures, cycle des quintes, gammes majeures et mineures (naturelle, harmonique, mélodique), degrés, orthographe ; explorateur de gammes |
+| **4. Intervalles et théorie** | Intervalles, accords, renversements, degrés et fonctions, lecture mélodique, cadences — ouvert selon le niveau |
+| **Test de positionnement** | 15 questions, niveau estimé, domaines à travailler |
 
-Pour l'instant, **aucun compte n'est nécessaire** : les résultats sont
-enregistrés dans le navigateur de l'élève (et l'interface le dit clairement).
-Ils seront synchronisés avec le compte quand l'authentification arrivera.
+Correction immédiate et expliquée, historique et recommandations enregistrés
+sur l’appareil, partitions dessinées avec VexFlow et vérifiées.
 
-### Le laboratoire de lecture des notes
+### Avec un compte (Supabase)
 
-- Clé de sol, clé de fa ou les deux, sur de vraies portées (VexFlow).
-- 4 niveaux : dans la portée → lignes supplémentaires → plusieurs octaves → altérations.
-- Réponse par boutons (nom de la note) ou par clavier de piano (nom **et** octave),
-  raccourcis clavier `1`–`7` ou `C`–`B` sur ordinateur.
-- Mode **entraînement** (correction immédiate expliquée : « En clé de fa, la note
-  sur le 2e interligne est Do 2 ») et mode **évaluation** (série fixe, corrigée à la fin).
-- Notation française (Do Ré Mi, Do 3 = do central) ou internationale (C D E, C4).
-- Son facultatif (Web Audio) : l'exercice fonctionne entièrement sans le son.
+- **Élève** : tableau de bord (dernière leçon, « Reprendre mon apprentissage »,
+  progression, objectif de la semaine, exercices recommandés, résultats, prochain
+  live), profil musical, cours et leçons avec reprise, ressources
+  téléchargeables, exercices corrigés par la base, devoirs, lives et replays,
+  annonces, import des résultats faits sans compte.
+- **Formateur** : cours / modules / leçons / ressources, publication, exercices
+  et évaluations (écrits ou générés par les laboratoires), groupes, fiche élève
+  (niveau, déblocage, commentaires, compétences), devoirs et correction, lives,
+  annonces, statistiques (élèves en difficulté, devoirs à corriger, exercices).
+- **Administrateur** : comptes et rôles, publication de tous les contenus,
+  annonces, paramètres, statistiques générales.
 
-Détails techniques et plan complet : [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
+Toutes les données affichées proviennent de la base ou de l’appareil : aucun chiffre fictif.
+
+## Documentation
+
+| Document | Contenu |
+|---|---|
+| [`docs/SUPABASE.md`](docs/SUPABASE.md) | Créer et configurer le projet Supabase, premier administrateur, comptes de démonstration |
+| [`docs/DEPLOIEMENT.md`](docs/DEPLOIEMENT.md) | Mise en ligne sur Vercel, variables, recette |
+| [`docs/SECURITE.md`](docs/SECURITE.md) | Politiques d’accès par rôle, protections, tests, limites |
+| [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Architecture, logique musicale, modèle de données |
 
 ## Installation
 
@@ -42,42 +52,39 @@ Prérequis : Node.js ≥ 20.9 (testé avec Node 22) et npm.
 
 ```bash
 npm install          # .npmrc active legacy-peer-deps (dépendances facultatives de Vitest)
+cp .env.example .env.local   # facultatif : variables Supabase
 npm run dev          # http://localhost:3000
 ```
 
-Aucune variable d'environnement n'est nécessaire à cette étape. Celles de
-Supabase sont déjà documentées dans [`.env.example`](.env.example).
+Sans variables Supabase, le site fonctionne en mode « laboratoires sans compte ».
 
-## Scripts
+## Scripts et tests
 
 | Commande | Rôle |
 |---|---|
-| `npm run dev` | serveur de développement |
-| `npm run build` / `npm start` | compilation et serveur de production |
-| `npm run lint` | ESLint (règles Next.js + TypeScript) |
-| `npm run typecheck` | vérification TypeScript |
-| `npm test` | tests unitaires Vitest (règles musicales, correction, séances, stockage) |
-| `npm run test:e2e` | test de bout en bout dans Chromium (après `npm run build`) |
-| `npm run test:e2e:labs` | test de bout en bout des laboratoires à questions |
+| `npm run dev` / `npm run build` / `npm start` | développement, compilation, production |
+| `npm run lint` · `npm run typecheck` | ESLint, TypeScript |
+| `npm test` | 110 tests unitaires (théorie musicale, moteur d’exercices, validation, statistiques…) |
+| `npm run test:db` | 103 vérifications de sécurité sur un PostgreSQL temporaire (binaires PostgreSQL requis) |
+| `npm run test:e2e` | lecture des notes dans Chromium : 120 notes relues dans le SVG, reprise, historique, hors connexion |
+| `npm run test:e2e:labs` | laboratoires rythme, tonalités, intervalles (tous niveaux, évaluation, accès au module 4) |
+| `npm run test:e2e:espaces` | toutes les pages élève / formateur / administrateur avec un faux serveur Supabase |
 
-Le test de bout en bout joue 120 questions sur téléphone (360 px) : il relit
-chaque note **dans le dessin SVG** (position de la tête de note par rapport aux
-lignes, clé, altération), en déduit la réponse, et vérifie que l'application la
-valide. Il teste aussi la correction d'une erreur, la reprise d'une évaluation
-après rechargement, l'historique et l'absence de défilement horizontal.
-Variables utiles : `BASE_URL`, `CHROMIUM_PATH`, `SCREENSHOTS_DIR`.
+Les tests `test:e2e*` nécessitent `npm run build` (sauf `test:e2e:espaces`, qui
+compile lui-même) et Chromium (variable `CHROMIUM_PATH` si besoin).
 
-## Déploiement (Vercel)
+## Structure
 
-1. Importer le dépôt dans Vercel (framework détecté : Next.js).
-2. Aucune variable n'est requise pour cette version.
-3. Déployer. Les pages sont statiques et la police musicale est servie depuis `/fonts`.
-
-## Ce qui demandera une configuration externe (étapes suivantes)
-
-- **Supabase** (étape 7) : créer un projet Supabase dédié à Solfège Progression, renseigner les variables de
-  `.env.example` dans Vercel, appliquer les migrations SQL qui seront fournies.
-- **Visioconférence** (étape 8) : simples liens externes (Zoom, Google Meet, Jitsi…).
+```
+src/app/            pages (laboratoires, espaces, cours, authentification, API de fichiers)
+src/components/     interface (notation, laboratoires, académie, formulaires…)
+src/lib/music/      théorie musicale pure et testée (hauteurs, portée, gammes, intervalles, accords)
+src/lib/rhythm/     durées exactes, mesures, pulsation
+src/lib/exercises/  moteur d’exercices générique
+src/lib/theory/     générateurs d’exercices (tonalités, intervalles, notes)
+supabase/           migrations SQL et tests de sécurité
+scripts/            tests de bout en bout, faux serveur Supabase, données de démonstration
+```
 
 ## Licences
 

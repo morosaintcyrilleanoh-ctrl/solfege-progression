@@ -212,6 +212,25 @@ async function main() {
   await feedbackText(desktop);
   if (shotsDir) await desktop.screenshot({ path: join(shotsDir, 'desktop_lab.png'), fullPage: true });
 
+  // 6. Hors connexion : les laboratoires restent utilisables (service worker).
+  console.log('• Hors connexion');
+  const offlineCtx = await browser.newContext({ viewport: { width: 360, height: 740 } });
+  const off = await offlineCtx.newPage();
+  await off.goto(`${baseUrl}/laboratoires/rythme`);
+  await off.evaluate(async () => {
+    await navigator.serviceWorker.ready;
+  });
+  await off.goto(`${baseUrl}/laboratoires/lecture-des-notes`);
+  await off.reload(); // page désormais contrôlée par le service worker
+  await off.getByRole('button', { name: /Commencer l’entraînement/ }).waitFor();
+  await offlineCtx.setOffline(true);
+  await off.reload();
+  await off.getByRole('button', { name: /Commencer l’entraînement/ }).click();
+  const offNote = await readStaff(off);
+  await off.getByRole('group', { name: 'Nom de la note' }).getByRole('button', { name: new RegExp(`^${FR[offNote.letter]}`) }).click();
+  check((await feedbackText(off)).startsWith('Bravo'), 'exercice hors connexion');
+  await offlineCtx.close();
+
   check(errors.length === 0, `erreurs dans la console : ${errors.join(' | ')}`);
   await browser.close();
 }

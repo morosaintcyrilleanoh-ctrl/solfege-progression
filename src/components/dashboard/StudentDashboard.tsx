@@ -132,7 +132,11 @@ export function StudentDashboard() {
       <Card>
         <h2 className="font-bold text-night-800">Prochain cours en direct</h2>
         <p className="mt-2 text-sm text-slate-500">
-          Le calendrier des lives sera disponible avec les comptes élèves et l’espace live.
+          Le calendrier des cours en direct est dans ton{' '}
+          <Link href="/espace/lives" className="font-semibold text-electric-600 hover:underline">
+            espace en ligne
+          </Link>
+          .
         </p>
       </Card>
     </div>

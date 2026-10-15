@@ -25,7 +25,7 @@
 | Notation | VexFlow 5 (`vexflow/core`, import dynamique) + police Bravura locale | `public/fonts/bravura.woff2` (OFL) |
 | Son | Web Audio API (`src/lib/audio/synth.ts`) | aucun fichier à télécharger |
 | Tests | Vitest (logique) + script Playwright/Chromium (bout en bout) | |
-| Données (étape 7) | Supabase : Auth, Postgres, RLS, Storage | migrations SQL dans `supabase/migrations` |
+| Données | Supabase : Auth, Postgres, RLS, Storage | migrations SQL dans `supabase/migrations`, testées par `npm run test:db` |
 | Hébergement | Vercel | |
 
 ## 3. Arborescence
@@ -127,12 +127,12 @@ scripts/
 | 4 | Laboratoire de lecture des notes | ✅ testé |
 | 5 | Laboratoire rythmique (durées en fractions exactes, métronome Web Audio) | ✅ testé |
 | 6 | Tonalités et gammes (orthographe par degrés, armures, cycle des quintes) + module 4 | ✅ testé |
-| 7 | Supabase : authentification, rôles, migrations, RLS, synchronisation de l'historique local | à faire |
-| 8 | Cours, ressources, devoirs, lives | à faire |
-| 9 | Statistiques formateur, tests de permissions | à faire |
-| 10 | Déploiement et documentation finale | à faire |
+| 7 | Supabase : authentification, rôles, migrations, RLS, import de l'historique local | ✅ |
+| 8 | Cours, ressources, exercices, devoirs, lives, annonces | ✅ |
+| 9 | Administration, statistiques, tests de sécurité et des espaces | ✅ |
+| 10 | Hors connexion, déploiement, documentation | ✅ |
 
-## 6. Modèle de données prévu (étape 7)
+## 6. Modèle de données (supabase/migrations)
 
 Tables : `profiles` (rôle : `admin` · `trainer` · `student`), `courses`,
 `modules`, `lessons`, `lesson_resources`, `exercises`, `exercise_questions`,
@@ -149,8 +149,23 @@ Règles d'accès principales (RLS) :
   `security definer`), jamais par l'utilisateur lui-même ;
 - ressources privées et replays : Storage privé + URL signées générées côté serveur.
 
-Le format de `StoredSession` (`src/lib/note-reading/history.ts`) correspond
-déjà à `exercise_attempts` pour importer l'historique local à la première connexion.
+Les séances faites sans compte s'importent dans `exercise_attempts`
+(identifiant de séance unique : pas de doublon). Détail des règles :
+`docs/SECURITE.md`.
+
+## 7. Espaces connectés
+
+- `src/proxy.ts` (Next.js 16) : rafraîchit la session et redirige les
+  visiteurs non connectés des routes privées ; chaque page appelle aussi
+  `requireUser` / `requireRole` (`src/lib/auth/session.ts`).
+- Actions serveur par domaine (`src/app/**/actions.ts`) : rôle vérifié, données
+  validées (zod), écriture avec la session de l'utilisateur (RLS), succès
+  annoncé seulement si la base confirme.
+- Fichiers : envoi direct du navigateur vers un compartiment privé (droits
+  vérifiés par les politiques de stockage), téléchargement par lien signé.
+- Dates : saisies et affichées dans le fuseau horaire de l'appareil.
+- Hors connexion : `public/sw.js` met en cache les pages publiques et les
+  fichiers statiques, jamais les espaces connectés.
 
 Solfège Progression utilise son **propre projet Supabase**, indépendant de tout
 autre projet.
