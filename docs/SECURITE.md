@@ -47,6 +47,11 @@
 - `set_student_level`, `add_student_to_group`, `enroll_student`, `enroll_group` :
   formateur responsable (ou administrateur).
 - `record_placement` : l’élève enregistre son test (scores contrôlés).
+- `set_invite_code`, `get_invite_code` : administrateurs. Le code d’invitation est
+  rangé dans le schéma `app` (jamais exposé par l’API) ; un déclencheur sur
+  `auth.users` refuse la création d’un compte sans le bon code (sauf compte déjà confirmé
+  ou invité au moment de sa création) et ne conserve pas le code. Laisser
+  « Confirm email » activé dans Supabase.
 - Déclencheurs : le rôle est toujours « élève » à l’inscription (les données
   envoyées par le navigateur sont ignorées) ; le rôle, l’activation et le
   niveau sont protégés ; un élève ne peut pas modifier sa note, un formateur
@@ -75,7 +80,7 @@ requise, ligne visible par l’utilisateur, puis lien signé valable 2 minutes.
 
 ## Tests
 
-- `npm run test:db` : 103 vérifications sur un vrai PostgreSQL (migrations
+- `npm run test:db` : 120 vérifications sur un vrai PostgreSQL (migrations
   appliquées, scénarios élève / formateur / administrateur / visiteur).
 - `npm test` : validation, redirections, normalisation, logique métier.
 - `npm run test:e2e:espaces` : toutes les pages connectées, accès refusés selon le rôle.

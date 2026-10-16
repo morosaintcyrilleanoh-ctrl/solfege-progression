@@ -44,6 +44,15 @@ export function SignUpForm() {
               error={s?.fieldErrors?.password}
             />
             <Field name="password_confirm" label="Confirme le mot de passe" type="password" autoComplete="new-password" required error={s?.fieldErrors?.password_confirm} />
+            <Field
+              name="invite_code"
+              defaultValue={s?.values?.invite_code}
+              label="Code d’invitation"
+              autoComplete="off"
+              maxLength={60}
+              hint="Donné par ton formateur. Laisse vide si on ne t’en a pas donné."
+              error={s?.fieldErrors?.invite_code}
+            />
             <label className="flex items-start gap-2 text-sm text-slate-700">
               <input type="checkbox" name="consent" className="mt-1 size-4 accent-electric-500" />
               <span>

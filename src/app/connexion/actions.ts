@@ -36,17 +36,26 @@ export async function signUpAction(_prev: ActionResult | null, formData: FormDat
   // Réglage de la plateforme (à doubler par le réglage « Allow new users to sign up » de Supabase Auth).
   const { data: setting } = await supabase.from('platform_settings').select('value').eq('key', 'signup.open').maybeSingle();
   if (setting && setting.value === false) return { ok: false, message: 'Les inscriptions sont fermées pour le moment. Contacte ton formateur.' };
-  const { email, password, first_name, last_name } = parsed.data;
+  const { email, password, first_name, last_name, invite_code } = parsed.data;
+  // Code d'invitation : vérifié par la base à la création du compte ; ici, seulement pour un message clair.
+  const { data: inviteRequired } = await supabase.rpc('signup_requires_invite');
+  if (inviteRequired === true && !invite_code)
+    return { ok: false, fieldErrors: { invite_code: 'Code d’invitation requis : demande-le à ton formateur.' }, values: keepValues(formData) };
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
-      // Seuls le prénom et le nom sont transmis ; le rôle est toujours « élève » (fixé par la base).
-      data: { first_name, last_name },
+      // Seuls le prénom, le nom et le code d'invitation sont transmis ; le rôle est toujours « élève » (fixé par la base).
+      data: { first_name, last_name, ...(inviteRequired === true ? { invite_code } : {}) },
       emailRedirectTo: `${await siteUrl()}/auth/confirmation?suivant=/profil`,
     },
   });
-  if (error) return { ok: false, message: authErrorMessage(error), values: keepValues(formData) };
+  if (error) {
+    // La base refuse le compte (code incorrect) : Supabase ne renvoie qu'un message générique.
+    if (inviteRequired === true && /database error saving new user/i.test(error.message ?? ''))
+      return { ok: false, fieldErrors: { invite_code: 'Code d’invitation incorrect.' }, values: keepValues(formData) };
+    return { ok: false, message: authErrorMessage(error), values: keepValues(formData) };
+  }
   if (data.session) redirect('/profil?bienvenue=1');
   return { ok: true, message: `Compte créé. Un e-mail de confirmation a été envoyé à ${email} : clique sur le lien qu’il contient pour activer ton compte.` };
 }

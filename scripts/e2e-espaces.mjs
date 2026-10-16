@@ -72,6 +72,24 @@ async function main() {
     const anon = await browser.newPage();
     await anon.goto(`${base}/espace/formateur`);
     check(new URL(anon.url()).pathname === '/connexion', `visiteur non redirigé : ${anon.url()}`);
+
+    // Inscription avec code d'invitation : absent, incorrect, puis correct.
+    console.log('• Inscription avec code d’invitation');
+    await anon.goto(`${base}/inscription`);
+    const fill = async (code) => {
+      for (const [name, value] of [['first_name', 'Ama'], ['email', 'ama@test.local'], ['password', 'Musique2026'], ['password_confirm', 'Musique2026'], ['invite_code', code]])
+        await anon.locator(`input[name=${name}]`).fill(value);
+      await anon.getByRole('checkbox').check();
+      await anon.getByRole('button', { name: 'Créer mon compte' }).click();
+    };
+    await fill('');
+    await anon.getByText('Code d’invitation requis').waitFor();
+    await fill('mauvais');
+    await anon.getByText('Code d’invitation incorrect.').waitFor();
+    await fill('solfege2026');
+    await anon.getByText('Compte créé.').waitFor();
+    const signups = requests.filter((r) => r.path === '/auth/v1/signup');
+    check(signups.length === 2, `inscriptions envoyées : ${signups.length} (attendu 2, la première est bloquée avant l’envoi)`);
     await anon.close();
 
     for (const role of ['student', 'trainer', 'admin']) {
@@ -119,6 +137,10 @@ async function main() {
         check(r.status() === 307 && (r.headers().location ?? '').includes('/object/sign/'), `ressource : ${r.status()} ${r.headers().location}`);
         const bad = await page.request.get(`${base}/api/fichiers/ressource/pas-un-uuid`, { maxRedirects: 0 });
         check(bad.status() === 404, `identifiant invalide : ${bad.status()}`);
+      }
+      if (role === 'admin') {
+        await page.goto(`${base}/espace/admin/parametres`);
+        check((await page.locator('input[name=invite_code]').inputValue()) === 'SOLFEGE2026', 'l’admin voit le code d’invitation');
       }
       if (role === 'trainer') {
         await page.goto(`${base}/espace/admin`);

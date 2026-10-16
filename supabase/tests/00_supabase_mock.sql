@@ -9,6 +9,8 @@ create table auth.users (
   id uuid primary key,
   email text unique,
   raw_user_meta_data jsonb not null default '{}',
+  invited_at timestamptz,
+  email_confirmed_at timestamptz,
   created_at timestamptz not null default now()
 );
 create function auth.uid() returns uuid language sql stable as $$

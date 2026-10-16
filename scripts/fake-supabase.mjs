@@ -97,7 +97,12 @@ export const db = {
   ],
 };
 
+export const INVITE_CODE = 'SOLFEGE2026';
+
 const RPC = {
+  signup_requires_invite: () => true,
+  get_invite_code: () => INVITE_CODE,
+  set_invite_code: (args) => String(args?.p_code ?? '').trim().toUpperCase() || null,
   admin_overview: () => ({ students: 2, trainers: 1, admins: 1, inactive: 0, courses_published: 1, courses_draft: 1, enrollments: 1, attempts_7d: 8, active_students_7d: 2, submissions_pending: 1, lives_upcoming: 1 }),
   admin_list_users: () =>
     db.profiles.map((p) => ({ id: p.id, email: Object.values(USERS).find((u) => u.id === p.id)?.email ?? 'moussa@test.local', first_name: p.first_name, last_name: p.last_name, role: p.role, level: p.level, is_active: p.is_active, created_at: p.created_at, total: db.profiles.length })),
@@ -161,6 +166,12 @@ export function startFakeSupabase(port) {
     if (url.pathname === '/auth/v1/admin/users' && req.method === 'POST') {
       const id = randomUUID();
       return send(res, 200, { id, email: body?.email, aud: 'authenticated', role: 'authenticated', user_metadata: body?.user_metadata ?? {}, app_metadata: {} });
+    }
+    // Inscription : la base refuse un code d'invitation incorrect (message générique de Supabase).
+    if (url.pathname === '/auth/v1/signup' && req.method === 'POST') {
+      if (String(body?.data?.invite_code ?? '').toUpperCase() !== INVITE_CODE)
+        return send(res, 500, { code: 'unexpected_failure', message: 'Database error saving new user' });
+      return send(res, 200, { id: randomUUID(), email: body?.email, aud: 'authenticated', role: 'authenticated', user_metadata: body?.data ?? {}, app_metadata: {}, created_at: iso(0) });
     }
     if (url.pathname.startsWith('/auth/v1/')) return send(res, 200, {});
 

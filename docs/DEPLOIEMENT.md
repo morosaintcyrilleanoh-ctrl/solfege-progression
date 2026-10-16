@@ -17,6 +17,11 @@ Dans **Settings > Environment Variables** (ou à l’import), ajoutez :
 | `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | clé publique (publishable / anon) | pour les comptes |
 | `NEXT_PUBLIC_SITE_URL` | adresse du site, ex. `https://solfege-progression.vercel.app` | recommandé (liens des e-mails) |
 
+Choisissez le type **Config** (et non **Secret**) pour ces trois variables : elles
+sont publiques par nature (visibles dans le navigateur). Une variable `NEXT_PUBLIC_…`
+enregistrée comme **Secret** empêche la connexion de fonctionner. Une variable
+Secret ne peut pas être convertie : supprimez-la et recréez-la en Config.
+
 Sans ces variables, le site fonctionne en mode « laboratoires sans compte ».
 
 **Ne définissez jamais `SUPABASE_SECRET_KEY` dans Vercel** : le site n’en a pas
@@ -24,6 +29,11 @@ besoin. Elle ne sert qu’au script de démonstration lancé en local.
 
 Après tout changement de variable : **Deployments > ⋯ > Redeploy** (les
 variables `NEXT_PUBLIC_…` sont intégrées au moment de la compilation).
+
+**Région** : le fichier `vercel.json` place le site à Paris (`cdg1`), à côté de
+la base Supabase (eu-west-3). C’est important pour la rapidité : chaque page
+fait plusieurs échanges avec la base. Si votre projet Supabase est ailleurs,
+adaptez `vercel.json` (ou **Settings > Functions > Function Region**).
 
 ## 3. Déployer
 

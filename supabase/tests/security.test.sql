@@ -292,4 +292,38 @@ set request.jwt.claim.sub = '00000000-0000-0000-0000-0000000000f1';
 select tests.ok(tests.affected($$update public.platform_settings set value = 'true' where key = 'signup.open'$$) = 0, 'un formateur ne change pas les paramètres');
 reset role;
 
+-- ---------------------------------------------------------------- Code d'invitation
+select tests.ok(public.signup_requires_invite() = false, 'pas de code d''invitation par défaut');
+set role authenticated;
+set request.jwt.claim.sub = '00000000-0000-0000-0000-0000000000f1';
+select tests.refused($$select public.set_invite_code('PIRATE1')$$, 'un formateur ne fixe pas le code d''invitation');
+select tests.refused($$select public.get_invite_code()$$, 'un formateur ne lit pas le code d''invitation');
+select tests.refused($$select code from app.signup_invitation$$, 'la table du code est inaccessible par l''API');
+reset role;
+set role authenticated;
+set request.jwt.claim.sub = '00000000-0000-0000-0000-0000000000a1';
+select tests.ok(public.set_invite_code(' solfege 2026 ') = 'SOLFEGE2026', 'l''admin fixe le code (normalisé)');
+select tests.ok(public.get_invite_code() = 'SOLFEGE2026', 'l''admin relit le code');
+select tests.refused($$select public.set_invite_code('ab')$$, 'code trop court refusé');
+select tests.refused($$select public.set_invite_code('solfège')$$, 'code avec accent refusé');
+reset role;
+set role anon;
+select tests.ok(public.signup_requires_invite(), 'un visiteur sait qu''un code est demandé');
+select tests.refused($$select public.get_invite_code()$$, 'un visiteur ne lit pas le code');
+reset role;
+select tests.refused($$insert into auth.users (id, email, raw_user_meta_data) values ('00000000-0000-0000-0000-0000000000b1', 'intrus@test.local', '{"first_name":"Intrus"}')$$,
+  'inscription sans code refusée');
+select tests.refused($$insert into auth.users (id, email, raw_user_meta_data) values ('00000000-0000-0000-0000-0000000000b1', 'intrus@test.local', '{"first_name":"Intrus","invite_code":"MAUVAIS"}')$$,
+  'inscription avec un mauvais code refusée');
+insert into auth.users (id, email, raw_user_meta_data) values ('00000000-0000-0000-0000-0000000000b2', 'invite@test.local', '{"first_name":"Ama","invite_code":"solfege2026"}');
+select tests.ok((select role = 'student' and first_name = 'Ama' from public.profiles where id = '00000000-0000-0000-0000-0000000000b2'), 'inscription avec le bon code acceptée');
+select tests.ok((select not (raw_user_meta_data ? 'invite_code') from auth.users where id = '00000000-0000-0000-0000-0000000000b2'), 'le code n''est pas conservé dans le compte');
+insert into auth.users (id, email, email_confirmed_at) values ('00000000-0000-0000-0000-0000000000b3', 'cree-par-admin@test.local', now());
+select tests.ok((select count(*) = 1 from public.profiles where id = '00000000-0000-0000-0000-0000000000b3'), 'un compte créé par l''admin (déjà confirmé) n''a pas besoin du code');
+set role authenticated;
+set request.jwt.claim.sub = '00000000-0000-0000-0000-0000000000a1';
+select tests.ok(public.set_invite_code('') is null, 'l''admin supprime le code');
+reset role;
+select tests.ok(public.signup_requires_invite() = false, 'sans code, l''inscription est libre');
+
 select format('%s vérifications réussies.', count(*)) as resultat from tests.results;
