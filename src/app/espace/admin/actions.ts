@@ -35,6 +35,22 @@ const settingsSchema = z.object({
   default_weekly_goal: z.coerce.number().int().min(10).max(2000),
 });
 
+export async function saveInviteCodeAction(_p: ActionResult | null, formData: FormData): Promise<ActionResult> {
+  const { supabase } = await requireRole(['admin'], '/espace/admin/parametres');
+  const code = z.string().max(60).safeParse(formData.get('invite_code') ?? '');
+  if (!code.success) return { ok: false, fieldErrors: { invite_code: '60 caractères maximum.' } };
+  const { data, error } = await supabase.rpc('set_invite_code', { p_code: code.data });
+  if (error) {
+    const invalid = error.code === '22023';
+    return { ok: false, fieldErrors: invalid ? { invite_code: error.message } : undefined, message: invalid ? undefined : message(error), values: { invite_code: code.data } };
+  }
+  revalidatePath('/espace/admin/parametres');
+  return {
+    ok: true,
+    message: data ? `Code enregistré : ${data}. Il est désormais obligatoire pour créer un compte.` : 'Code supprimé : l’inscription ne demande plus de code.',
+  };
+}
+
 export async function saveSettingsAction(_p: ActionResult | null, formData: FormData): Promise<ActionResult> {
   const { supabase, userId } = await requireRole(['admin'], '/espace/admin/parametres');
   const parsed = settingsSchema.safeParse(Object.fromEntries(formData));

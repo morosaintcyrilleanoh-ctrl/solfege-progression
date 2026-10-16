@@ -293,6 +293,9 @@ export type Database = {
       add_student_to_group: { Args: { p_group: string; p_email: string }; Returns: string };
       enroll_student: { Args: { p_course: string; p_email: string }; Returns: string };
       enroll_group: { Args: { p_course: string; p_group: string }; Returns: number };
+      signup_requires_invite: { Args: Record<string, never>; Returns: boolean };
+      get_invite_code: { Args: Record<string, never>; Returns: string | null };
+      set_invite_code: { Args: { p_code: string }; Returns: string | null };
       admin_overview: { Args: never; Returns: Json };
       admin_list_users: {
         Args: { p_search?: string; p_role?: AppRole | null; p_limit?: number; p_offset?: number };

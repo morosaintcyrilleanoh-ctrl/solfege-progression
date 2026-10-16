@@ -27,6 +27,7 @@ export const signUpSchema = z
     email: emailSchema,
     password: passwordSchema,
     password_confirm: z.string(),
+    invite_code: trimmed(60).optional().default(''),
     consent: z.literal('on', { message: 'Merci d’accepter les conditions d’utilisation.' }),
   })
   .refine((d) => d.password === d.password_confirm, { message: 'Les deux mots de passe ne correspondent pas.', path: ['password_confirm'] });
