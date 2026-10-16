@@ -8,7 +8,8 @@
  * dirait « faux » et le test échouerait.
  *
  * Prérequis : `npm run build`. Usage : `npm run test:e2e`
- * Variables : BASE_URL (sinon un serveur `next start` est lancé), CHROMIUM_PATH,
+ * Variables : BASE_URL (sinon un serveur `next start` est lancé), SW_CACHE (nom du cache
+ *             du service worker, « sp-v1 » par défaut), CHROMIUM_PATH,
  *             SCREENSHOTS_DIR (captures d'écran facultatives).
  */
 import { spawn } from 'node:child_process';
@@ -227,16 +228,16 @@ async function main() {
   // chaque fichier utilisé par la page doit être dans le cache du service worker.
   let offlineReady = false;
   for (let i = 0; i < 80 && !offlineReady; i++) {
-    offlineReady = await off.evaluate(async () => {
+    offlineReady = await off.evaluate(async ({ name, prefix }) => {
       if (!document.fonts.check('40px Bravura')) return false;
-      const cache = await caches.open('sp-v1');
+      const cache = await caches.open(name);
       const used = performance
         .getEntriesByType('resource')
         .map((e) => new URL(e.name))
-        .filter((u) => u.origin === location.origin && u.pathname.startsWith('/_next/static/'));
+        .filter((u) => u.origin === location.origin && u.pathname.startsWith(prefix));
       const hits = await Promise.all(used.map((u) => cache.match(u.href)));
       return used.length > 0 && hits.every(Boolean);
-    });
+    }, { name: process.env.SW_CACHE ?? 'sp-v1', prefix: `${new URL(baseUrl).pathname.replace(/\/$/, '')}/_next/static/` });
     if (!offlineReady) await off.waitForTimeout(250);
   }
   check(offlineReady, 'fichiers du laboratoire absents du cache hors connexion');
