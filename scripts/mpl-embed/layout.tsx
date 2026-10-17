@@ -19,7 +19,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
-  themeColor: '#0c0a1f',
+  themeColor: '#ffffff',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -36,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="contenu" tabIndex={-1} className="pb-24 md:pb-12">
           {children}
         </main>
-        <footer className="hidden border-t border-white/10 bg-night-900 py-6 text-sm text-white/60 md:block">
+        <footer className="hidden border-t border-slate-200 bg-white py-6 text-center text-sm text-slate-500 md:block">
           <div className="mx-auto max-w-6xl px-4">
             © Music Progression Lab — Développe ton oreille. Comprends ta musique. Progresse chaque jour.
           </div>
