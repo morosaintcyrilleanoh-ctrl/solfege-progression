@@ -5,6 +5,12 @@ import { buttonClasses } from '@/components/ui/primitives';
 import { Icon } from '@/components/ui/Icon';
 import { AccountBanner } from '@/components/dashboard/AccountBanner';
 
+const ESPACE = [
+  { href: '/#/espace-solfege/formations', icon: '🎓', label: 'Formations' },
+  { href: '/#/espace-solfege/lives', icon: '🎥', label: 'Lives' },
+  { href: '/#/espace-solfege/ressources', icon: '📁', label: 'Ressources' },
+];
+
 export default function SolfegeHome() {
   return (
     <>
@@ -36,6 +42,25 @@ export default function SolfegeHome() {
 
       <section className="mx-auto max-w-6xl px-4 py-8">
         <AccountBanner />
+        <h2 className="mb-3 text-xl font-bold text-night-800">Mon espace solfège</h2>
+        <div className="mb-4 grid grid-cols-3 gap-2 sm:gap-3">
+          {ESPACE.map((e, i) => (
+            // Pages du Lab (formations, lives, ressources du formateur) : liens ordinaires.
+            <a
+              key={e.href}
+              href={e.href}
+              className="mpl-rise flex flex-col items-center gap-2 rounded-2xl border border-slate-200 bg-white p-3 text-center shadow-sm transition hover:-translate-y-0.5 hover:border-electric-300 hover:shadow-md sm:p-4"
+              style={{ animationDelay: `${i * 60}ms` }}
+            >
+              <span className="grid size-11 place-items-center rounded-xl bg-electric-500/10 text-2xl" aria-hidden="true">
+                {e.icon}
+              </span>
+              <span className="text-sm font-bold text-night-800">{e.label}</span>
+            </a>
+          ))}
+        </div>
+        {/* Prochain live et formation en cours de l'élève connecté (rempli par le Lab : js/solfege-widget.js). */}
+        <div id="mpl-espace-widget" />
         <div className="mb-6 grid grid-cols-2 gap-3">
           <Link href="/tableau-de-bord" className="mpl-rise flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-electric-300 hover:shadow-md">
             <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-electric-500/10 text-electric-600">
