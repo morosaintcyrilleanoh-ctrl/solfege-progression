@@ -3,8 +3,9 @@
  * laboratoires (lecture des notes, rythme, tonalités, intervalles, test de niveau,
  * progrès), aux couleurs de Music Progression Lab, servie dans le dossier /solfege.
  *
- * Sans compte ni base de données : les résultats restent sur l'appareil de l'élève,
- * et le service worker garde le solfège utilisable hors connexion.
+ * Les résultats restent sur l'appareil de l'élève (le service worker garde le solfège
+ * utilisable hors connexion). Si l'élève est connecté au Lab, chaque séance porte son
+ * identifiant et le Lab (js/solfege-bridge.js) l'enregistre dans son compte.
  *
  * Usage : node scripts/export-mpl.mjs <dossier-de-destination>
  *   ex. : node scripts/export-mpl.mjs ../music-progression-lab/solfege
@@ -43,14 +44,20 @@ for (const d of ['acces-refuse', 'api', 'auth', 'compte-desactive', 'configurati
 rmSync(join(BUILD, 'src/proxy.ts'), { force: true });
 rmSync(join(BUILD, 'src/app/icon.svg'), { force: true }); // icône : celle du Lab
 
+/** Copie un fichier de la version intégrée (ses imports « ./mpl-owner » pointent vers src/lib). */
+function embed(file, target) {
+  writeFileSync(join(BUILD, target), readFileSync(join(EMBED, file), 'utf8').replaceAll("from './mpl-owner'", "from '@/lib/mpl-owner'"));
+}
+
 console.log('• Version intégrée (en-tête, menu, accueil, couleurs)');
 cpSync(join(EMBED, 'layout.tsx'), join(BUILD, 'src/app/layout.tsx'));
 cpSync(join(EMBED, 'page.tsx'), join(BUILD, 'src/app/page.tsx'));
 cpSync(join(EMBED, 'SolfegeArt.tsx'), join(BUILD, 'src/app/SolfegeArt.tsx'));
 for (const f of ['nav-items.ts', 'SiteHeader.tsx', 'MobileNav.tsx', 'ServiceWorker.tsx']) cpSync(join(EMBED, f), join(BUILD, 'src/components/layout', f));
-cpSync(join(EMBED, 'AccountBanner.tsx'), join(BUILD, 'src/components/dashboard/AccountBanner.tsx'));
+embed('AccountBanner.tsx', 'src/components/dashboard/AccountBanner.tsx');
+cpSync(join(EMBED, 'mpl-owner.ts'), join(BUILD, 'src/lib/mpl-owner.ts'));
 mkdirSync(join(BUILD, 'src/app/espace'), { recursive: true });
-cpSync(join(EMBED, 'espace-actions.ts'), join(BUILD, 'src/app/espace/actions.ts'));
+embed('espace-actions.ts', 'src/app/espace/actions.ts');
 writeFileSync(
   join(BUILD, 'next.config.ts'),
   readFileSync(join(EMBED, 'next.config.ts'), 'utf8').replace('const nextConfig: NextConfig = {', `const nextConfig: NextConfig = {\n  turbopack: { root: ${JSON.stringify(ROOT)} },`),
@@ -98,6 +105,16 @@ patch(
             espace Cours de Music Progression Lab
           </a>`,
 );
+
+// Chaque séance enregistrée porte l'identifiant de l'élève connecté au Lab (s'il y en a un) :
+// le Lab n'envoie dans un compte que les séances faites par cet élève.
+for (const [file, fn] of [['src/lib/note-reading/history.ts', 'toStoredSession'], ['src/lib/exercises/history.ts', 'toStoredQuiz']]) {
+  const text = readFileSync(join(BUILD, file), 'utf8');
+  if (!text.includes(`export function ${fn}(`)) throw new Error(`${fn} introuvable dans ${file}`);
+  writeFileSync(join(BUILD, file), `import { mplOwner } from '@/lib/mpl-owner';\n${text}`);
+}
+patch('src/lib/note-reading/history.ts', '    items: state.items.map((i) => ({ k: questionKey(i.question), c: i.correct, ms: i.ms })),\n  };', '    items: state.items.map((i) => ({ k: questionKey(i.question), c: i.correct, ms: i.ms })),\n    ...mplOwner(),\n  };');
+patch('src/lib/exercises/history.ts', '    items: state.items.map((i) => ({ s: i.question.skill, c: i.correct, ms: i.ms })),\n  };', '    items: state.items.map((i) => ({ s: i.question.skill, c: i.correct, ms: i.ms })),\n    ...mplOwner(),\n  };');
 
 console.log('• Compilation');
 execSync('npx next build', { cwd: BUILD, stdio: 'inherit', env: { ...process.env, NEXT_TELEMETRY_DISABLED: '1', NEXT_PUBLIC_SUPABASE_URL: '', NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: '' } });

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import { Plus_Jakarta_Sans } from 'next/font/google';
+import Script from 'next/script';
 import { MobileNav } from '@/components/layout/MobileNav';
 import { ServiceWorker } from '@/components/layout/ServiceWorker';
 import { SiteHeader } from '@/components/layout/SiteHeader';
@@ -7,6 +8,10 @@ import './globals.css';
 
 // Version intégrée à Music Progression Lab (dossier /solfege) : même police et mêmes couleurs.
 const font = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+
+// Élève connecté au Lab : le Lab envoie ses séances de solfège dans son compte.
+const BRIDGE =
+  "try{for(var i=0;i<localStorage.length;i++){if(/^sb-.+-auth-token$/.test(localStorage.key(i)||'')){import('/js/solfege-bridge.js').catch(function(){});break}}}catch(e){}";
 
 export const metadata: Metadata = {
   title: { default: 'Solfège · Music Progression Lab', template: '%s · Solfège · Music Progression Lab' },
@@ -43,6 +48,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </footer>
         <MobileNav />
         <ServiceWorker />
+        <Script id="mpl-solfege-bridge" strategy="afterInteractive">
+          {BRIDGE}
+        </Script>
       </body>
     </html>
   );

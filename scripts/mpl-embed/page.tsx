@@ -3,6 +3,7 @@ import { ModuleCards } from '@/components/ModuleCards';
 import { SolfegeArt } from './SolfegeArt';
 import { buttonClasses } from '@/components/ui/primitives';
 import { Icon } from '@/components/ui/Icon';
+import { AccountBanner } from '@/components/dashboard/AccountBanner';
 
 export default function SolfegeHome() {
   return (
@@ -34,6 +35,7 @@ export default function SolfegeHome() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-8">
+        <AccountBanner />
         <div className="mb-6 grid grid-cols-2 gap-3">
           <Link href="/tableau-de-bord" className="mpl-rise flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-electric-300 hover:shadow-md">
             <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-electric-500/10 text-electric-600">
