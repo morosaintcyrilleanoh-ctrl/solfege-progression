@@ -46,6 +46,7 @@ rmSync(join(BUILD, 'src/app/icon.svg'), { force: true }); // icône : celle du L
 console.log('• Version intégrée (en-tête, menu, accueil, couleurs)');
 cpSync(join(EMBED, 'layout.tsx'), join(BUILD, 'src/app/layout.tsx'));
 cpSync(join(EMBED, 'page.tsx'), join(BUILD, 'src/app/page.tsx'));
+cpSync(join(EMBED, 'SolfegeArt.tsx'), join(BUILD, 'src/app/SolfegeArt.tsx'));
 for (const f of ['nav-items.ts', 'SiteHeader.tsx', 'MobileNav.tsx', 'ServiceWorker.tsx']) cpSync(join(EMBED, f), join(BUILD, 'src/components/layout', f));
 cpSync(join(EMBED, 'AccountBanner.tsx'), join(BUILD, 'src/components/dashboard/AccountBanner.tsx'));
 mkdirSync(join(BUILD, 'src/app/espace'), { recursive: true });
@@ -57,18 +58,32 @@ writeFileSync(
 
 // Police musicale servie depuis /solfege ; couleurs de Music Progression Lab.
 patch('src/app/globals.css', "url('/fonts/bravura.woff2')", `url('${BASE}/fonts/bravura.woff2')`);
+// Palette blanc et bleu, commune avec Music Progression Lab.
 const colors = {
-  '--color-night-950: #070b1d': '--color-night-950: #08061a',
-  '--color-night-900: #0b1230': '--color-night-900: #0c0a1f',
-  '--color-night-800: #121b45': '--color-night-800: #1a1740',
-  '--color-night-700: #1c2760': '--color-night-700: #231f52',
-  '--color-night-600: #2a3780': '--color-night-600: #2e2870',
+  '--color-night-950: #070b1d': '--color-night-950: #0b1f3d',
+  '--color-night-900: #0b1230': '--color-night-900: #1d4ed8',
+  '--color-night-800: #121b45': '--color-night-800: #0b2545',
+  '--color-night-700: #1c2760': '--color-night-700: #1e40af',
+  '--color-night-600: #2a3780': '--color-night-600: #1e3a8a',
+  '--color-accent-300: #c4b5fd': '--color-accent-300: #bfd6ff',
+  '--color-accent-400: #a78bfa': '--color-accent-400: #93b8ff',
+  '--color-accent-500: #8b5cf6': '--color-accent-500: #2563eb',
+  '--color-accent-600: #7c3aed': '--color-accent-600: #1d4ed8',
+  '--color-accent-700: #6d28d9': '--color-accent-700: #1e40af',
+  '--color-electric-300: #93c5fd': '--color-electric-300: #bcd3ff',
   '--color-electric-400: #4f9bff': '--color-electric-400: #60a5fa',
-  '--color-electric-500: #2f7bff': '--color-electric-500: #3b82f6',
-  '--color-electric-600: #1f63e6': '--color-electric-600: #2563eb',
-  '--color-mist: #f3f5fb': '--color-mist: #f4f2fc',
+  '--color-electric-500: #2f7bff': '--color-electric-500: #2563eb',
+  '--color-electric-600: #1f63e6': '--color-electric-600: #1d4ed8',
+  '--color-electric-700: #194fb8': '--color-electric-700: #1e40af',
+  '--color-mist: #f3f5fb': '--color-mist: #f6f8fc',
+  '--color-ink: #0f172a': '--color-ink: #0b2545',
 };
 for (const [from, to] of Object.entries(colors)) patch('src/app/globals.css', from, to);
+// Animations : apparition douce, portée animée de l'accueil (désactivées si « moins de mouvement »).
+writeFileSync(
+  join(BUILD, 'src/app/globals.css'),
+  readFileSync(join(BUILD, 'src/app/globals.css'), 'utf8') + readFileSync(join(EMBED, 'animations.css'), 'utf8'),
+);
 
 // Les cours en direct sont dans l'espace « Cours » de Music Progression Lab.
 patch(

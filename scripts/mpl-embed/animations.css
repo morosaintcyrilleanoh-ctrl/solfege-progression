@@ -1,0 +1,21 @@
+
+/* ---------- Version Music Progression Lab : animations ---------- */
+@keyframes mpl-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.mpl-rise { animation: mpl-rise 0.45s ease both; }
+/* Seulement les cartes des modules de l'accueil (jamais les exercices : rien ne doit bouger sous le doigt). */
+.mpl-cards li { animation: mpl-rise 0.45s ease both; }
+.mpl-cards li:nth-child(2) { animation-delay: 0.06s; }
+.mpl-cards li:nth-child(3) { animation-delay: 0.12s; }
+.mpl-cards li:nth-child(4) { animation-delay: 0.18s; }
+@keyframes mpl-note { 0%, 8% { opacity: 0; transform: translateY(-8px); } 18%, 88% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+.mpl-note { animation: mpl-note 5s ease-in-out infinite; }
+@keyframes mpl-progress { from { width: 16px; } to { width: 328px; } }
+.mpl-progress { animation: mpl-progress 5s linear infinite; }
+@keyframes mpl-float { 50% { transform: translateY(-8px); } }
+.mpl-float { animation: mpl-float 4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .mpl-rise, .mpl-cards li, .mpl-note, .mpl-progress, .mpl-float { animation: none !important; }
+}
+
+/* La barre du bas ne doit jamais cacher l'élément sur lequel on se place (clavier, défilement automatique). */
+@media (max-width: 767px) { html { scroll-padding-bottom: 88px; } }
