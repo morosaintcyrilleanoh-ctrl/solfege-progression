@@ -85,6 +85,9 @@ writeFileSync(
   readFileSync(join(BUILD, 'src/app/globals.css'), 'utf8') + readFileSync(join(EMBED, 'animations.css'), 'utf8'),
 );
 
+// En-têtes des laboratoires : même bandeau dégradé que l'accueil.
+patch('src/components/layout/PageHero.tsx', '<div className="bg-night-900 text-white">', '<div className="mpl-band text-white">');
+
 // Les cours en direct sont dans l'espace « Cours » de Music Progression Lab.
 patch(
   'src/components/dashboard/StudentDashboard.tsx',
