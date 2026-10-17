@@ -19,3 +19,8 @@
 
 /* La barre du bas ne doit jamais cacher l'élément sur lequel on se place (clavier, défilement automatique). */
 @media (max-width: 767px) { html { scroll-padding-bottom: 88px; } }
+
+/* Bandeaux : dégradé bleu nuit → bleu, comme Music Progression Lab */
+.mpl-band { position: relative; background: linear-gradient(135deg, #0b2545 0%, #133a8a 55%, #1d4ed8 100%); }
+.mpl-band::before { content: ''; position: absolute; inset: 0; background: radial-gradient(60% 70% at 85% 20%, rgba(96, 165, 250, 0.28), transparent 60%); pointer-events: none; }
+.mpl-band > * { position: relative; }

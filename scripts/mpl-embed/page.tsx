@@ -7,7 +7,7 @@ import { Icon } from '@/components/ui/Icon';
 export default function SolfegeHome() {
   return (
     <>
-      <section className="relative overflow-hidden bg-night-900 text-white">
+      <section className="mpl-band relative overflow-hidden text-white">
         <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-4 py-9 sm:py-14 md:grid-cols-[1.1fr_0.9fr]">
           <div className="mpl-rise">
             <p className="text-xs font-bold uppercase tracking-[0.14em] text-accent-300">Music Progression Lab · Solfège</p>
@@ -19,7 +19,7 @@ export default function SolfegeHome() {
               immédiate, même sans connexion.
             </p>
             <div className="mt-6 flex flex-col gap-2 sm:flex-row">
-              <Link href="/laboratoires/lecture-des-notes" className={`${buttonClasses('primary', 'lg')} !bg-white !text-electric-700 hover:!bg-electric-500/5`}>
+              <Link href="/laboratoires/lecture-des-notes" className={`${buttonClasses('primary', 'lg')} !bg-white !text-night-800 hover:!bg-electric-500/5`}>
                 <Icon name="play" /> Lire mes premières notes
               </Link>
               <Link href="/test-de-positionnement" className={`${buttonClasses('secondary', 'lg')} !border-white/50 !bg-transparent !text-white hover:!bg-white/10`}>
