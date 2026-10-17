@@ -66,6 +66,8 @@ Sans variables Supabase, le site fonctionne en mode « laboratoires sans compte 
 | `npm run lint` · `npm run typecheck` | ESLint, TypeScript |
 | `npm test` | 110 tests unitaires (théorie musicale, moteur d’exercices, validation, statistiques…) |
 | `npm run test:db` | 120 vérifications de sécurité sur un PostgreSQL temporaire (binaires PostgreSQL requis) |
+| `npm run export:mpl -- <dossier>` | Génère le volet Solfège de Music Progression Lab (laboratoires statiques dans `/solfege`) |
+| `npm run test:e2e:mpl -- <dossier-du-lab>` | Vérifie ce volet dans Music Progression Lab (menu, pages, téléphone) |
 | `npm run test:e2e` | lecture des notes dans Chromium : 120 notes relues dans le SVG, reprise, historique, hors connexion |
 | `npm run test:e2e:labs` | laboratoires rythme, tonalités, intervalles (tous niveaux, évaluation, accès au module 4) |
 | `npm run test:e2e:espaces` | toutes les pages élève / formateur / administrateur avec un faux serveur Supabase |

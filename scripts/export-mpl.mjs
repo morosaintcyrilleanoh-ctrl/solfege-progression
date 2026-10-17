@@ -1,0 +1,105 @@
+/**
+ * Génère le volet « Solfège » de Music Progression Lab : une version statique des
+ * laboratoires (lecture des notes, rythme, tonalités, intervalles, test de niveau,
+ * progrès), aux couleurs de Music Progression Lab, servie dans le dossier /solfege.
+ *
+ * Sans compte ni base de données : les résultats restent sur l'appareil de l'élève,
+ * et le service worker garde le solfège utilisable hors connexion.
+ *
+ * Usage : node scripts/export-mpl.mjs <dossier-de-destination>
+ *   ex. : node scripts/export-mpl.mjs ../music-progression-lab/solfege
+ */
+import { execSync } from 'node:child_process';
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { dirname, join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const EMBED = join(ROOT, 'scripts/mpl-embed');
+const BUILD = join(ROOT, '.mpl-build');
+const BASE = '/solfege';
+const dest = process.argv[2] ? resolve(process.argv[2]) : null;
+if (!dest) {
+  console.error('Usage : node scripts/export-mpl.mjs <dossier-de-destination>');
+  process.exit(1);
+}
+
+/** Remplace un passage exact (échoue si le code d'origine a changé). */
+function patch(file, from, to) {
+  const path = join(BUILD, file);
+  const text = readFileSync(path, 'utf8');
+  if (!text.includes(from)) throw new Error(`Passage introuvable dans ${file} : ${from.slice(0, 60)}…`);
+  writeFileSync(path, text.split(from).join(to));
+}
+
+console.log('• Copie du projet');
+rmSync(BUILD, { recursive: true, force: true });
+mkdirSync(BUILD);
+for (const f of ['src', 'public', 'package.json', 'tsconfig.json', 'postcss.config.mjs']) cpSync(join(ROOT, f), join(BUILD, f), { recursive: true });
+
+console.log('• Retrait des pages en ligne (comptes, cours, espaces)');
+for (const d of ['acces-refuse', 'api', 'auth', 'compte-desactive', 'configuration', 'connexion', 'cours', 'espace', 'inscription', 'mot-de-passe-oublie', 'nouveau-mot-de-passe', 'profil'])
+  rmSync(join(BUILD, 'src/app', d), { recursive: true, force: true });
+rmSync(join(BUILD, 'src/proxy.ts'), { force: true });
+rmSync(join(BUILD, 'src/app/icon.svg'), { force: true }); // icône : celle du Lab
+
+console.log('• Version intégrée (en-tête, menu, accueil, couleurs)');
+cpSync(join(EMBED, 'layout.tsx'), join(BUILD, 'src/app/layout.tsx'));
+cpSync(join(EMBED, 'page.tsx'), join(BUILD, 'src/app/page.tsx'));
+for (const f of ['nav-items.ts', 'SiteHeader.tsx', 'MobileNav.tsx', 'ServiceWorker.tsx']) cpSync(join(EMBED, f), join(BUILD, 'src/components/layout', f));
+cpSync(join(EMBED, 'AccountBanner.tsx'), join(BUILD, 'src/components/dashboard/AccountBanner.tsx'));
+mkdirSync(join(BUILD, 'src/app/espace'), { recursive: true });
+cpSync(join(EMBED, 'espace-actions.ts'), join(BUILD, 'src/app/espace/actions.ts'));
+writeFileSync(
+  join(BUILD, 'next.config.ts'),
+  readFileSync(join(EMBED, 'next.config.ts'), 'utf8').replace('const nextConfig: NextConfig = {', `const nextConfig: NextConfig = {\n  turbopack: { root: ${JSON.stringify(ROOT)} },`),
+);
+
+// Police musicale servie depuis /solfege ; couleurs de Music Progression Lab.
+patch('src/app/globals.css', "url('/fonts/bravura.woff2')", `url('${BASE}/fonts/bravura.woff2')`);
+const colors = {
+  '--color-night-950: #070b1d': '--color-night-950: #08061a',
+  '--color-night-900: #0b1230': '--color-night-900: #0c0a1f',
+  '--color-night-800: #121b45': '--color-night-800: #1a1740',
+  '--color-night-700: #1c2760': '--color-night-700: #231f52',
+  '--color-night-600: #2a3780': '--color-night-600: #2e2870',
+  '--color-electric-400: #4f9bff': '--color-electric-400: #60a5fa',
+  '--color-electric-500: #2f7bff': '--color-electric-500: #3b82f6',
+  '--color-electric-600: #1f63e6': '--color-electric-600: #2563eb',
+  '--color-mist: #f3f5fb': '--color-mist: #f4f2fc',
+};
+for (const [from, to] of Object.entries(colors)) patch('src/app/globals.css', from, to);
+
+// Les cours en direct sont dans l'espace « Cours » de Music Progression Lab.
+patch(
+  'src/components/dashboard/StudentDashboard.tsx',
+  `<Link href="/espace/lives" className="font-semibold text-electric-600 hover:underline">
+            espace en ligne
+          </Link>`,
+  `<a href="/#/cours" className="font-semibold text-electric-600 hover:underline">
+            espace Cours de Music Progression Lab
+          </a>`,
+);
+
+console.log('• Compilation');
+execSync('npx next build', { cwd: BUILD, stdio: 'inherit', env: { ...process.env, NEXT_TELEMETRY_DISABLED: '1', NEXT_PUBLIC_SUPABASE_URL: '', NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: '' } });
+
+console.log('• Service worker limité à /solfege');
+const out = join(BUILD, 'out');
+let sw = readFileSync(join(ROOT, 'public/sw.js'), 'utf8');
+const pages = ['/', '/laboratoires/', '/laboratoires/lecture-des-notes/', '/laboratoires/lecture-des-notes/historique/', '/laboratoires/rythme/', '/laboratoires/tonalites/', '/laboratoires/intervalles/', '/tableau-de-bord/', '/test-de-positionnement/'].map((p) => BASE + p);
+sw = sw
+  .replace(/const VERSION = '[^']+';/, "const VERSION = 'mpl-solfege-v1';")
+  .replace(/const PUBLIC_PAGES = \[[^\]]+\];/, `const PUBLIC_PAGES = ${JSON.stringify(pages)};`)
+  .replace("'/fonts/bravura.woff2'", `'${BASE}/fonts/bravura.woff2'`)
+  .replace("url.pathname.startsWith('/_next/static/') || url.pathname.startsWith('/fonts/')", `url.pathname.startsWith('${BASE}/_next/static/') || url.pathname.startsWith('${BASE}/fonts/')`)
+  .replace("caches.match('/laboratoires')", `caches.match('${BASE}/')`);
+for (const must of ['mpl-solfege-v1', `${BASE}/_next/static/`, `'${BASE}/'`]) if (!sw.includes(must)) throw new Error(`sw.js : adaptation incomplète (${must})`);
+writeFileSync(join(out, 'sw.js'), sw);
+
+console.log(`• Copie vers ${dest}`);
+rmSync(dest, { recursive: true, force: true });
+cpSync(out, dest, { recursive: true });
+rmSync(BUILD, { recursive: true, force: true });
+if (!existsSync(join(dest, 'index.html'))) throw new Error('index.html manquant');
+console.log('\nVolet Solfège prêt.');

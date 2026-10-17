@@ -14,7 +14,9 @@
     "test:e2e": "node scripts/e2e-note-lab.mjs",
     "test:e2e:labs": "node scripts/e2e-quiz-labs.mjs",
     "test:db": "bash scripts/test-db.sh",
-    "test:e2e:espaces": "node scripts/e2e-espaces.mjs"
+    "test:e2e:espaces": "node scripts/e2e-espaces.mjs",
+    "export:mpl": "node scripts/export-mpl.mjs",
+    "test:e2e:mpl": "node scripts/e2e-mpl.mjs"
   },
   "engines": {
     "node": ">=20.9.0"
