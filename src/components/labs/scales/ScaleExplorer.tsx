@@ -21,8 +21,9 @@ export function ScaleExplorer() {
   const result = useMemo(() => {
     try {
       const octave = LETTERS.indexOf(letter) >= 4 ? 3 : 4;
+      // Toutes les gammes : ascendante puis descendante (la mineure mélodique redescend en mineure naturelle).
       const up = buildScale({ letter, accidental }, type, octave);
-      const down = type === 'melodic-minor' ? buildScale({ letter, accidental }, type, octave, 'down') : null;
+      const down = buildScale({ letter, accidental }, type, octave, 'down');
       return { up, down, error: null as string | null };
     } catch (e) {
       return { up: null, down: null, error: e instanceof ScaleSpellingError ? e.message : 'Gamme impossible.' };
@@ -34,15 +35,21 @@ export function ScaleExplorer() {
   const standard = isStandardKey(key);
   const fmt = (p: Parameters<typeof formatPitch>[0]) => formatPitch(p, { notation, octave: false });
 
+  // Montée puis descente, sans répéter la tonique du sommet.
   const play = () => {
-    if (!result.up) return;
-    const seq = [...result.up, ...(result.down ?? [])];
+    if (!result.up || !result.down) return;
+    const seq = [...result.up, ...result.down.slice(1)];
     seq.forEach((p, i) => window.setTimeout(() => playTone(frequency(p), 0.45), i * 380));
   };
 
-  const scoreNotation: Notation | null = result.up
-    ? { kind: 'notes', clef: 'treble', notes: result.up, layout: 'melodic', forceAccidentals: true, labels: result.up.map((p) => fmt(p)) }
-    : null;
+  const staff = (notes: NonNullable<typeof result.up>): Notation => ({
+    kind: 'notes',
+    clef: 'treble',
+    notes,
+    layout: 'melodic',
+    forceAccidentals: true,
+    labels: notes.map((p) => fmt(p)),
+  });
 
   return (
     <div className="space-y-4">
@@ -104,7 +111,14 @@ export function ScaleExplorer() {
           <p className="mt-2 text-sm text-danger-700" role="alert">{result.error}</p>
         ) : (
           <>
-            {scoreNotation && <ScoreView notation={scoreNotation} label="Gamme sur la portée" className="mt-2" />}
+            {result.up && result.down && (
+              <>
+                <h3 className="mt-3 text-sm font-bold text-slate-700">↗ Gamme ascendante</h3>
+                <ScoreView notation={staff(result.up)} label="Gamme ascendante sur la portée" className="mt-1" />
+                <h3 className="mt-3 text-sm font-bold text-slate-700">↘ Gamme descendante</h3>
+                <ScoreView notation={staff(result.down)} label="Gamme descendante sur la portée" className="mt-1" />
+              </>
+            )}
             <ol className="mt-3 flex flex-wrap gap-1.5" aria-label="Écarts entre les degrés">
               {stepPattern(type).map((s, i) => (
                 <li key={i} className={`rounded-full px-2.5 py-1 text-xs font-bold ${s === '½' ? 'bg-accent-600/10 text-accent-700' : s === 'T' ? 'bg-electric-500/10 text-electric-700' : 'bg-amber-100 text-amber-800'}`}>
@@ -123,7 +137,7 @@ export function ScaleExplorer() {
                 ))}
               </tbody>
             </table>
-            {result.down && (
+            {type === 'melodic-minor' && result.down && (
               <p className="mt-3 text-sm text-slate-700">
                 En descendant, la gamme mineure mélodique reprend la forme naturelle : {result.down.map((p) => fmt(p)).join(' – ')}.
               </p>
@@ -149,7 +163,7 @@ export function ScaleExplorer() {
               )}
             </div>
             <button type="button" onClick={play} className={`${buttonClasses('secondary')} mt-3`}>
-              <Icon name="sound" className="size-4" /> Écouter la gamme
+              <Icon name="sound" className="size-4" /> Écouter la gamme (montée et descente)
             </button>
           </>
         )}
