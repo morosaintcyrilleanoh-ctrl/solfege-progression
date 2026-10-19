@@ -1,6 +1,6 @@
 /**
  * Vérifie l'enregistrement des séances de solfège dans le compte Music Progression Lab :
- * séances marquées au nom de l'élève connecté, envoi par le Lab (js/solfege-sync.js),
+ * solfège réservé aux élèves connectés, séances marquées au nom de l'élève connecté, envoi par le Lab (js/solfege-sync.js),
  * affichage sur le tableau de bord de l'élève et sur sa fiche côté formateur,
  * séances d'un autre élève jamais envoyées, message clair si la table manque.
  *
@@ -131,17 +131,8 @@ async function main() {
 
     console.log('• Visiteur non connecté');
     await page.goto(`${base}/solfege/`);
-    await page.locator('[data-mpl-account]').waitFor();
-    check((await page.locator('[data-mpl-account]').getAttribute('data-mpl-account')) === 'invite', 'invitation à se connecter au Lab');
-    await page.goto(`${base}/solfege/laboratoires/rythme/`);
-    await page.getByRole('button', { name: /^Évaluation/ }).click();
-    for (let i = 0; i < 10; i++) {
-      await page.getByText(`Question ${i + 1}/10`).waitFor();
-      await answerCurrent(page);
-    }
-    await page.getByText('Évaluation terminée').waitFor();
-    const anon = (await store(page, 'solfege-progression:quiz:rythme:history:v1'))?.[0];
-    check(anon && !('owner' in anon), 'séance anonyme : sans propriétaire');
+    await page.waitForURL(`${base}/#/connexion?retour=solfege`);
+    check(true, 'solfège réservé aux élèves connectés');
     check(bridgeLoads.length === 0, 'le pont vers le compte n’est pas chargé sans connexion');
 
     console.log('• Élève connecté au Lab');

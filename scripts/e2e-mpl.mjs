@@ -25,11 +25,14 @@ const check = (ok, msg) => {
   }
 };
 
-// Le Lab charge supabase-js depuis un CDN : remplacé ici par un module minimal (visiteur non connecté).
+// Le Lab charge supabase-js depuis un CDN : remplacé ici par un module minimal
+// (élève connecté si une session sb-…-auth-token est dans le stockage local).
 const FAKE_SUPABASE = `export function createClient() {
+  const key = () => Object.keys(localStorage).find((k) => /^sb-.+-auth-token$/.test(k));
+  const session = () => (key() ? { access_token: 'x', user: { id: JSON.parse(localStorage.getItem(key())).user.id, email: 'eleve@exemple.fr', user_metadata: {} } } : null);
   const empty = { data: [], error: null };
   const q = { select: () => q, eq: () => q, order: () => q, limit: () => q, maybeSingle: async () => ({ data: null, error: null }), single: async () => ({ data: null, error: null }), then: (r) => r(empty) };
-  return { auth: { getSession: async () => ({ data: { session: null } }), onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }), signOut: async () => ({}) }, from: () => q, rpc: async () => ({ data: null, error: null }) };
+  return { auth: { getSession: async () => ({ data: { session: session() } }), onAuthStateChange: () => ({ data: { subscription: { unsubscribe() {} } } }), signOut: async () => ({}) }, from: () => q, rpc: async () => ({ data: null, error: null }) };
 }`;
 
 const PAGES = ['/solfege/', '/solfege/laboratoires/', '/solfege/laboratoires/lecture-des-notes/', '/solfege/laboratoires/lecture-des-notes/historique/', '/solfege/laboratoires/rythme/', '/solfege/laboratoires/tonalites/', '/solfege/laboratoires/intervalles/', '/solfege/tableau-de-bord/', '/solfege/test-de-positionnement/'];
@@ -55,16 +58,30 @@ async function main() {
     const missing = [];
     page.on('response', (r) => r.status() >= 400 && missing.push(`${r.status()} ${new URL(r.url()).pathname}`));
 
-    console.log('• Accès depuis Music Progression Lab');
+    console.log('• Plateforme privée : visiteur non connecté');
     await page.goto(`${base}/#/`);
-    const navLink = page.locator('#nav a[href="/solfege/"]');
-    await navLink.waitFor();
-    check((await navLink.innerText()).trim() === 'Solfège', 'lien « Solfège » dans le menu du Lab');
+    await page.locator('#tabbar a').first().waitFor();
+    check((await page.locator('#nav a[href="/solfege/"]').count()) === 0, 'pas de lien direct vers le solfège pour un visiteur');
+    await page.goto(`${base}/solfege/laboratoires/rythme/`);
+    await page.waitForURL(`${base}/#/connexion?retour=solfege`);
+    check(true, 'solfège sans connexion → page de connexion');
+    await page.goto(`${base}/#/programme`);
+    await page.waitForURL(/#\/connexion\?retour=%2Fprogramme$/);
+    check(true, 'exercices de l’oreille sans connexion → page de connexion');
+    await page.goto(`${base}/#/inscription?code=mpl-ab12c`);
+    await page.locator('#trainer_code').waitFor();
+    check((await page.locator('#trainer_code').inputValue()) === 'MPL-AB12C', 'inscription : code formateur prérempli depuis le lien');
+
+    console.log('• Accès depuis Music Progression Lab (élève connecté)');
+    await page.evaluate(() => localStorage.setItem('sb-test-auth-token', JSON.stringify({ user: { id: '00000000-0000-4000-8000-00000000000a' } })));
+    await page.goto(`${base}/?connecte=1#/`); // rechargement complet : le Lab relit la session
+    await page.locator('#nav-links').waitFor({ state: 'attached' });
+    check((await page.locator('#nav a[href="/solfege/"]').innerText()).trim() === 'Solfège', 'lien « Solfège » dans le menu du Lab');
     check((await page.locator('main a[href="/solfege/"]').count()) === 1, 'carte « Solfège » sur l’accueil du Lab');
     const tabs = (await page.locator('#tabbar a').allInnerTexts()).map((s) => s.trim());
     check(tabs.join('|') === 'Accueil|Oreille|Solfège|Compte', `barre du bas du Lab : ${tabs.join('|')}`);
     if (shots) await page.screenshot({ path: join(shots, 'lab-accueil.png'), fullPage: true });
-    await navLink.click();
+    await page.locator('#tabbar a[href="/solfege/"]').click();
     await page.waitForURL(`${base}/solfege/`);
     await page.getByRole('heading', { level: 1 }).waitFor();
     check((await page.locator('header').innerText()).includes('Music Progression'), 'en-tête aux couleurs du Lab');
@@ -92,7 +109,7 @@ async function main() {
     await page.goto(`${base}/solfege/laboratoires/rythme/`);
     await page.getByRole('navigation', { name: 'Navigation mobile' }).getByRole('link', { name: 'Accueil' }).click();
     await page.waitForURL(`${base}/#/`);
-    await page.locator('#nav a[href="/solfege/"]').waitFor();
+    await page.locator('#nav a[href="/solfege/"]').waitFor({ state: 'attached' });
 
     check(errors.length === 0, `erreurs console : ${errors.slice(0, 3).join(' | ')}`);
     check(missing.length === 0, `fichiers introuvables : ${[...new Set(missing)].slice(0, 5).join(', ')}`);
