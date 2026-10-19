@@ -13,6 +13,10 @@ const font = Plus_Jakarta_Sans({ subsets: ['latin'], variable: '--font-inter', d
 const BRIDGE =
   "try{for(var i=0;i<localStorage.length;i++){if(/^sb-.+-auth-token$/.test(localStorage.key(i)||'')){import('/js/solfege-bridge.js').catch(function(){});break}}}catch(e){}";
 
+// Volet réservé aux élèves connectés au Lab : sinon, page de connexion (avant tout affichage).
+const GATE =
+  "try{if(!Object.keys(localStorage).some(function(k){return /^sb-.+-auth-token$/.test(k)}))location.replace('/#/connexion?retour=solfege')}catch(e){}";
+
 export const metadata: Metadata = {
   title: { default: 'Solfège · Music Progression Lab', template: '%s · Solfège · Music Progression Lab' },
   description: 'Lecture des notes, rythme, tonalités et intervalles : le volet solfège de Music Progression Lab.',
@@ -30,6 +34,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={font.variable}>
+      {/* Layout racine de l'App Router : <head> y est autorisé. */}
+      {/* eslint-disable-next-line @next/next/no-head-element */}
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: GATE }} />
+      </head>
       <body className="min-h-dvh font-sans antialiased">
         <a
           href="#contenu"
