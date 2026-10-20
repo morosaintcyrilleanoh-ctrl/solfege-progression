@@ -1,10 +1,10 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ScoreView } from '@/components/notation/ScoreView';
 import { Card, SegmentedControl, buttonClasses } from '@/components/ui/primitives';
 import { Icon } from '@/components/ui/Icon';
-import { playTone } from '@/lib/audio/synth';
+import { playSequence } from '@/lib/audio/synth';
 import type { Notation } from '@/lib/exercises/types';
 import { type Mode, fifthsOf, isStandardKey, keyName, keySignatureAccidentals, relativeKey } from '@/lib/music/keys';
 import { type Accidental, type Letter, FRENCH_NAMES, LETTERS, frequency, formatPitch } from '@/lib/music/pitch';
@@ -35,11 +35,17 @@ export function ScaleExplorer() {
   const standard = isStandardKey(key);
   const fmt = (p: Parameters<typeof formatPitch>[0]) => formatPitch(p, { notation, octave: false });
 
-  // Montée puis descente, sans répéter la tonique du sommet.
+  // Montée puis descente au piano, sans répéter la tonique du sommet.
+  const [playing, setPlaying] = useState(false);
+  const timer = useRef<number | undefined>(undefined);
+  useEffect(() => () => window.clearTimeout(timer.current), []);
   const play = () => {
-    if (!result.up || !result.down) return;
-    const seq = [...result.up, ...result.down.slice(1)];
-    seq.forEach((p, i) => window.setTimeout(() => playTone(frequency(p), 0.45), i * 380));
+    if (!result.up || !result.down || playing) return;
+    const seq = [...result.up, ...result.down.slice(1)].map((p) => frequency(p));
+    const seconds = playSequence(seq, { step: 0.45, last: 1.6 });
+    if (!seconds) return;
+    setPlaying(true);
+    timer.current = window.setTimeout(() => setPlaying(false), seconds * 1000);
   };
 
   const staff = (notes: NonNullable<typeof result.up>): Notation => ({
@@ -162,8 +168,8 @@ export function ScaleExplorer() {
                 </p>
               )}
             </div>
-            <button type="button" onClick={play} className={`${buttonClasses('secondary')} mt-3`}>
-              <Icon name="sound" className="size-4" /> Écouter la gamme (montée et descente)
+            <button type="button" onClick={play} disabled={playing} aria-busy={playing} className={`${buttonClasses('secondary')} mt-3`}>
+              <Icon name="sound" className="size-4" /> {playing ? 'Lecture en cours…' : 'Écouter la gamme (montée et descente)'}
             </button>
           </>
         )}
