@@ -18,7 +18,8 @@
     "export:mpl": "node scripts/export-mpl.mjs",
     "test:e2e:mpl": "node scripts/e2e-mpl.mjs",
     "test:e2e:mpl-sync": "node scripts/e2e-mpl-sync.mjs",
-    "test:e2e:mpl-espace": "node scripts/e2e-mpl-espace.mjs"
+    "test:e2e:mpl-espace": "node scripts/e2e-mpl-espace.mjs",
+    "test:e2e:mpl-formation": "node scripts/e2e-mpl-formation.mjs"
   },
   "engines": {
     "node": ">=20.9.0"

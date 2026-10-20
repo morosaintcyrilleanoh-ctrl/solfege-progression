@@ -153,7 +153,7 @@ async function main() {
     console.log('• Formateur : formation et leçons');
     await page.goto(`${base}/`);
     await signIn(page, TRAINER, 'trainer');
-    await open(page, '#/formateur/solfege');
+    await open(page, '#/formateur/solfege?vue=formations');
     check((await page.locator('.tabs a[aria-current="page"]').innerText()).includes('Solfège'), 'onglet « Solfège » dans l’espace formateur');
     const cform = page.locator('#course-form');
     await cform.locator('button[type=submit]').click();
