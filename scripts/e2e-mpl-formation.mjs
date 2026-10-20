@@ -29,8 +29,6 @@ const check = (ok, msg) => {
 
 const STUDENT = '00000000-0000-4000-8000-00000000000a';
 const TRAINER = '00000000-0000-4000-8000-0000000000f1';
-// Image PNG 1×1 et faux MP3 servis pour les « liens temporaires » des fichiers.
-const PNG = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==', 'base64');
 
 // supabase-js (CDN) remplacé par une petite base en mémoire (stockage local). Les règles
 // d'accès réelles sont testées sur PostgreSQL (music-progression-lab/scripts/test-db.sh).
