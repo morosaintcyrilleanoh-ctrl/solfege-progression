@@ -3,7 +3,7 @@ import { analyzeTriad, buildTriad, triadOnDegree } from './chords';
 import { buildInterval, intervalBetween, intervalName, stepKind, tonesLabel } from './intervals';
 import { ALL_FIFTHS, accidentalToDraw, fifthsOf, keyFromFifths, keyName, keySignatureMap, relativeKey } from './keys';
 import { type Pitch, LETTERS, formatPitch, midiNumber, parsePitchKey, pitchKey } from './pitch';
-import { SCALE_STEPS, buildScale, degreeName, doubleAccidentals } from './scales';
+import { SCALE_STEPS, arpeggio, buildScale, degreeName, doubleAccidentals } from './scales';
 
 const p = parsePitchKey;
 const keys = (list: Pitch[]) => list.map(pitchKey);
@@ -159,5 +159,24 @@ describe('accords', () => {
     const a = keyFromFifths(0, 'minor');
     expect([1, 2, 3, 4, 5, 6, 7].map((d) => triadOnDegree(a, d).roman)).toEqual(['i', 'ii°', 'III+', 'iv', 'V', 'VI', 'vii°']);
     expect(keys(triadOnDegree(a, 5).notes)).toEqual(['E5', 'G#5', 'B5']);
+  });
+});
+
+describe('arpège de la tonique', () => {
+  const names = (ps: Pitch[]) => ps.map(pitchKey);
+  it('Do majeur : Do Mi Sol Do', () => {
+    expect(names(arpeggio(buildScale({ letter: 'C', accidental: 0 }, 'major', 4)))).toEqual(['C4', 'E4', 'G4', 'C5']);
+  });
+  it('Fa majeur et Si♭ majeur', () => {
+    expect(names(arpeggio(buildScale({ letter: 'F', accidental: 0 }, 'major', 4)))).toEqual(['F4', 'A4', 'C5', 'F5']);
+    expect(names(arpeggio(buildScale({ letter: 'B', accidental: -1 }, 'major', 3)))).toEqual(['Bb3', 'D4', 'F4', 'Bb4']);
+  });
+  it('La mineur (toutes les formes) : La Do Mi La', () => {
+    for (const t of ['natural-minor', 'harmonic-minor', 'melodic-minor'] as const) {
+      expect(names(arpeggio(buildScale({ letter: 'A', accidental: 0 }, t, 3)))).toEqual(['A3', 'C4', 'E4', 'A4']);
+    }
+  });
+  it('Fa♯ majeur garde l’orthographe (La♯, Do♯)', () => {
+    expect(names(arpeggio(buildScale({ letter: 'F', accidental: 1 }, 'major', 4)))).toEqual(['F#4', 'A#4', 'C#5', 'F#5']);
   });
 });

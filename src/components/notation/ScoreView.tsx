@@ -190,7 +190,11 @@ function minimumWidth(notation: Notation): number {
 
 type RenderState = { kind: 'loading' } | { kind: 'ready' } | { kind: 'error' };
 
-export function ScoreView({ notation, label, className = '' }: { notation: Notation; label: string; className?: string }) {
+/**
+ * `sizeAs` : autre partition dont on reprend la largeur de dessin, pour que deux portées
+ * affichées l'une sous l'autre aient la même taille (ex. arpège de 4 notes sous une gamme de 8).
+ */
+export function ScoreView({ notation, label, className = '', sizeAs }: { notation: Notation; label: string; className?: string; sizeAs?: Notation }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<RenderState>({ kind: 'loading' });
   const [width, setWidth] = useState(0);
@@ -217,7 +221,7 @@ export function ScoreView({ notation, label, className = '' }: { notation: Notat
         host.replaceChildren();
         const zoom = zoomFor(width) * (notation.kind === 'rhythm' ? 0.85 : 1);
         // Si les notes ne tiennent pas, on élargit la zone de dessin (la partition est alors réduite) plutôt que de la couper.
-        const logicalWidth = Math.max(200, width / zoom, minimumWidth(notation));
+        const logicalWidth = Math.max(200, width / zoom, minimumWidth(notation), sizeAs ? minimumWidth(sizeAs) : 0);
         const renderer = new VF.Renderer(host, VF.Renderer.Backends.SVG);
         // Hauteur provisoire, ajustée après le dessin.
         renderer.resize(logicalWidth, 600);
@@ -234,7 +238,7 @@ export function ScoreView({ notation, label, className = '' }: { notation: Notat
     return () => {
       cancelled = true;
     };
-  }, [notation, width, retry]);
+  }, [notation, sizeAs, width, retry]);
 
   if (notation.kind === 'glyphs') {
     return (

@@ -8,7 +8,7 @@ import { playSequence } from '@/lib/audio/synth';
 import type { Notation } from '@/lib/exercises/types';
 import { type Mode, fifthsOf, isStandardKey, keyName, keySignatureAccidentals, relativeKey } from '@/lib/music/keys';
 import { type Accidental, type Letter, FRENCH_NAMES, LETTERS, frequency, formatPitch } from '@/lib/music/pitch';
-import { type ScaleType, SCALE_NAMES_FR, ScaleSpellingError, buildScale, degreeName, doubleAccidentals, stepPattern } from '@/lib/music/scales';
+import { type ScaleType, SCALE_NAMES_FR, ScaleSpellingError, arpeggio, buildScale, degreeName, doubleAccidentals, stepPattern } from '@/lib/music/scales';
 
 const TYPES: ScaleType[] = ['major', 'natural-minor', 'harmonic-minor', 'melodic-minor'];
 
@@ -35,18 +35,29 @@ export function ScaleExplorer() {
   const standard = isStandardKey(key);
   const fmt = (p: Parameters<typeof formatPitch>[0]) => formatPitch(p, { notation, octave: false });
 
-  // Montée puis descente au piano, sans répéter la tonique du sommet.
-  const [playing, setPlaying] = useState(false);
+  // Arpège de la tonique (degrés 1, 3, 5, 8), en montant puis en descendant.
+  const arpUp = result.up ? arpeggio(result.up) : null;
+  const arpDown = arpUp ? [...arpUp].reverse() : null;
+
+  // Montée puis descente au piano, sans répéter la note du sommet.
+  const [playing, setPlaying] = useState<'scale' | 'arpeggio' | null>(null);
   const timer = useRef<number | undefined>(undefined);
   useEffect(() => () => window.clearTimeout(timer.current), []);
-  const play = () => {
-    if (!result.up || !result.down || playing) return;
-    const seq = [...result.up, ...result.down.slice(1)].map((p) => frequency(p));
-    const seconds = playSequence(seq, { step: 0.45, last: 1.6 });
+  const play = (what: 'scale' | 'arpeggio') => {
+    const up = what === 'scale' ? result.up : arpUp;
+    const down = what === 'scale' ? result.down : arpDown;
+    if (!up || !down || playing) return;
+    const seq = [...up, ...down.slice(1)].map((p) => frequency(p));
+    const seconds = playSequence(seq, { step: what === 'scale' ? 0.45 : 0.55, last: 1.6 });
     if (!seconds) return;
-    setPlaying(true);
-    timer.current = window.setTimeout(() => setPlaying(false), seconds * 1000);
+    setPlaying(what);
+    timer.current = window.setTimeout(() => setPlaying(null), seconds * 1000);
   };
+  const listenButton = (what: 'scale' | 'arpeggio', label: string) => (
+    <button type="button" onClick={() => play(what)} disabled={playing !== null} aria-busy={playing === what} className={`${buttonClasses('secondary')} mt-3`}>
+      <Icon name="sound" className="size-4" /> {playing === what ? 'Lecture en cours…' : label}
+    </button>
+  );
 
   const staff = (notes: NonNullable<typeof result.up>): Notation => ({
     kind: 'notes',
@@ -123,7 +134,23 @@ export function ScaleExplorer() {
                 <ScoreView notation={staff(result.up)} label="Gamme ascendante sur la portée" className="mt-1" />
                 <h3 className="mt-3 text-sm font-bold text-slate-700">↘ Gamme descendante</h3>
                 <ScoreView notation={staff(result.down)} label="Gamme descendante sur la portée" className="mt-1" />
+                {listenButton('scale', 'Écouter la gamme (montée et descente)')}
               </>
+            )}
+            {arpUp && arpDown && (
+              <section className="mt-5 border-t border-slate-100 pt-4" aria-labelledby="arpege-titre">
+                <h2 id="arpege-titre" className="text-lg font-bold text-night-800">
+                  Arpège de {fmt({ letter, accidental, octave: 4 })} {mode === 'major' ? 'majeur' : 'mineur'}
+                </h2>
+                <p className="mt-0.5 text-sm text-slate-600">
+                  Les degrés I, III, V et VIII de la gamme : {arpUp.map((p) => fmt(p)).join(' – ')}.
+                </p>
+                <h3 className="mt-3 text-sm font-bold text-slate-700">↗ Arpège ascendant</h3>
+                <ScoreView notation={staff(arpUp)} sizeAs={result.up ? staff(result.up) : undefined} label="Arpège ascendant sur la portée" className="mt-1" />
+                <h3 className="mt-3 text-sm font-bold text-slate-700">↘ Arpège descendant</h3>
+                <ScoreView notation={staff(arpDown)} sizeAs={result.up ? staff(result.up) : undefined} label="Arpège descendant sur la portée" className="mt-1" />
+                {listenButton('arpeggio', 'Écouter l’arpège (montée et descente)')}
+              </section>
             )}
             <ol className="mt-3 flex flex-wrap gap-1.5" aria-label="Écarts entre les degrés">
               {stepPattern(type).map((s, i) => (
@@ -168,9 +195,6 @@ export function ScaleExplorer() {
                 </p>
               )}
             </div>
-            <button type="button" onClick={play} disabled={playing} aria-busy={playing} className={`${buttonClasses('secondary')} mt-3`}>
-              <Icon name="sound" className="size-4" /> {playing ? 'Lecture en cours…' : 'Écouter la gamme (montée et descente)'}
-            </button>
           </>
         )}
       </Card>
