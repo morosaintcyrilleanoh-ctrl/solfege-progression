@@ -70,3 +70,12 @@ export function stepPattern(type: ScaleType): string[] {
 export function doubleAccidentals(scale: Pitch[]): number {
   return scale.slice(0, 7).filter((p) => Math.abs(p.accidental) === 2).length;
 }
+
+/**
+ * Arpège de la tonique (accord parfait) tiré d'une gamme ascendante de 8 notes :
+ * degrés 1, 3, 5 et 8. Ex. : Do majeur → Do, Mi, Sol, Do.
+ */
+export function arpeggio(scale: Pitch[]): Pitch[] {
+  if (scale.length < 8) throw new Error('Gamme de 8 notes attendue.');
+  return [0, 2, 4, 7].map((i) => scale[i] as Pitch);
+}
