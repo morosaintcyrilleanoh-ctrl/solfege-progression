@@ -1,0 +1,208 @@
+.page {
+  background:
+    radial-gradient(60% 40% at 100% 0%, rgba(201, 164, 92, 0.12), transparent 70%),
+    var(--noir);
+  padding-top: clamp(32px, 6vw, 72px);
+}
+
+.grille {
+  display: grid;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (min-width: 960px) {
+  .grille {
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 72px;
+  }
+  .entete {
+    position: sticky;
+    top: calc(var(--hauteur-entete) + 32px);
+  }
+}
+
+.entete {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
+.etapes {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+  color: var(--texte-doux);
+}
+
+.etapes strong {
+  color: var(--or);
+  font-family: var(--police-titre);
+  margin-right: 6px;
+}
+
+.formulaire {
+  display: grid;
+  gap: 26px;
+  padding: clamp(20px, 4vw, 36px);
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon);
+  background: var(--noir-2);
+  min-width: 0;
+}
+
+.groupe {
+  display: grid;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.groupe legend {
+  padding: 0;
+  margin-bottom: 4px;
+  font-family: var(--police-titre);
+  font-size: 1.35rem;
+}
+
+@media (min-width: 640px) {
+  .groupe {
+    grid-template-columns: 1fr 1fr;
+  }
+  .groupe legend,
+  .choix,
+  .info {
+    grid-column: 1 / -1;
+  }
+}
+
+.champ {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.champ label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.champ abbr {
+  color: var(--or);
+  text-decoration: none;
+}
+
+.champ input:not([type='checkbox']):not([type='radio']),
+.champ select,
+.champ textarea {
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 14px;
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon-petit);
+  background: var(--noir);
+  font-size: 1rem; /* 16 px : évite le zoom automatique sur iPhone */
+  transition: border-color 0.2s ease;
+}
+
+.champ textarea {
+  resize: vertical;
+}
+
+.champ input:focus,
+.champ select:focus,
+.champ textarea:focus {
+  outline: none;
+  border-color: var(--or);
+}
+
+.champ [aria-invalid='true'] {
+  border-color: #e0796b !important;
+}
+
+.erreur {
+  color: #f0a194;
+  font-size: 0.86rem;
+}
+
+.erreurEnvoi {
+  padding: 12px 14px;
+  border: 1px solid #e0796b;
+  border-radius: var(--rayon-petit);
+  color: #f0a194;
+}
+
+.choix {
+  display: grid;
+  gap: 10px;
+}
+
+@media (min-width: 640px) {
+  .choix {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon-petit);
+  cursor: pointer;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.optionActive {
+  border-color: var(--or);
+  background: rgba(201, 164, 92, 0.08);
+}
+
+.option input {
+  accent-color: var(--or);
+  margin-top: 4px;
+}
+
+.option span {
+  display: grid;
+}
+
+.option small {
+  color: var(--texte-doux);
+}
+
+.info {
+  font-size: 0.88rem;
+  color: var(--texte-doux);
+}
+
+.case {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-weight: 400 !important;
+  cursor: pointer;
+}
+
+.case input {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  flex: none;
+  accent-color: var(--or);
+}
+
+.mention {
+  font-size: 0.86rem;
+  color: var(--texte-doux);
+  text-align: center;
+}
+
+.mention:empty {
+  display: none;
+}

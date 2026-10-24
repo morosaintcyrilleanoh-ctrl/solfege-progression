@@ -45,6 +45,7 @@ Toutes les données affichées proviennent de la base ou de l’appareil : aucun
 | [`docs/DEPLOIEMENT.md`](docs/DEPLOIEMENT.md) | Mise en ligne sur Vercel, variables, recette |
 | [`docs/SECURITE.md`](docs/SECURITE.md) | Politiques d’accès par rôle, protections, tests, limites |
 | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) | Architecture, logique musicale, modèle de données |
+| [`site-vitrine/README.md`](site-vitrine/README.md) | Site de vente des formations (React + Vite), projet Vercel séparé |
 
 ## Installation
 

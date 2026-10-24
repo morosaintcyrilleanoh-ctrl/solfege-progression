@@ -1,0 +1,12 @@
+Déposez ici vos photos, puis indiquez leur chemin dans src/config/ :
+
+  formateur.jpg       → site.images.formateurAccueil       (portrait ~900 × 1100 px)
+  formateur-2.jpg     → site.images.formateurPresentation  (portrait ~800 × 1000 px)
+  communaute.jpg      → site.images.communaute             (portrait ~900 × 1100 px)
+  formation-xxx.jpg   → image d'une formation (formations.ts, paysage ~1200 × 750 px)
+  temoignage-xxx.jpg  → photo d'un témoignage (temoignages.ts, carré ~200 × 200 px)
+
+Exemple : formateurAccueil: '/images/formateur.jpg'
+
+Conseil : enregistrez les photos en JPG ou WebP de moins de 250 Ko
+(https://squoosh.app) pour un chargement rapide sur mobile.

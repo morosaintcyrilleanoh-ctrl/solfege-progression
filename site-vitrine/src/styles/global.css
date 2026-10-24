@@ -1,0 +1,327 @@
+/* ==========================================================
+   Identité visuelle « Apprendre la musique »
+   Noir profond, or patiné, blanc ivoire.
+   Toutes les couleurs et polices sont des variables : modifiez-les ici.
+   ========================================================== */
+:root {
+  --noir: #0c0b09;
+  --noir-2: #13110d;
+  --noir-3: #1c1913;
+  --or: #c9a45c;
+  --or-clair: #e8d3a0;
+  --or-fonce: #8c6c2f;
+  --blanc: #f7f3ea;
+  --blanc-pur: #ffffff;
+  --texte: #f2ede2;
+  --texte-doux: #b9b0a0;
+  --texte-sombre: #1a1712;
+  --texte-sombre-doux: #5e5546;
+  --ligne: rgba(201, 164, 92, 0.22);
+  --ligne-claire: rgba(140, 108, 47, 0.25);
+
+  --police-titre: 'Bodoni Moda', 'Didot', 'Bodoni 72', Georgia, 'Times New Roman', serif;
+  --police-texte: 'Figtree', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  --rayon: 14px;
+  --rayon-petit: 8px;
+  --largeur: 1160px;
+  --gouttiere: max(18px, env(safe-area-inset-left, 0px));
+  --gouttiere-d: max(18px, env(safe-area-inset-right, 0px));
+  --hauteur-entete: 64px;
+  --ombre: 0 18px 50px -20px rgba(0, 0, 0, 0.7);
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--hauteur-entete) + 12px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--noir);
+  color: var(--texte);
+  font-family: var(--police-texte);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--police-titre);
+  font-weight: 500;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--or);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--or);
+  color: var(--noir);
+}
+
+/* ---------- Mise en page ---------- */
+.conteneur {
+  width: 100%;
+  max-width: calc(var(--largeur) + 36px);
+  margin-inline: auto;
+  padding-left: var(--gouttiere);
+  padding-right: var(--gouttiere-d);
+}
+
+.section {
+  padding-block: clamp(64px, 11vw, 120px);
+  position: relative;
+}
+
+.section--alt {
+  background: var(--noir-2);
+}
+
+/* Section claire (fond ivoire, texte noir) */
+.section--claire {
+  background: var(--blanc);
+  color: var(--texte-sombre);
+  --texte-doux: var(--texte-sombre-doux);
+  --ligne: var(--ligne-claire);
+  --or: #9a7535;
+  color-scheme: light;
+}
+
+.entete-section {
+  display: grid;
+  gap: 14px;
+  max-width: 640px;
+  margin-bottom: clamp(36px, 6vw, 56px);
+}
+
+.surtitre {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--or);
+}
+
+.surtitre::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+}
+
+.titre-section {
+  font-size: clamp(2rem, 6.4vw, 3.2rem);
+}
+
+.intro-section {
+  color: var(--texte-doux);
+  font-size: 1.05rem;
+  max-width: 60ch;
+}
+
+.visuellement-cache {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Boutons ---------- */
+.btn {
+  --fond: var(--or);
+  --couleur: var(--noir);
+  --bord: var(--or);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 12px 24px;
+  border: 1px solid var(--bord);
+  border-radius: 999px;
+  background: var(--fond);
+  color: var(--couleur);
+  font-weight: 600;
+  font-size: 0.98rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:hover {
+  --fond: var(--or-clair);
+  --bord: var(--or-clair);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--contour {
+  --fond: transparent;
+  --couleur: var(--texte);
+  --bord: var(--ligne);
+}
+
+.btn--contour:hover {
+  --fond: transparent;
+  --couleur: var(--or-clair);
+  --bord: var(--or);
+}
+
+.section--claire .btn--contour {
+  --couleur: var(--texte-sombre);
+}
+
+.section--claire .btn--contour:hover {
+  --couleur: var(--or-fonce);
+}
+
+.section--claire .btn:not(.btn--contour) {
+  --fond: var(--noir);
+  --couleur: var(--blanc);
+  --bord: var(--noir);
+}
+
+.section--claire .btn:not(.btn--contour):hover {
+  --fond: var(--noir-3);
+  --bord: var(--noir-3);
+}
+
+.btn--petit {
+  min-height: 42px;
+  padding: 8px 18px;
+  font-size: 0.92rem;
+}
+
+.btn--large {
+  width: 100%;
+}
+
+.btn[aria-disabled='true'],
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Emplacement à compléter (mode aperçu) ---------- */
+.emplacement {
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+  padding: 20px;
+  border: 1px dashed var(--ligne);
+  border-radius: var(--rayon);
+  background: repeating-linear-gradient(135deg, transparent 0 12px, rgba(201, 164, 92, 0.04) 12px 24px);
+  color: var(--texte-doux);
+  text-align: center;
+  font-size: 0.88rem;
+}
+
+.emplacement strong {
+  color: var(--or);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.emplacement code {
+  font-size: 0.78rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(201, 164, 92, 0.1);
+  word-break: break-all;
+}
+
+.badge-apercu {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px dashed var(--or);
+  color: var(--or);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ---------- Animation discrète d'apparition ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .apparition {
+    animation: apparition 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .apparition--2 {
+    animation-delay: 0.08s;
+  }
+  .apparition--3 {
+    animation-delay: 0.16s;
+  }
+  .apparition--4 {
+    animation-delay: 0.24s;
+  }
+}
+
+@keyframes apparition {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

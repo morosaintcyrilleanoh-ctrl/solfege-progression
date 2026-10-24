@@ -1,0 +1,94 @@
+.grille {
+  display: grid;
+  gap: 40px;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .grille {
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 72px;
+  }
+}
+
+.visuel {
+  position: relative;
+}
+
+.photo {
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: var(--rayon);
+}
+
+.sansPhoto {
+  display: grid;
+  place-items: center;
+  background: var(--noir);
+  color: var(--or-clair);
+}
+
+.contenu {
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+}
+
+.role {
+  font-family: var(--police-titre);
+  font-style: italic;
+  font-size: 1.25rem;
+  color: var(--or);
+}
+
+.paragraphe {
+  font-size: 1.05rem;
+  max-width: 62ch;
+}
+
+.parcours {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.parcours li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.parcours svg {
+  flex: none;
+  margin-top: 4px;
+  color: var(--or);
+}
+
+.aCompleter {
+  font-size: 0.9rem;
+  color: var(--texte-doux);
+}
+
+.aCompleter code {
+  font-size: 0.82rem;
+}
+
+.specialites {
+  list-style: none;
+  margin: 4px 0 6px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.specialites li {
+  padding: 6px 14px;
+  border: 1px solid var(--ligne);
+  border-radius: 999px;
+  font-size: 0.88rem;
+}

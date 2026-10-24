@@ -1,0 +1,148 @@
+.entete {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding-top: env(safe-area-inset-top, 0px);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  border-bottom: 1px solid transparent;
+}
+
+.plein {
+  background: rgba(12, 11, 9, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom-color: var(--ligne);
+}
+
+.barre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: var(--hauteur-entete);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  min-width: 0;
+}
+
+.monogramme {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border: 1px solid var(--or);
+  border-radius: 50%;
+  color: var(--or);
+}
+
+.nom {
+  display: grid;
+  font-family: var(--police-titre);
+  font-size: 1.12rem;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.nom small {
+  font-family: var(--police-texte);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--or);
+  margin-top: 3px;
+}
+
+.burger {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border: 1px solid var(--ligne);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  flex: none;
+}
+
+/* Menu mobile : panneau plein écran */
+.nav {
+  position: fixed;
+  inset: calc(var(--hauteur-entete) + env(safe-area-inset-top, 0px)) 0 0 0;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 28px var(--gouttiere-d) calc(28px + env(safe-area-inset-bottom, 0px)) var(--gouttiere);
+  background: var(--noir);
+  overflow-y: auto;
+}
+
+.navOuverte {
+  display: flex;
+}
+
+.nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+
+.nav li a {
+  display: block;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--ligne);
+  font-family: var(--police-titre);
+  font-size: 1.6rem;
+  text-decoration: none;
+}
+
+.nav li a:hover {
+  color: var(--or-clair);
+}
+
+.navActions {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 1000px) {
+  .burger {
+    display: none;
+  }
+
+  .nav {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 28px;
+    padding: 0;
+    background: none;
+    overflow: visible;
+  }
+
+  .nav ul {
+    display: flex;
+    gap: 24px;
+  }
+
+  .nav li a {
+    padding: 6px 0;
+    border: 0;
+    font-family: var(--police-texte);
+    font-size: 0.92rem;
+    color: var(--texte-doux);
+  }
+
+  .navActions {
+    display: flex;
+    gap: 10px;
+  }
+}

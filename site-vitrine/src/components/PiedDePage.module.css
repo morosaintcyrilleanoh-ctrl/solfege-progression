@@ -1,0 +1,99 @@
+.pied {
+  border-top: 1px solid var(--ligne);
+  background: var(--noir);
+  padding-top: 64px;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
+}
+
+.grille {
+  display: grid;
+  gap: 40px;
+}
+
+@media (min-width: 760px) {
+  .grille {
+    grid-template-columns: 1.4fr 1fr 1fr;
+  }
+}
+
+.marque {
+  display: grid;
+  gap: 14px;
+  align-content: start;
+  max-width: 40ch;
+  color: var(--texte-doux);
+}
+
+.nom {
+  font-family: var(--police-titre);
+  font-size: 1.6rem;
+  color: var(--texte);
+}
+
+.titre {
+  font-family: var(--police-texte);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--or);
+  margin-bottom: 16px;
+}
+
+.liste,
+.reseaux {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.reseaux {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+}
+
+.liste a,
+.liste span,
+.reseaux a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--texte-doux);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+
+.liste a:hover,
+.reseaux a:hover {
+  color: var(--or-clair);
+}
+
+.liste svg {
+  color: var(--or);
+  flex: none;
+}
+
+.aCompleter {
+  color: var(--texte-doux);
+  font-size: 0.88rem;
+}
+
+.aCompleter code {
+  font-size: 0.8rem;
+}
+
+.bas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 56px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ligne);
+  color: var(--texte-doux);
+  font-size: 0.85rem;
+}

@@ -1,0 +1,139 @@
+.grille {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 18px;
+  align-items: stretch;
+}
+
+@media (min-width: 900px) {
+  .grille {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.offre {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 30px 24px 24px;
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon);
+  background: var(--noir);
+}
+
+.recommandee {
+  border-color: var(--or);
+  background:
+    radial-gradient(90% 60% at 50% 0%, rgba(201, 164, 92, 0.14), transparent 70%),
+    var(--noir);
+}
+
+.etiquette {
+  position: absolute;
+  top: -12px;
+  left: 24px;
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: var(--or);
+  color: var(--noir);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.nom {
+  font-size: 1.7rem;
+}
+
+.description {
+  color: var(--texte-doux);
+}
+
+.prix {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+  padding-block: 14px;
+  border-block: 1px solid var(--ligne);
+}
+
+.montant {
+  font-family: var(--police-titre);
+  font-size: 2.2rem;
+  line-height: 1.1;
+  color: var(--or-clair);
+  font-variant-numeric: lining-nums;
+}
+
+.mention {
+  color: var(--texte-doux);
+  font-size: 0.9rem;
+}
+
+.surDemande {
+  font-family: var(--police-titre);
+  font-size: 1.5rem;
+  color: var(--or-clair);
+}
+
+.inclus {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  flex: 1;
+  align-content: start;
+}
+
+.inclus li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.inclus svg {
+  flex: none;
+  margin-top: 4px;
+  color: var(--or);
+}
+
+.paiement {
+  display: grid;
+  gap: 12px;
+  margin-top: 36px;
+  padding: 20px 22px;
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon);
+  color: var(--texte-doux);
+  font-size: 0.92rem;
+}
+
+.paiementTitre {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--or);
+}
+
+.paiement ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.paiement li {
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--noir-3);
+  color: var(--texte);
+  font-size: 0.85rem;
+}

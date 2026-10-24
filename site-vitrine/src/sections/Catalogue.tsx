@@ -1,0 +1,60 @@
+import { formations, type Formation } from '../config/formations';
+import type { Bouton } from '../config/types';
+import { BoutonAction, messagePour } from '../components/BoutonAction';
+import { EnteteSection } from '../components/EnteteSection';
+import { Icone } from '../components/Icone';
+import styles from './Catalogue.module.css';
+
+/** Un bouton WhatsApp sans message reçoit automatiquement le message de la formation. */
+function avecMessage(bouton: Bouton, formation: Formation): Bouton {
+  if (bouton.action.type === 'whatsapp' && !bouton.action.message) {
+    return { ...bouton, action: { type: 'whatsapp', message: messagePour(formation.id) } };
+  }
+  return bouton;
+}
+
+export function Catalogue() {
+  return (
+    <section id="formations" className="section section--alt" aria-labelledby="titre-formations">
+      <div className="conteneur">
+        <EnteteSection
+          id="titre-formations"
+          surtitre="Catalogue"
+          titre="Les formations"
+          introduction="Cinq formations complémentaires pour progresser étape par étape, des premières notes jusqu’à l’harmonie."
+        />
+
+        <ul className={styles.grille}>
+          {formations.map((f) => (
+            <li key={f.id} className={styles.carte} id={`formation-${f.id}`}>
+              {f.image && <img className={styles.image} src={f.image} alt="" loading="lazy" width={1200} height={750} />}
+              <div className={styles.haut}>
+                <span className={styles.symbole}>
+                  <Icone nom={f.symbole} taille={34} />
+                </span>
+                <span className={styles.niveau}>{f.niveau}</span>
+              </div>
+              <h3 className={styles.titre}>{f.titre}</h3>
+              <p className={styles.accroche}>{f.accroche}</p>
+              <p className={styles.description}>{f.description}</p>
+              <ul className={styles.programme} aria-label={`Programme : ${f.titre}`}>
+                {f.programme.map((point) => (
+                  <li key={point}>
+                    <Icone nom="coche" taille={16} />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+              <div className={styles.actions}>
+                <BoutonAction bouton={avecMessage(f.bouton, f)} taille="petit" />
+                {f.boutonSecondaire && (
+                  <BoutonAction bouton={avecMessage(f.boutonSecondaire, f)} variante="contour" taille="petit" />
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}

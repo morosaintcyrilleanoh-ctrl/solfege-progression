@@ -1,0 +1,96 @@
+.grille {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 32px 20px;
+}
+
+@media (min-width: 760px) {
+  .grille {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .principale {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1040px) {
+  .grille {
+    grid-template-columns: 1.6fr 1fr;
+    grid-template-rows: auto auto;
+  }
+  .principale {
+    grid-column: 1;
+    grid-row: span 2;
+  }
+}
+
+.element {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+  min-width: 0;
+}
+
+.cadre {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-width: 100%;
+  border-radius: var(--rayon);
+  overflow: hidden;
+  background: var(--noir);
+  border: 1px solid var(--ligne);
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 0;
+  border-radius: 0;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.lecture {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: var(--or);
+  color: var(--noir);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: transform 0.2s ease;
+}
+
+.vignette:hover .lecture {
+  transform: translate(-50%, -50%) scale(1.06);
+}
+
+.titre {
+  font-size: 1.35rem;
+  margin-top: 6px;
+}
+
+.principale .titre {
+  font-size: 1.7rem;
+}
+
+.description {
+  color: var(--texte-doux);
+}

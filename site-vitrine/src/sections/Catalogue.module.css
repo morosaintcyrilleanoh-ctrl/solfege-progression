@@ -1,0 +1,132 @@
+.grille {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 18px;
+}
+
+@media (min-width: 680px) {
+  .grille {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1040px) {
+  .grille {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  /* 3 cartes puis 2 cartes centrées et plus larges */
+  .carte {
+    grid-column: span 2;
+  }
+  .carte:nth-child(4) {
+    grid-column: 1 / span 3;
+  }
+  .carte:nth-child(5) {
+    grid-column: 4 / span 3;
+  }
+}
+
+.carte {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 26px 22px 22px;
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon);
+  background: linear-gradient(180deg, var(--noir-3), var(--noir-2));
+  transition: border-color 0.25s ease, transform 0.25s ease;
+  min-width: 0;
+}
+
+@media (hover: hover) {
+  .carte:hover {
+    border-color: rgba(201, 164, 92, 0.55);
+    transform: translateY(-3px);
+  }
+}
+
+.image {
+  width: calc(100% + 44px);
+  max-width: none;
+  margin: -26px -22px 8px;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: var(--rayon) var(--rayon) 0 0;
+}
+
+.haut {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.symbole {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid var(--ligne);
+  color: var(--or);
+}
+
+.niveau {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--texte-doux);
+}
+
+.titre {
+  font-size: 1.85rem;
+  margin-top: 6px;
+}
+
+.accroche {
+  font-family: var(--police-titre);
+  font-style: italic;
+  color: var(--or-clair);
+  font-size: 1.05rem;
+}
+
+.description {
+  color: var(--texte-doux);
+}
+
+.programme {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--ligne);
+  display: grid;
+  gap: 6px;
+  font-size: 0.92rem;
+}
+
+.programme li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.programme svg {
+  flex: none;
+  margin-top: 4px;
+  color: var(--or);
+}
+
+.actions {
+  margin-top: auto;
+  padding-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.actions > * {
+  flex: 1 1 auto;
+}

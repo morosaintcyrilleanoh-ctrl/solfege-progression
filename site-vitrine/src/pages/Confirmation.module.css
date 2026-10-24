@@ -1,0 +1,103 @@
+.page {
+  min-height: 70vh;
+  display: grid;
+  align-items: center;
+  background:
+    radial-gradient(50% 50% at 50% 0%, rgba(201, 164, 92, 0.16), transparent 70%),
+    var(--noir);
+}
+
+.carte {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  max-width: 680px;
+  text-align: center;
+}
+
+.pastille {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+}
+
+.succes,
+.apercu {
+  color: var(--or);
+}
+
+.attente {
+  color: var(--or-clair);
+}
+
+.erreur {
+  color: #f0a194;
+}
+
+.titre {
+  font-size: clamp(2rem, 7vw, 3rem);
+}
+
+.texte {
+  color: var(--texte-doux);
+  font-size: 1.08rem;
+  max-width: 54ch;
+}
+
+.reference {
+  display: grid;
+  gap: 4px;
+  padding: 14px 22px;
+  border: 1px dashed var(--ligne);
+  border-radius: var(--rayon-petit);
+}
+
+.reference strong {
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+  color: var(--or-clair);
+  font-variant-numeric: tabular-nums;
+}
+
+.reference small {
+  color: var(--texte-doux);
+}
+
+.recap {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 18px;
+  margin: 0;
+  padding: 16px 20px;
+  border-radius: var(--rayon-petit);
+  background: var(--noir-2);
+  text-align: left;
+  width: min(100%, 420px);
+}
+
+.recap dt {
+  color: var(--texte-doux);
+}
+
+.recap dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.signature {
+  margin-top: 16px;
+  font-family: var(--police-titre);
+  font-style: italic;
+  color: var(--texte-doux);
+}

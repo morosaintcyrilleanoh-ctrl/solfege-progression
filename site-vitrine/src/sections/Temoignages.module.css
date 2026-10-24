@@ -1,0 +1,74 @@
+.grille {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 18px;
+}
+
+@media (min-width: 760px) {
+  .grille {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+.emplacement {
+  min-height: 220px;
+  height: 100%;
+}
+
+.carte {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 26px 24px;
+  border: 1px solid var(--ligne);
+  border-radius: var(--rayon);
+  background: var(--noir-2);
+}
+
+.guillemets {
+  color: var(--or);
+}
+
+.texte {
+  margin: 0;
+  font-family: var(--police-titre);
+  font-size: 1.15rem;
+  line-height: 1.5;
+}
+
+.auteur {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ligne);
+}
+
+.auteur img,
+.initiale {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: none;
+}
+
+.initiale {
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--or);
+  color: var(--or);
+  font-family: var(--police-titre);
+  font-size: 1.3rem;
+}
+
+.auteur span {
+  display: grid;
+}
+
+.auteur small {
+  color: var(--texte-doux);
+}
