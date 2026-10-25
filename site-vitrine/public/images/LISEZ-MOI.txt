@@ -10,3 +10,7 @@ Exemple : formateurAccueil: '/images/formateur.jpg'
 
 Conseil : enregistrez les photos en JPG ou WebP de moins de 250 Ko
 (https://squoosh.app) pour un chargement rapide sur mobile.
+
+Logo :
+  logo.jpg            → logo complet (partage sur les réseaux, documents)
+  L'emblème affiché dans l'en-tête est src/assets/logo-embleme.png.

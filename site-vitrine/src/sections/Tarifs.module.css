@@ -32,7 +32,7 @@
   --ligne: rgba(255, 255, 255, 0.14);
   border-color: var(--noir);
   background:
-    radial-gradient(90% 50% at 100% 0%, rgba(247, 181, 0, 0.28), transparent 70%),
+    radial-gradient(90% 50% at 100% 0%, rgba(254, 186, 1, 0.28), transparent 70%),
     var(--noir);
   color: #fff;
   box-shadow: var(--ombre);

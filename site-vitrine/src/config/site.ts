@@ -1,4 +1,5 @@
 import type { Bouton } from './types';
+import emblemeLogo from '../assets/logo-embleme.png';
 
 /**
  * ============================================================
@@ -11,6 +12,7 @@ export const site = {
   nom: 'Apprendre la musique',
   formateur: 'Anoh Cyrille',
   titreFormateur: 'Formateur Anoh Cyrille',
+  slogan: 'Apprendre la musique avec méthode.',
 
   /**
    * Mode aperçu : affiche des emplacements « à compléter » pour les photos,
@@ -65,8 +67,12 @@ export const site = {
    * puis indiquez leur chemin, ex. : '/images/formateur.jpg'.
    */
   images: {
-    /** Votre logo (en-tête et pied de page), ex. '/images/logo.png'. Vide = clé de sol. */
-    logo: '',
+    /**
+     * Emblème du logo (en-tête, pied de page). Par défaut : src/assets/logo-embleme.png.
+     * Pour le changer : remplacez ce fichier, ou indiquez un chemin, ex. '/images/logo.png'.
+     * Logo complet (pour vos documents et réseaux) : public/images/logo.jpg
+     */
+    logo: emblemeLogo as string,
     /** Photo principale (accueil). Format portrait conseillé, ~900 × 1100 px, < 250 Ko. */
     formateurAccueil: '',
     /** Photo de la section « Le formateur ». */
@@ -85,7 +91,7 @@ export const accueil = {
   boutonPrincipal: { libelle: 'Découvrir les formations', action: { type: 'section', id: 'formations' } } satisfies Bouton,
   boutonSecondaire: { libelle: 'Poser une question', action: { type: 'whatsapp' } } satisfies Bouton,
   /** Mots-clés affichés sous les boutons. */
-  disciplines: ['Solfège', 'Lecture', 'Piano', 'Harmonie', 'Oreille'],
+  disciplines: ['Solfège', 'Lecture', 'Piano', 'Harmonie', 'Oreille musicale'],
 };
 
 /** Présentation du formateur. */

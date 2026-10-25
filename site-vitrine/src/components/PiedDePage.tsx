@@ -25,6 +25,7 @@ export function PiedDePage() {
       <div className={`conteneur ${styles.grille}`}>
         <div className={styles.marque}>
           <Logo sousTitre={false} />
+          <p className={styles.slogan}>{site.slogan}</p>
           <p>Formations en solfège, lecture de partition, piano, harmonie et oreille musicale avec le {site.titreFormateur}.</p>
           {reseaux.length > 0 && (
             <ul className={styles.reseaux}>

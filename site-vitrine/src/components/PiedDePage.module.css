@@ -92,3 +92,10 @@
   color: var(--texte-doux);
   font-size: 0.85rem;
 }
+
+.slogan {
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--texte);
+}

@@ -5,9 +5,9 @@
    (ex. remplacez --jaune par le code exact de votre logo).
    ========================================================== */
 :root {
-  --jaune: #f7b500;
-  --jaune-vif: #ffc61a;
-  --jaune-pale: #fff4d1;
+  --jaune: #feba01; /* jaune exact du logo */
+  --jaune-vif: #ffc933;
+  --jaune-pale: #fff4d0;
   --noir: #0e0e0e;
   --noir-2: #1b1b1b;
   --noir-3: #2a2a2a;
@@ -171,7 +171,7 @@ textarea {
   height: 8px;
   border-radius: 50%;
   background: var(--jaune);
-  box-shadow: 0 0 0 4px rgba(247, 181, 0, 0.18);
+  box-shadow: 0 0 0 4px rgba(254, 186, 1, 0.18);
 }
 
 .titre-section {
@@ -217,7 +217,7 @@ textarea {
 }
 
 .btn:not(.btn--contour) {
-  box-shadow: 0 10px 24px -12px rgba(247, 181, 0, 0.9);
+  box-shadow: 0 10px 24px -12px rgba(254, 186, 1, 0.9);
 }
 
 .btn:hover {
@@ -288,7 +288,7 @@ textarea {
   padding: 20px;
   border: 1.5px dashed #d8d4c6;
   border-radius: var(--rayon);
-  background: repeating-linear-gradient(135deg, transparent 0 12px, rgba(247, 181, 0, 0.07) 12px 24px), var(--gris-fond);
+  background: repeating-linear-gradient(135deg, transparent 0 12px, rgba(254, 186, 1, 0.07) 12px 24px), var(--gris-fond);
   color: var(--gris-texte);
   text-align: center;
   font-size: 0.88rem;
@@ -296,7 +296,7 @@ textarea {
 
 .sombre .emplacement {
   border-color: rgba(255, 255, 255, 0.2);
-  background: repeating-linear-gradient(135deg, transparent 0 12px, rgba(247, 181, 0, 0.08) 12px 24px), var(--noir-2);
+  background: repeating-linear-gradient(135deg, transparent 0 12px, rgba(254, 186, 1, 0.08) 12px 24px), var(--noir-2);
   color: rgba(255, 255, 255, 0.7);
 }
 
@@ -323,7 +323,7 @@ textarea {
   border-radius: 999px;
   border: 1.5px dashed var(--jaune);
   color: var(--texte);
-  background: rgba(247, 181, 0, 0.1);
+  background: rgba(254, 186, 1, 0.1);
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.08em;

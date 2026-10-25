@@ -6,7 +6,7 @@
   border-radius: 32px;
   text-align: center;
   background:
-    radial-gradient(70% 70% at 50% 0%, rgba(247, 181, 0, 0.3), transparent 70%),
+    radial-gradient(70% 70% at 50% 0%, rgba(254, 186, 1, 0.3), transparent 70%),
     linear-gradient(160deg, #1d1a10, var(--noir) 55%);
   box-shadow: var(--ombre);
 }

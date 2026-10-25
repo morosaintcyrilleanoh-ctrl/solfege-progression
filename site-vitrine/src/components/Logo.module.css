@@ -5,8 +5,7 @@
   min-width: 0;
 }
 
-.embleme,
-.image {
+.embleme {
   display: grid;
   place-items: center;
   width: 40px;
@@ -15,17 +14,42 @@
   border-radius: 12px;
   background: var(--noir);
   color: var(--jaune);
-  object-fit: contain;
+}
+
+/* Tuile blanche : l'emblème reste lisible sur fond clair comme sur fond sombre */
+.tuile {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  padding: 5px;
+  border-radius: 13px;
+  background: #fff;
+}
+
+.image {
+  width: 100%;
+  height: auto;
 }
 
 .nom {
   display: grid;
-  font-family: var(--police-titre);
-  font-weight: 700;
-  font-size: 1rem;
   line-height: 1.15;
-  letter-spacing: -0.02em;
   white-space: nowrap;
+}
+
+.marque {
+  font-family: var(--police-titre);
+  font-weight: 800;
+  font-size: 1.04rem;
+  letter-spacing: -0.03em;
+  text-transform: lowercase;
+  color: var(--texte);
+}
+
+.marque span {
+  color: var(--jaune);
 }
 
 .nom small {

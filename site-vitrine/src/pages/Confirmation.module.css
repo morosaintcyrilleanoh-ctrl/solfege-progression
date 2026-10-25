@@ -3,7 +3,7 @@
   display: grid;
   align-items: center;
   padding-top: calc(var(--hauteur-entete) + env(safe-area-inset-top, 0px) + 40px);
-  background: radial-gradient(60% 40% at 50% 0%, rgba(247, 181, 0, 0.18), transparent 70%), var(--blanc);
+  background: radial-gradient(60% 40% at 50% 0%, rgba(254, 186, 1, 0.18), transparent 70%), var(--blanc);
 }
 
 .carte {
@@ -20,7 +20,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  box-shadow: 0 0 0 10px rgba(247, 181, 0, 0.18);
+  box-shadow: 0 0 0 10px rgba(254, 186, 1, 0.18);
 }
 
 .succes,
