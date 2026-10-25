@@ -60,6 +60,12 @@ export const site = {
   plateforme: {
     url: '',
     libelle: 'Accéder à la plateforme d’exercices',
+    /**
+     * Adresse du test de niveau gratuit de la plateforme
+     * (ex. 'https://votre-plateforme.vercel.app/test-de-positionnement').
+     * Renseignée, elle ajoute le bouton « Tester mon niveau gratuitement ».
+     */
+    testNiveau: '',
   },
 
   /**
@@ -88,8 +94,10 @@ export const accueil = {
   titre: 'Lisez, comprenez et jouez la musique.',
   sousTitre:
     'Des formations progressives en solfège, lecture de partition, piano, harmonie et oreille musicale, pensées pour les débutants et les musiciens francophones.',
-  boutonPrincipal: { libelle: 'Découvrir les formations', action: { type: 'section', id: 'formations' } } satisfies Bouton,
-  boutonSecondaire: { libelle: 'Poser une question', action: { type: 'whatsapp' } } satisfies Bouton,
+  boutonPrincipal: { libelle: 'Je commence maintenant', action: { type: 'inscription' } } satisfies Bouton,
+  boutonSecondaire: { libelle: 'Quelle formation pour moi ?', action: { type: 'section', id: 'quiz' } } satisfies Bouton,
+  /** Petit lien sous les boutons. */
+  lienTertiaire: { libelle: 'Voir les formations', action: { type: 'section', id: 'formations' } } satisfies Bouton,
   /** Mots-clés affichés sous les boutons. */
   disciplines: ['Solfège', 'Lecture', 'Piano', 'Harmonie', 'Oreille musicale'],
 };
@@ -147,8 +155,9 @@ export const communaute = {
 /** Bloc d'appel à l'action (inscription et contact). */
 export const appelAction = {
   titre: 'Prêt à commencer ?',
+  /** Bouton principal en fin de page. */
   texte:
     'Inscrivez-vous à la formation de votre choix ou posez vos questions directement au formateur. Vous recevrez une réponse personnalisée.',
-  boutonInscription: { libelle: 'Je m’inscris', action: { type: 'inscription' } } satisfies Bouton,
-  boutonContact: { libelle: 'Écrire sur WhatsApp', action: { type: 'whatsapp' } } satisfies Bouton,
+  boutonInscription: { libelle: 'Réserver ma place', action: { type: 'inscription' } } satisfies Bouton,
+  boutonContact: { libelle: 'Poser une question sur WhatsApp', action: { type: 'whatsapp' } } satisfies Bouton,
 };

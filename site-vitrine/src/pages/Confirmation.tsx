@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
-import { site } from '../config/site';
+import { communaute, site } from '../config/site';
+import { BoutonPartage } from '../components/BoutonPartage';
 import { BoutonAction } from '../components/BoutonAction';
 import { Icone } from '../components/Icone';
 import { useRouteur } from '../lib/router';
@@ -124,6 +125,22 @@ export function Confirmation() {
           )}
           <BoutonAction bouton={{ libelle: 'Retour à l’accueil', action: { type: 'section', id: 'formations' } }} variante="contour" />
         </div>
+
+        {(statut === 'inscription-envoyee' || statut === 'inscription-whatsapp' || statut === 'paiement-reussi' || statut === 'paiement-en-attente' || statut === 'apercu') && (
+          <div className={styles.suite}>
+            <h2>En attendant la réponse du formateur</h2>
+            <div className={styles.suiteActions}>
+              {(communaute.bouton.action.type !== 'lien' || communaute.bouton.action.url || site.afficherEmplacements) && (
+                <BoutonAction
+                  bouton={{ ...communaute.bouton, libelle: 'Rejoindre le groupe des élèves' }}
+                  icone={<Icone nom="personnes" />}
+                  variante="contour"
+                />
+              )}
+              <BoutonPartage />
+            </div>
+          </div>
+        )}
 
         <p className={styles.signature}>{site.titreFormateur} · {site.nom}</p>
       </div>

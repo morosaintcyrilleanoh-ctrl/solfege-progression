@@ -99,3 +99,10 @@
   font-size: 1.15rem;
   color: var(--texte);
 }
+
+/* Laisse la place à la barre d'action fixe sur téléphone */
+@media (max-width: 1039px) {
+  .pied {
+    padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
+  }
+}

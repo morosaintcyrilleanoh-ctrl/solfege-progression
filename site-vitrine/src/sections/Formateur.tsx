@@ -11,7 +11,7 @@ export function Formateur() {
   const actif = formateur.onglets[onglet];
 
   return (
-    <section id="formateur" className="section" aria-labelledby="titre-formateur">
+    <section id="formateur" className="section section--grise" aria-labelledby="titre-formateur">
       <div className={`conteneur ${styles.grille}`}>
         <div className={styles.visuel}>
           {photo ? (

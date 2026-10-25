@@ -39,4 +39,23 @@ export const faq: QuestionFaq[] = [
     question: 'Combien de temps dure une formation ?',
     reponse: '',
   },
+  {
+    question: 'Je n’ai pas d’instrument. Puis-je suivre les formations ?',
+    reponse:
+      'Oui pour le Solfège, la Lecture de partition, l’Harmonie et l’Oreille musicale : ces disciplines se travaillent sans instrument. Pour la formation Piano, il vous faut un piano ou un clavier, même d’entrée de gamme.',
+  },
+  {
+    question: 'Je n’ai pas beaucoup de temps. Est-ce adapté ?',
+    reponse:
+      'Les formations sont progressives : quelques séances courtes et régulières chaque semaine sont plus efficaces qu’une longue séance de temps en temps.',
+  },
+  {
+    question: 'Et si je n’y arrive pas ?',
+    reponse:
+      'Chaque notion est expliquée pas à pas, puis mise en pratique. En cas de blocage, vous pouvez poser vos questions au formateur.',
+  },
+  {
+    question: 'Le prix est un frein pour moi. Que faire ?',
+    reponse: '',
+  },
 ];

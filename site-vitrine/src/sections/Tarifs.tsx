@@ -39,6 +39,7 @@ export function Tarifs() {
                   </>
                 )}
               </div>
+              {offre.plusieursFois && <p className={styles.plusieursFois}>{offre.plusieursFois}</p>}
               <ul className={styles.inclus}>
                 {offre.inclus.map((ligne) => (
                   <li key={ligne}>

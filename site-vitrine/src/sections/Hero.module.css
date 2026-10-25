@@ -156,3 +156,9 @@
   font-size: 0.75rem;
   color: var(--gris-texte);
 }
+
+.tertiaire {
+  justify-self: start;
+  font-size: 0.95rem;
+  color: var(--texte-doux);
+}

@@ -369,3 +369,15 @@ textarea {
     transform: none;
   }
 }
+
+/* Lien discret (ex. « Partager à un ami » en version texte) */
+.lien-partage {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--jaune);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}

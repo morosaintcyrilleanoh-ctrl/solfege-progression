@@ -23,6 +23,9 @@ export function Hero() {
             <BoutonAction bouton={accueil.boutonPrincipal} icone={<Icone nom="fleche" />} />
             <BoutonAction bouton={accueil.boutonSecondaire} variante="contour" />
           </div>
+          <a className={`lien-partage ${styles.tertiaire}`} href={`#${accueil.lienTertiaire.action.id}`}>
+            {accueil.lienTertiaire.libelle} <Icone nom="chevron" taille={18} />
+          </a>
         </div>
 
         <figure className={`${styles.portrait} apparition apparition--3`}>

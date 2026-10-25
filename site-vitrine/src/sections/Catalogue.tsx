@@ -3,6 +3,7 @@ import type { Bouton } from '../config/types';
 import { BoutonAction, messagePour } from '../components/BoutonAction';
 import { EnteteSection } from '../components/EnteteSection';
 import { Icone } from '../components/Icone';
+import { href, useRouteur } from '../lib/router';
 import styles from './Catalogue.module.css';
 
 /** Un bouton WhatsApp sans message reçoit automatiquement le message de la formation. */
@@ -14,6 +15,7 @@ function avecMessage(bouton: Bouton, formation: Formation): Bouton {
 }
 
 export function Catalogue() {
+  const { naviguer } = useRouteur();
   return (
     <section id="formations" className="section section--grise" aria-labelledby="titre-formations">
       <div className="conteneur">
@@ -37,7 +39,17 @@ export function Catalogue() {
                 </span>
               </div>
               <span className="pastille">{f.niveau}</span>
-              <h3 className={styles.titre}>{f.titre}</h3>
+              <h3 className={styles.titre}>
+                <a
+                  href={href(`/formations/${f.id}`)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    naviguer(`/formations/${f.id}`);
+                  }}
+                >
+                  {f.titre}
+                </a>
+              </h3>
               <p className={styles.accroche}>{f.accroche}</p>
               <p className={styles.description}>{f.description}</p>
               <ul className={styles.programme} aria-label={`Programme : ${f.titre}`}>

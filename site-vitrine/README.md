@@ -28,7 +28,9 @@ npm run preview    # teste la version compilée
 | `offres.ts` | Tarifs et offres (prix `null` = « Tarif sur demande ») |
 | `videos.ts` | Vidéos YouTube ou fichiers vidéo |
 | `temoignages.ts` | Témoignages (vides au départ : n'ajoutez que de vrais témoignages) |
-| `faq.ts` | Questions fréquentes |
+| `faq.ts` | Questions fréquentes (dont les objections : instrument, temps, prix…) |
+| `quiz.ts` | Quiz « Quelle formation est faite pour moi ? » : questions et points par formation |
+| `conversion.ts` | « Pour qui ? », « Vos difficultés, nos solutions », barre d'action fixe, message de partage |
 
 ### Boutons configurables
 
@@ -39,6 +41,7 @@ Chaque bouton est décrit par une action (voir `src/config/types.ts`) :
 { libelle: 'Une question ?', action: { type: 'whatsapp', message: 'Bonjour…' } }    // WhatsApp
 { libelle: 'Payer', action: { type: 'lien', url: 'https://…', nouvelOnglet: true } } // lien externe
 { libelle: 'Voir les tarifs', action: { type: 'section', id: 'tarifs' } }           // défilement
+{ libelle: 'Voir le programme', action: { type: 'page', chemin: '/formations/piano' } } // page du site
 ```
 
 ### WhatsApp
@@ -63,6 +66,7 @@ FAQ). **Passez-le à `false` avant la mise en ligne** : ce qui est vide est alor
 | Adresse | Rôle |
 |---|---|
 | `/` | Accueil (toutes les sections) |
+| `/formations/piano` | Page détaillée d'une formation (objectifs, pour qui, programme, inscription) |
 | `/inscription?formation=piano&offre=parcours-complet` | Formulaire d'inscription pré-rempli |
 | `/confirmation?statut=…&ref=…` | Confirmation après inscription ou retour de paiement |
 
@@ -131,6 +135,20 @@ site-vitrine/
 ├── vercel.json
 └── .env.example
 ```
+
+## Éléments qui aident à vendre
+
+- **Barre d'action fixe** en bas de l'écran sur téléphone (« Je m'inscris » + WhatsApp),
+  bouton WhatsApp flottant sur ordinateur.
+- **Quiz d'orientation** : 3 questions → formation recommandée → inscription pré-remplie.
+- **Une page par formation** (`/formations/<id>`), à partager dans les groupes WhatsApp.
+- **« Pour qui ? »** et **« Vos difficultés, nos solutions »**.
+- **Boutons « Partager à un ami »** (feuille de partage du téléphone ou WhatsApp).
+- Après l'inscription : **rejoindre le groupe des élèves** (lien `communaute.bouton`) et partager.
+- Paiement en plusieurs fois affiché sur une offre si vous renseignez `plusieursFois` (`offres.ts`).
+- Bouton « Tester mon niveau gratuitement » si `site.plateforme.testNiveau` est renseigné.
+
+Règle des boutons : un seul bouton jaune (action principale) par écran ; les autres en contour.
 
 ## Identité visuelle
 

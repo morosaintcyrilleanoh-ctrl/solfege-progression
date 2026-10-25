@@ -15,7 +15,9 @@ export type Action =
   /** Ouvre un lien externe (page de paiement, plateforme de cours, formulaire…). */
   | { type: 'lien'; url: string; nouvelOnglet?: boolean }
   /** Fait défiler jusqu'à une section de la page d'accueil (ex. « tarifs »). */
-  | { type: 'section'; id: string };
+  | { type: 'section'; id: string }
+  /** Ouvre une page du site, ex. '/formations/piano'. */
+  | { type: 'page'; chemin: string };
 
 export type Bouton = { libelle: string; action: Action };
 

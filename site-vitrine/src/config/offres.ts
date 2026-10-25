@@ -13,8 +13,13 @@ export type Offre = {
   description: string;
   prix: Prix | null;
   inclus: string[];
-  /** Met l'offre en avant (bordure dorée). */
+  /** Met l'offre en avant (carte noire). */
   recommandee?: boolean;
+  /**
+   * Paiement en plusieurs fois, si vous l'acceptez. Ex. : 'Possible en 3 fois : 3 × 10 000 FCFA'.
+   * Vide = rien n'est affiché.
+   */
+  plusieursFois?: string;
   bouton: Bouton;
 };
 
@@ -35,7 +40,7 @@ export const offres: Offre[] = [
     description: 'Suivez la formation de votre choix parmi le catalogue.',
     prix: null,
     inclus: ['Accès à une formation au choix', 'Supports pédagogiques', 'Questions au formateur'],
-    bouton: { libelle: 'Choisir cette offre', action: { type: 'inscription', offre: 'formation-unique' } },
+    bouton: { libelle: 'Choisir cette formule', action: { type: 'inscription', offre: 'formation-unique' } },
   },
   {
     id: 'parcours-complet',
@@ -44,7 +49,7 @@ export const offres: Offre[] = [
     prix: null,
     inclus: ['Solfège et lecture de partition', 'Piano', 'Harmonie et oreille musicale', 'Questions au formateur'],
     recommandee: true,
-    bouton: { libelle: 'Choisir cette offre', action: { type: 'inscription', offre: 'parcours-complet' } },
+    bouton: { libelle: 'Choisir cette formule', action: { type: 'inscription', offre: 'parcours-complet' } },
   },
   {
     id: 'accompagnement',

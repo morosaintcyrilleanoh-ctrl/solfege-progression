@@ -2,6 +2,7 @@ import { appelAction, site } from '../config/site';
 import { BoutonAction } from '../components/BoutonAction';
 import { Icone } from '../components/Icone';
 import { Portee } from '../components/Portee';
+import { BoutonPartage } from '../components/BoutonPartage';
 import { whatsappDisponible } from '../lib/whatsapp';
 import styles from './AppelAction.module.css';
 
@@ -29,6 +30,8 @@ export function AppelAction() {
             </span>
           )}
         </div>
+
+        <BoutonPartage variante="texte" libelle="Partager à un ami qui veut apprendre la musique" />
 
         <ul className={styles.coordonnees}>
           {contact.telephone && (

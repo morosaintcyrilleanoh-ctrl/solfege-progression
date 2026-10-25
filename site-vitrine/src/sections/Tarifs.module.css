@@ -154,3 +154,14 @@
   font-weight: 700;
   font-size: 0.84rem;
 }
+
+.plusieursFois {
+  justify-self: start;
+  align-self: flex-start;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--jaune-pale);
+  color: var(--noir);
+  font-size: 0.85rem;
+  font-weight: 700;
+}

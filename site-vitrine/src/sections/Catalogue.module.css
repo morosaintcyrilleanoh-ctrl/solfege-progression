@@ -88,6 +88,16 @@
   font-size: 1.6rem;
 }
 
+.titre a {
+  text-decoration: none;
+}
+
+.titre a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--jaune);
+  text-decoration-thickness: 3px;
+}
+
 .accroche {
   font-weight: 700;
   color: #9a7100;

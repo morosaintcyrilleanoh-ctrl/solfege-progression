@@ -2,6 +2,8 @@ import { Hero } from '../sections/Hero';
 import { Bandeau } from '../components/Bandeau';
 import { Formateur } from '../sections/Formateur';
 import { Catalogue } from '../sections/Catalogue';
+import { PourQui } from '../sections/PourQui';
+import { Quiz } from '../sections/Quiz';
 import { Communaute } from '../sections/Communaute';
 import { Videos } from '../sections/Videos';
 import { Temoignages } from '../sections/Temoignages';
@@ -15,8 +17,10 @@ export function Accueil() {
     <>
       <Hero />
       <Bandeau />
-      <Formateur />
+      <PourQui />
       <Catalogue />
+      <Quiz />
+      <Formateur />
       <Communaute />
       <Videos />
       <Temoignages />

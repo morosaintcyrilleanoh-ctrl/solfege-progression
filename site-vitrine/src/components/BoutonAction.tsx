@@ -102,6 +102,14 @@ export function BoutonAction({ bouton, variante = 'plein', taille = 'normal', la
       );
     }
 
+    case 'page':
+      return (
+        <a className={classes} {...interne(action.chemin)}>
+          {icone}
+          {libelle}
+        </a>
+      );
+
     case 'section': {
       if (chemin === '/') {
         return (
