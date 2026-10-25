@@ -1,5 +1,6 @@
 import type { Bouton } from './types';
 import emblemeLogo from '../assets/logo-embleme.png';
+import photoFormateur from '../assets/formateur.jpg';
 
 /**
  * ============================================================
@@ -31,9 +32,9 @@ export const site = {
   /** Coordonnées. Laissez vide ce que vous ne souhaitez pas afficher. */
   contact: {
     /** Numéro WhatsApp au format international, chiffres uniquement. Ex. : '2250700000000'. */
-    whatsapp: '',
+    whatsapp: '2250749562180',
     /** Numéro affiché (format libre). Ex. : '+225 07 00 00 00 00'. */
-    telephone: '',
+    telephone: '+225 07 49 56 21 80',
     email: '',
     /** Ex. : 'Abidjan, Côte d’Ivoire'. */
     localisation: '',
@@ -79,8 +80,11 @@ export const site = {
      * Logo complet (pour vos documents et réseaux) : public/images/logo.jpg
      */
     logo: emblemeLogo as string,
-    /** Photo principale (accueil). Format portrait conseillé, ~900 × 1100 px, < 250 Ko. */
-    formateurAccueil: '',
+    /**
+     * Photo principale (accueil). Format portrait conseillé, ~900 × 1100 px, < 250 Ko.
+     * Par défaut : src/assets/formateur.jpg (remplacez ce fichier pour changer de photo).
+     */
+    formateurAccueil: photoFormateur as string,
     /** Photo de la section « Le formateur ». */
     formateurPresentation: '',
     /** Photo de la section communauté (cours, groupe, concert…). */
@@ -98,7 +102,9 @@ export const accueil = {
   boutonSecondaire: { libelle: 'Quelle formation pour moi ?', action: { type: 'section', id: 'quiz' } } satisfies Bouton,
   /** Petit lien sous les boutons. */
   lienTertiaire: { libelle: 'Voir les formations', action: { type: 'section', id: 'formations' } } satisfies Bouton,
-  /** Mots-clés affichés sous les boutons. */
+  /** Étiquette sous la photo du formateur. */
+  etiquettePhoto: 'Professeur de musique à l’INSAAC',
+  /** Mots-clés du ruban défilant. */
   disciplines: ['Solfège', 'Lecture', 'Piano', 'Harmonie', 'Oreille musicale'],
 };
 
@@ -116,7 +122,7 @@ export const formateur = {
    * Parcours, diplômes, expériences : à compléter avec des informations réelles.
    * Chaque ligne s'affiche comme un point de la liste. Laissez vide pour masquer.
    */
-  parcours: [] as string[],
+  parcours: ['Professeur de musique à l’INSAAC'] as string[],
   /**
    * Onglets « Ma mission / Ma méthode » : une phrase forte (en noir)
    * suivie d'une suite (en gris). Textes proposés : adaptez-les à vos mots.

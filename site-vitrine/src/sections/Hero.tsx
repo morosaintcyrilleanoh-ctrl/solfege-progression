@@ -52,7 +52,7 @@ export function Hero() {
             </span>
             <span>
               <strong>{site.titreFormateur}</strong>
-              <small>Solfège · Piano · Harmonie</small>
+              <small>{accueil.etiquettePhoto}</small>
             </span>
           </figcaption>
         </figure>
