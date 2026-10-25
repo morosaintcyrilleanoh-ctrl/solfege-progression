@@ -1,4 +1,5 @@
 import { Hero } from '../sections/Hero';
+import { Bandeau } from '../components/Bandeau';
 import { Formateur } from '../sections/Formateur';
 import { Catalogue } from '../sections/Catalogue';
 import { Communaute } from '../sections/Communaute';
@@ -13,6 +14,7 @@ export function Accueil() {
   return (
     <>
       <Hero />
+      <Bandeau />
       <Formateur />
       <Catalogue />
       <Communaute />

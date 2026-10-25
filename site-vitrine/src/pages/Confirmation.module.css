@@ -1,10 +1,9 @@
 .page {
-  min-height: 70vh;
+  min-height: 80vh;
   display: grid;
   align-items: center;
-  background:
-    radial-gradient(50% 50% at 50% 0%, rgba(201, 164, 92, 0.16), transparent 70%),
-    var(--noir);
+  padding-top: calc(var(--hauteur-entete) + env(safe-area-inset-top, 0px) + 40px);
+  background: radial-gradient(60% 40% at 50% 0%, rgba(247, 181, 0, 0.18), transparent 70%), var(--blanc);
 }
 
 .carte {
@@ -18,27 +17,32 @@
 .pastille {
   display: grid;
   place-items: center;
-  width: 72px;
-  height: 72px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
-  border: 1px solid currentColor;
+  box-shadow: 0 0 0 10px rgba(247, 181, 0, 0.18);
 }
 
 .succes,
 .apercu {
-  color: var(--or);
+  background: var(--jaune);
+  color: var(--noir);
 }
 
 .attente {
-  color: var(--or-clair);
+  background: var(--noir);
+  color: var(--jaune);
 }
 
 .erreur {
-  color: #f0a194;
+  background: #fde8e4;
+  color: var(--erreur);
+  box-shadow: 0 0 0 10px rgba(194, 65, 45, 0.1);
 }
 
 .titre {
   font-size: clamp(2rem, 7vw, 3rem);
+  font-weight: 800;
 }
 
 .texte {
@@ -51,14 +55,14 @@
   display: grid;
   gap: 4px;
   padding: 14px 22px;
-  border: 1px dashed var(--ligne);
+  border: 1.5px dashed #d8d4c6;
   border-radius: var(--rayon-petit);
 }
 
 .reference strong {
   font-size: 1.15rem;
   letter-spacing: 0.06em;
-  color: var(--or-clair);
+  font-family: var(--police-titre);
   font-variant-numeric: tabular-nums;
 }
 
@@ -73,7 +77,7 @@
   margin: 0;
   padding: 16px 20px;
   border-radius: var(--rayon-petit);
-  background: var(--noir-2);
+  background: var(--gris-fond);
   text-align: left;
   width: min(100%, 420px);
 }
@@ -97,7 +101,6 @@
 
 .signature {
   margin-top: 16px;
-  font-family: var(--police-titre);
-  font-style: italic;
+  font-weight: 600;
   color: var(--texte-doux);
 }

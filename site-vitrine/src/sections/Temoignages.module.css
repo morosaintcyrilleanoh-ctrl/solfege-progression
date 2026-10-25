@@ -22,20 +22,25 @@
   flex-direction: column;
   gap: 18px;
   padding: 26px 24px;
-  border: 1px solid var(--ligne);
+  border: 1px solid var(--gris-ligne);
   border-radius: var(--rayon);
-  background: var(--noir-2);
+  background: var(--blanc);
+  box-shadow: var(--ombre-douce);
 }
 
 .guillemets {
-  color: var(--or);
+  width: 44px;
+  height: 44px;
+  padding: 9px;
+  border-radius: 12px;
+  background: var(--jaune);
+  color: var(--noir);
 }
 
 .texte {
   margin: 0;
-  font-family: var(--police-titre);
-  font-size: 1.15rem;
-  line-height: 1.5;
+  font-size: 1.08rem;
+  line-height: 1.6;
 }
 
 .auteur {
@@ -59,9 +64,10 @@
 .initiale {
   display: grid;
   place-items: center;
-  border: 1px solid var(--or);
-  color: var(--or);
+  background: var(--noir);
+  color: var(--jaune);
   font-family: var(--police-titre);
+  font-weight: 700;
   font-size: 1.3rem;
 }
 

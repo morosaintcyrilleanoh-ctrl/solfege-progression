@@ -3,6 +3,7 @@ import { formations } from '../config/formations';
 import { href, useRouteur } from '../lib/router';
 import { lienWhatsApp } from '../lib/whatsapp';
 import { Icone } from './Icone';
+import { Logo } from './Logo';
 import styles from './PiedDePage.module.css';
 
 const nomsReseaux: Record<keyof typeof site.reseaux, string> = {
@@ -20,10 +21,10 @@ export function PiedDePage() {
   const aucuneCoordonnee = !whatsapp && !contact.telephone && !contact.email && !contact.localisation;
 
   return (
-    <footer className={styles.pied}>
+    <footer className={`sombre ${styles.pied}`}>
       <div className={`conteneur ${styles.grille}`}>
         <div className={styles.marque}>
-          <span className={styles.nom}>{site.nom}</span>
+          <Logo sousTitre={false} />
           <p>Formations en solfège, lecture de partition, piano, harmonie et oreille musicale avec le {site.titreFormateur}.</p>
           {reseaux.length > 0 && (
             <ul className={styles.reseaux}>

@@ -1,6 +1,6 @@
 .pied {
-  border-top: 1px solid var(--ligne);
-  background: var(--noir);
+  margin-top: clamp(24px, 5vw, 48px);
+  border-radius: 32px 32px 0 0;
   padding-top: 64px;
   padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px));
 }
@@ -24,19 +24,14 @@
   color: var(--texte-doux);
 }
 
-.nom {
-  font-family: var(--police-titre);
-  font-size: 1.6rem;
-  color: var(--texte);
-}
 
 .titre {
   font-family: var(--police-texte);
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--or);
+  color: var(--jaune);
   margin-bottom: 16px;
 }
 
@@ -68,11 +63,11 @@
 
 .liste a:hover,
 .reseaux a:hover {
-  color: var(--or-clair);
+  color: var(--jaune);
 }
 
 .liste svg {
-  color: var(--or);
+  color: var(--jaune);
   flex: none;
 }
 

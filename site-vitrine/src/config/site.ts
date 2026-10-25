@@ -65,6 +65,8 @@ export const site = {
    * puis indiquez leur chemin, ex. : '/images/formateur.jpg'.
    */
   images: {
+    /** Votre logo (en-tête et pied de page), ex. '/images/logo.png'. Vide = clé de sol. */
+    logo: '',
     /** Photo principale (accueil). Format portrait conseillé, ~900 × 1100 px, < 250 Ko. */
     formateurAccueil: '',
     /** Photo de la section « Le formateur ». */
@@ -101,6 +103,22 @@ export const formateur = {
    * Chaque ligne s'affiche comme un point de la liste. Laissez vide pour masquer.
    */
   parcours: [] as string[],
+  /**
+   * Onglets « Ma mission / Ma méthode » : une phrase forte (en noir)
+   * suivie d'une suite (en gris). Textes proposés : adaptez-les à vos mots.
+   */
+  onglets: [
+    {
+      libelle: 'Ma mission',
+      fort: 'Rendre la musique compréhensible et accessible à chaque francophone qui veut apprendre.',
+      suite: 'Des premières notes jusqu’à l’harmonie, chaque élève avance à son rythme, avec des explications claires.',
+    },
+    {
+      libelle: 'Ma méthode',
+      fort: 'Expliquer simplement, puis pratiquer tout de suite.',
+      suite: 'Chaque notion est reliée à l’écoute et au jeu, pour lire, comprendre et jouer la musique avec assurance.',
+    },
+  ],
   specialites: ['Solfège', 'Lecture de partition', 'Piano', 'Harmonie', 'Oreille musicale'],
   bouton: { libelle: 'Échanger avec le formateur', action: { type: 'whatsapp' } } satisfies Bouton,
 };

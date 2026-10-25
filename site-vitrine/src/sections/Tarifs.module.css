@@ -1,7 +1,7 @@
 .grille {
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 14px 0 0;
   display: grid;
   gap: 18px;
   align-items: stretch;
@@ -19,34 +19,41 @@
   flex-direction: column;
   gap: 14px;
   padding: 30px 24px 24px;
-  border: 1px solid var(--ligne);
+  border: 1px solid var(--gris-ligne);
   border-radius: var(--rayon);
-  background: var(--noir);
+  background: var(--blanc);
+  box-shadow: var(--ombre-douce);
 }
 
+/* Offre recommandée : carte noire */
 .recommandee {
-  border-color: var(--or);
+  --texte: #fff;
+  --texte-doux: rgba(255, 255, 255, 0.72);
+  --ligne: rgba(255, 255, 255, 0.14);
+  border-color: var(--noir);
   background:
-    radial-gradient(90% 60% at 50% 0%, rgba(201, 164, 92, 0.14), transparent 70%),
+    radial-gradient(90% 50% at 100% 0%, rgba(247, 181, 0, 0.28), transparent 70%),
     var(--noir);
+  color: #fff;
+  box-shadow: var(--ombre);
 }
 
 .etiquette {
   position: absolute;
-  top: -12px;
+  top: -13px;
   left: 24px;
-  padding: 3px 12px;
+  padding: 4px 14px;
   border-radius: 999px;
-  background: var(--or);
+  background: var(--jaune);
   color: var(--noir);
   font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
 .nom {
-  font-size: 1.7rem;
+  font-size: 1.5rem;
 }
 
 .description {
@@ -58,15 +65,15 @@
   gap: 6px;
   justify-items: start;
   padding-block: 14px;
-  border-block: 1px solid var(--ligne);
+  border-block: 1px dashed var(--ligne, var(--gris-ligne));
 }
 
 .montant {
   font-family: var(--police-titre);
+  font-weight: 800;
   font-size: 2.2rem;
   line-height: 1.1;
-  color: var(--or-clair);
-  font-variant-numeric: lining-nums;
+  letter-spacing: -0.03em;
 }
 
 .mention {
@@ -76,8 +83,8 @@
 
 .surDemande {
   font-family: var(--police-titre);
-  font-size: 1.5rem;
-  color: var(--or-clair);
+  font-weight: 700;
+  font-size: 1.4rem;
 }
 
 .inclus {
@@ -85,7 +92,7 @@
   margin: 0 0 8px;
   padding: 0;
   display: grid;
-  gap: 8px;
+  gap: 9px;
   flex: 1;
   align-content: start;
 }
@@ -98,27 +105,36 @@
 
 .inclus svg {
   flex: none;
-  margin-top: 4px;
-  color: var(--or);
+  margin-top: 3px;
+  padding: 2px;
+  border-radius: 50%;
+  background: var(--jaune);
+  color: var(--noir);
+}
+
+.recommandee :global(.btn--contour) {
+  --couleur-btn: #fff;
+  --bord-btn: #fff;
 }
 
 .paiement {
   display: grid;
   gap: 12px;
-  margin-top: 36px;
+  margin-top: 32px;
   padding: 20px 22px;
-  border: 1px solid var(--ligne);
   border-radius: var(--rayon);
+  background: var(--blanc);
+  border: 1px solid var(--gris-ligne);
   color: var(--texte-doux);
   font-size: 0.92rem;
 }
 
 .paiementTitre {
   font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
+  font-weight: 800;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--or);
+  color: var(--noir);
 }
 
 .paiement ul {
@@ -131,9 +147,10 @@
 }
 
 .paiement li {
-  padding: 5px 12px;
+  padding: 6px 14px;
   border-radius: 999px;
-  background: var(--noir-3);
-  color: var(--texte);
-  font-size: 0.85rem;
+  background: var(--jaune-pale);
+  color: var(--noir);
+  font-weight: 700;
+  font-size: 0.84rem;
 }

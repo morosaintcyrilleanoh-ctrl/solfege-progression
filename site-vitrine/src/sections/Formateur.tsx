@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { formateur, site } from '../config/site';
 import { BoutonAction } from '../components/BoutonAction';
 import { Emplacement } from '../components/Emplacement';
@@ -6,13 +7,15 @@ import styles from './Formateur.module.css';
 
 export function Formateur() {
   const photo = site.images.formateurPresentation;
+  const [onglet, setOnglet] = useState(0);
+  const actif = formateur.onglets[onglet];
 
   return (
-    <section id="formateur" className="section section--claire" aria-labelledby="titre-formateur">
+    <section id="formateur" className="section" aria-labelledby="titre-formateur">
       <div className={`conteneur ${styles.grille}`}>
         <div className={styles.visuel}>
           {photo ? (
-            <img className={styles.photo} src={photo} alt={`${site.titreFormateur}`} loading="lazy" width={800} height={1000} />
+            <img className={styles.photo} src={photo} alt={site.titreFormateur} loading="lazy" width={800} height={1000} />
           ) : (
             <Emplacement
               className={styles.photo}
@@ -63,12 +66,35 @@ export function Formateur() {
               <li key={s}>{s}</li>
             ))}
           </ul>
-
           <div>
             <BoutonAction bouton={formateur.bouton} />
           </div>
         </div>
       </div>
+
+      {actif && (
+        <div className={`conteneur ${styles.onglets}`}>
+          <div className={styles.listeOnglets} role="tablist" aria-label="Mission et méthode">
+            {formateur.onglets.map((o, i) => (
+              <button
+                key={o.libelle}
+                type="button"
+                role="tab"
+                id={`onglet-${i}`}
+                aria-selected={i === onglet}
+                aria-controls="panneau-onglet"
+                className={styles.onglet}
+                onClick={() => setOnglet(i)}
+              >
+                {o.libelle}
+              </button>
+            ))}
+          </div>
+          <p className={styles.declaration} role="tabpanel" id="panneau-onglet" aria-labelledby={`onglet-${onglet}`} key={onglet}>
+            {actif.fort} <span>{actif.suite}</span>
+          </p>
+        </div>
+      )}
     </section>
   );
 }

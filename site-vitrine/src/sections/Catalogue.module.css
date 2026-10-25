@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 18px;
+  gap: 16px;
 }
 
 @media (min-width: 680px) {
@@ -16,7 +16,6 @@
   .grille {
     grid-template-columns: repeat(6, 1fr);
   }
-  /* 3 cartes puis 2 cartes centrées et plus larges */
   .carte {
     grid-column: span 2;
   }
@@ -31,26 +30,28 @@
 .carte {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 12px;
-  padding: 26px 22px 22px;
-  border: 1px solid var(--ligne);
+  padding: 24px 22px 22px;
+  border: 1px solid var(--gris-ligne);
   border-radius: var(--rayon);
-  background: linear-gradient(180deg, var(--noir-3), var(--noir-2));
-  transition: border-color 0.25s ease, transform 0.25s ease;
+  background: var(--blanc);
+  box-shadow: var(--ombre-douce);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   min-width: 0;
 }
 
 @media (hover: hover) {
   .carte:hover {
-    border-color: rgba(201, 164, 92, 0.55);
-    transform: translateY(-3px);
+    transform: translateY(-4px);
+    box-shadow: var(--ombre);
   }
 }
 
 .image {
   width: calc(100% + 44px);
   max-width: none;
-  margin: -26px -22px 8px;
+  margin: -24px -22px 8px;
   aspect-ratio: 16 / 10;
   object-fit: cover;
   border-radius: var(--rayon) var(--rayon) 0 0;
@@ -59,38 +60,37 @@
 .haut {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  align-self: stretch;
   gap: 12px;
 }
 
+/* Icône dans un carré jaune pâle */
 .symbole {
   display: grid;
   place-items: center;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  border: 1px solid var(--ligne);
-  color: var(--or);
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  background: var(--jaune-pale);
+  color: var(--noir);
 }
 
-.niveau {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--texte-doux);
+.numero {
+  font-family: var(--police-titre);
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #e9e4d3;
+  letter-spacing: -0.02em;
 }
 
 .titre {
-  font-size: 1.85rem;
-  margin-top: 6px;
+  font-size: 1.6rem;
 }
 
 .accroche {
-  font-family: var(--police-titre);
-  font-style: italic;
-  color: var(--or-clair);
-  font-size: 1.05rem;
+  font-weight: 700;
+  color: #9a7100;
 }
 
 .description {
@@ -101,22 +101,25 @@
   list-style: none;
   margin: 4px 0 0;
   padding: 14px 0 0;
-  border-top: 1px solid var(--ligne);
+  border-top: 1px dashed var(--gris-ligne);
   display: grid;
-  gap: 6px;
-  font-size: 0.92rem;
+  gap: 7px;
+  font-size: 0.93rem;
+  align-self: stretch;
 }
 
 .programme li {
   display: flex;
-  gap: 8px;
+  gap: 9px;
   align-items: flex-start;
 }
 
 .programme svg {
   flex: none;
-  margin-top: 4px;
-  color: var(--or);
+  margin-top: 3px;
+  padding: 2px;
+  border-radius: 50%;
+  background: var(--jaune);
 }
 
 .actions {
@@ -125,6 +128,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  align-self: stretch;
 }
 
 .actions > * {

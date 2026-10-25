@@ -10,9 +10,11 @@ export function AppelAction() {
   const { contact } = site;
 
   return (
-    <section id="contact" className={`section ${styles.bloc}`} aria-labelledby="titre-contact">
+    <section id="contact" className="section" aria-labelledby="titre-contact">
+      <div className="conteneur">
+      <div className={`sombre ${styles.carte}`}>
       <Portee className={styles.portee} />
-      <div className={`conteneur ${styles.contenu}`}>
+      <div className={styles.contenu}>
         <span className="surtitre">Inscription & contact</span>
         <h2 className="titre-section" id="titre-contact">
           {appelAction.titre}
@@ -21,6 +23,11 @@ export function AppelAction() {
         <div className={styles.actions}>
           <BoutonAction bouton={appelAction.boutonInscription} icone={<Icone nom="fleche" />} />
           {whatsappDisponible() && <BoutonAction bouton={appelAction.boutonContact} variante="contour" />}
+          {!whatsappDisponible() && site.afficherEmplacements && (
+            <span className="btn btn--contour" aria-disabled="true">
+              <Icone nom="whatsapp" /> WhatsApp · numéro à configurer
+            </span>
+          )}
         </div>
 
         <ul className={styles.coordonnees}>
@@ -50,6 +57,8 @@ export function AppelAction() {
             <code>src/config/site.ts</code>) pour activer tous les boutons « WhatsApp » du site.
           </p>
         )}
+      </div>
+      </div>
       </div>
     </section>
   );

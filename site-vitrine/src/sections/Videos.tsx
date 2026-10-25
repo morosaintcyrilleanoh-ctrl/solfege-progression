@@ -15,7 +15,7 @@ export function Videos() {
   if (visibles.length === 0) return null;
 
   return (
-    <section id="videos" className="section section--alt" aria-labelledby="titre-videos">
+    <section id="videos" className="section section--grise" aria-labelledby="titre-videos">
       <div className="conteneur">
         <EnteteSection id="titre-videos" surtitre="Vidéos" titre={sectionVideos.titre} introduction={sectionVideos.introduction} />
         <ul className={styles.grille}>

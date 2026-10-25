@@ -1,21 +1,25 @@
-.bloc {
+/* Grande carte noire arrondie */
+.carte {
+  position: relative;
   overflow: hidden;
+  padding: clamp(40px, 8vw, 80px) clamp(20px, 6vw, 72px);
+  border-radius: 32px;
   text-align: center;
   background:
-    radial-gradient(60% 80% at 50% 0%, rgba(201, 164, 92, 0.18), transparent 70%),
-    var(--noir);
-  border-top: 1px solid var(--ligne);
+    radial-gradient(70% 70% at 50% 0%, rgba(247, 181, 0, 0.3), transparent 70%),
+    linear-gradient(160deg, #1d1a10, var(--noir) 55%);
+  box-shadow: var(--ombre);
 }
 
 .portee {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 40px;
+  bottom: 28px;
   width: 100%;
-  height: 80px;
-  color: var(--or);
-  opacity: 0.1;
+  height: 70px;
+  color: var(--jaune);
+  opacity: 0.14;
   pointer-events: none;
 }
 
@@ -31,11 +35,19 @@
 }
 
 .actions {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
   gap: 12px;
+  width: min(100%, 420px);
   margin-top: 8px;
+}
+
+@media (min-width: 640px) {
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: auto;
+  }
 }
 
 .coordonnees {
@@ -49,6 +61,10 @@
   color: var(--texte-doux);
 }
 
+.coordonnees:empty {
+  display: none;
+}
+
 .coordonnees li {
   display: inline-flex;
   align-items: center;
@@ -57,7 +73,7 @@
 }
 
 .coordonnees svg {
-  color: var(--or);
+  color: var(--jaune);
   flex: none;
 }
 
@@ -67,10 +83,11 @@
 
 .note {
   max-width: 56ch;
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   color: var(--texte-doux);
 }
 
 .note code {
   font-size: 0.8rem;
+  color: var(--jaune);
 }

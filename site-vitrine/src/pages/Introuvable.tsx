@@ -2,7 +2,7 @@ import { BoutonAction } from '../components/BoutonAction';
 
 export function Introuvable() {
   return (
-    <section className="section" aria-labelledby="titre-introuvable">
+    <section className="section" style={{ paddingTop: 'calc(var(--hauteur-entete) + 64px)' }} aria-labelledby="titre-introuvable">
       <div className="conteneur" style={{ display: 'grid', gap: 18, justifyItems: 'start' }}>
         <span className="surtitre">Erreur 404</span>
         <h1 className="titre-section" id="titre-introuvable">

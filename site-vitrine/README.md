@@ -23,7 +23,7 @@ npm run preview    # teste la version compilée
 
 | Fichier | Contenu |
 |---|---|
-| `site.ts` | Nom, **numéro WhatsApp**, téléphone, e-mail, réseaux sociaux, photos, textes de l'accueil, du formateur, de la communauté, **mode aperçu** |
+| `site.ts` | Nom, **logo**, **numéro WhatsApp**, téléphone, e-mail, réseaux sociaux, photos, textes de l'accueil, du formateur (dont les onglets « Ma mission / Ma méthode »), de la communauté, **mode aperçu** |
 | `formations.ts` | Catalogue : titres, textes, programme, **boutons de chaque formation** |
 | `offres.ts` | Tarifs et offres (prix `null` = « Tarif sur demande ») |
 | `videos.ts` | Vidéos YouTube ou fichiers vidéo |
@@ -132,7 +132,17 @@ site-vitrine/
 └── .env.example
 ```
 
-Couleurs et polices : variables en tête de `src/styles/global.css`.
+## Identité visuelle
+
+Fond blanc, noir et jaune, boutons en pilule, en-tête flottant, menu plein
+écran, ruban défilant, bouton WhatsApp flottant, inscription en 4 étapes
+(une question par écran, options A/B/C, bouton « Suivant » fixé en bas).
+
+- **Couleur jaune exacte de votre logo** : modifiez `--jaune` (et `--jaune-vif`
+  pour le survol) en tête de `src/styles/global.css`.
+- **Logo** : déposez-le dans `public/images/` et renseignez `site.images.logo`
+  (sinon, une clé de sol jaune sur fond noir s'affiche).
+- Polices : Sora (titres) et Plus Jakarta Sans (texte), via Google Fonts.
 Ordre des sections : `src/pages/Accueil.tsx`.
 
 La clé de sol provient de la police Bravura (SIL Open Font License, voir

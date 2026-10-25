@@ -40,7 +40,7 @@
   border-radius: var(--rayon);
   overflow: hidden;
   background: var(--noir);
-  border: 1px solid var(--ligne);
+  box-shadow: var(--ombre-douce);
 }
 
 .media {
@@ -72,9 +72,9 @@
   height: 72px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: var(--or);
+  background: var(--jaune);
   color: var(--noir);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 0 10px rgba(247, 181, 0, 0.25), 0 10px 30px rgba(0, 0, 0, 0.4);
   transition: transform 0.2s ease;
 }
 
@@ -83,12 +83,12 @@
 }
 
 .titre {
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   margin-top: 6px;
 }
 
 .principale .titre {
-  font-size: 1.7rem;
+  font-size: 1.6rem;
 }
 
 .description {

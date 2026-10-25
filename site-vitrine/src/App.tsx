@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { BoutonWhatsAppFlottant } from './components/BoutonWhatsAppFlottant';
 import { Entete } from './components/Entete';
 import { PiedDePage } from './components/PiedDePage';
 import { site } from './config/site';
@@ -27,17 +28,29 @@ function Page() {
   return <Composant />;
 }
 
-export function App() {
+/** Le parcours d'inscription s'affiche en plein écran, sans en-tête ni pied de page. */
+function Gabarit() {
+  const { chemin } = useRouteur();
+  const pleinEcran = chemin === '/inscription';
   return (
-    <FournisseurRouteur>
+    <>
       <a className="visuellement-cache" href="#contenu">
         Aller au contenu
       </a>
-      <Entete />
+      {!pleinEcran && <Entete />}
       <main id="contenu">
         <Page />
       </main>
-      <PiedDePage />
+      {!pleinEcran && <PiedDePage />}
+      <BoutonWhatsAppFlottant />
+    </>
+  );
+}
+
+export function App() {
+  return (
+    <FournisseurRouteur>
+      <Gabarit />
     </FournisseurRouteur>
   );
 }

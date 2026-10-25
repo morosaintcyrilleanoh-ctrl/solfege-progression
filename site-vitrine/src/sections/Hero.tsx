@@ -9,7 +9,8 @@ export function Hero() {
   const photo = site.images.formateurAccueil;
 
   return (
-    <section className={styles.hero} aria-labelledby="titre-accueil">
+    <section className={`sombre ${styles.hero}`} aria-labelledby="titre-accueil">
+      <div className={styles.halo} aria-hidden="true" />
       <Portee className={styles.portee} />
       <div className={`conteneur ${styles.grille}`}>
         <div className={styles.texte}>
@@ -22,17 +23,12 @@ export function Hero() {
             <BoutonAction bouton={accueil.boutonPrincipal} icone={<Icone nom="fleche" />} />
             <BoutonAction bouton={accueil.boutonSecondaire} variante="contour" />
           </div>
-          <ul className={styles.disciplines} aria-label="Disciplines enseignées">
-            {accueil.disciplines.map((d) => (
-              <li key={d}>{d}</li>
-            ))}
-          </ul>
         </div>
 
         <figure className={`${styles.portrait} apparition apparition--3`}>
           <div className={styles.cadre}>
             {photo ? (
-              <img src={photo} alt={`${site.titreFormateur}`} width={900} height={1100} fetchPriority="high" />
+              <img src={photo} alt={site.titreFormateur} width={900} height={1100} fetchPriority="high" />
             ) : (
               <Emplacement
                 className={styles.emplacement}
@@ -43,13 +39,18 @@ export function Hero() {
             )}
             {!photo && !site.afficherEmplacements && (
               <div className={styles.monogramme} aria-hidden="true">
-                <Icone nom="cle-sol" taille={140} />
+                <Icone nom="cle-sol" taille={150} />
               </div>
             )}
           </div>
-          <figcaption className={styles.legende}>
-            <span>{site.titreFormateur}</span>
-            <small>Solfège · Piano · Harmonie</small>
+          <figcaption className={styles.etiquette}>
+            <span className={styles.etiquetteIcone} aria-hidden="true">
+              <Icone nom="cle-sol" taille={18} />
+            </span>
+            <span>
+              <strong>{site.titreFormateur}</strong>
+              <small>Solfège · Piano · Harmonie</small>
+            </span>
           </figcaption>
         </figure>
       </div>
