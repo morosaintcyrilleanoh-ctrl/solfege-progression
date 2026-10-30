@@ -16,7 +16,7 @@ function avecMessage(bouton: Bouton, offre: Offre): Bouton {
 
 export function Tarifs() {
   return (
-    <section id="tarifs" className="section section--grise" aria-labelledby="titre-tarifs">
+    <section id="tarifs" className="section" aria-labelledby="titre-tarifs">
       <div className="conteneur">
         <EnteteSection id="titre-tarifs" surtitre="Tarifs" titre={tarifs.titre} introduction={tarifs.introduction} />
 

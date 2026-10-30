@@ -1,4 +1,5 @@
 import { accueil, site } from '../config/site';
+import { temoignages } from '../config/temoignages';
 import { BoutonAction } from '../components/BoutonAction';
 import { Emplacement } from '../components/Emplacement';
 import { Icone } from '../components/Icone';
@@ -23,9 +24,19 @@ export function Hero() {
             <BoutonAction bouton={accueil.boutonPrincipal} icone={<Icone nom="fleche" />} />
             <BoutonAction bouton={accueil.boutonSecondaire} variante="contour" />
           </div>
-          <a className={`lien-partage ${styles.tertiaire}`} href={`#${accueil.lienTertiaire.action.id}`}>
-            {accueil.lienTertiaire.libelle} <Icone nom="chevron" taille={18} />
-          </a>
+          {accueil.preuve && temoignages.length > 0 && (
+            <a className={`${styles.preuve} apparition apparition--4`} href="#temoignages">
+              <span className={styles.avatars} aria-hidden="true">
+                {temoignages.slice(0, 4).map((t) => (
+                  <span key={t.nom}>{t.nom.charAt(0)}</span>
+                ))}
+              </span>
+              <span>
+                <strong>{accueil.preuve}</strong>
+                <small>{accueil.lienPreuve} →</small>
+              </span>
+            </a>
+          )}
         </div>
 
         <figure className={`${styles.portrait} apparition apparition--3`}>

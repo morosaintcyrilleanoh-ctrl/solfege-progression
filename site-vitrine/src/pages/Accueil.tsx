@@ -19,11 +19,11 @@ export function Accueil() {
       <Bandeau />
       <PourQui />
       <Catalogue />
+      <Temoignages />
       <Quiz />
       <Formateur />
       <Communaute />
       <Videos />
-      <Temoignages />
       <Tarifs />
       <Faq />
       <AppelAction />

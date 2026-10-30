@@ -1,6 +1,7 @@
 import type { Bouton } from './types';
 import emblemeLogo from '../assets/logo-embleme.png';
 import photoFormateur from '../assets/formateur.jpg';
+import photoPiano from '../assets/formateur-piano.jpg';
 
 /**
  * ============================================================
@@ -86,7 +87,7 @@ export const site = {
      */
     formateurAccueil: photoFormateur as string,
     /** Photo de la section « Le formateur ». */
-    formateurPresentation: '',
+    formateurPresentation: photoPiano as string,
     /** Photo de la section communauté (cours, groupe, concert…). */
     communaute: '',
   },
@@ -100,8 +101,9 @@ export const accueil = {
     'Des formations progressives en solfège, lecture de partition, piano, harmonie et oreille musicale, pensées pour les débutants et les musiciens francophones.',
   boutonPrincipal: { libelle: 'Je commence maintenant', action: { type: 'inscription' } } satisfies Bouton,
   boutonSecondaire: { libelle: 'Quelle formation pour moi ?', action: { type: 'section', id: 'quiz' } } satisfies Bouton,
-  /** Petit lien sous les boutons. */
-  lienTertiaire: { libelle: 'Voir les formations', action: { type: 'section', id: 'formations' } } satisfies Bouton,
+  /** Preuve sociale sous les boutons (vide = masquée). Lien vers la section témoignages. */
+  preuve: 'Des élèves formés en ligne dans 6 pays',
+  lienPreuve: 'Lire leurs témoignages',
   /** Étiquette sous la photo du formateur. */
   etiquettePhoto: 'Professeur de musique à l’INSAAC',
   /** Mots-clés du ruban défilant. */

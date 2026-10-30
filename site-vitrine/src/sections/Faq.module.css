@@ -45,7 +45,7 @@
   width: 34px;
   height: 34px;
   border-radius: 50%;
-  background: var(--gris-fond);
+  background: var(--blanc);
   transition: background-color 0.2s ease;
 }
 

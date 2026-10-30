@@ -24,7 +24,8 @@ export const faq: QuestionFaq[] = [
   },
   {
     question: 'Comment se déroulent les cours ?',
-    reponse: '',
+    reponse:
+      'Les cours ont lieu en ligne, en direct avec le formateur : vous suivez les explications, posez vos questions et pratiquez pendant la séance. Vous pouvez donc les suivre depuis chez vous, où que vous soyez.',
   },
   {
     question: 'Ai-je besoin d’un piano ou d’un clavier ?',

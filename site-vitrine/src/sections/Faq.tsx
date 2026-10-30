@@ -8,7 +8,7 @@ export function Faq() {
   if (questions.length === 0) return null;
 
   return (
-    <section id="faq" className="section" aria-labelledby="titre-faq">
+    <section id="faq" className="section section--grise" aria-labelledby="titre-faq">
       <div className={`conteneur ${styles.grille}`}>
         <EnteteSection id="titre-faq" surtitre="FAQ" titre={sectionFaq.titre} />
         <div className={styles.liste}>
