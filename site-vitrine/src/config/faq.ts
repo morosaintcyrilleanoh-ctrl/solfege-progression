@@ -20,12 +20,12 @@ export const faq: QuestionFaq[] = [
   {
     question: 'Par quelle formation commencer ?',
     reponse:
-      'Si vous débutez, commencez par le Solfège, puis la Lecture de partition. Le Piano, l’Harmonie et l’Oreille musicale s’appuient sur ces bases. En cas de doute, écrivez au formateur sur WhatsApp.',
+      'Si vous débutez, commencez par le programme de Solfège « Lire une partition musicale en 60 jours ». Le Piano, l’Harmonie et l’Oreille musicale s’appuient sur ces bases. En cas de doute, faites le quiz d’orientation ou écrivez au formateur sur WhatsApp.',
   },
   {
     question: 'Comment se déroulent les cours ?',
     reponse:
-      'Les cours ont lieu en ligne, en direct avec le formateur : vous suivez les explications, posez vos questions et pratiquez pendant la séance. Vous pouvez donc les suivre depuis chez vous, où que vous soyez.',
+      'Les cours ont lieu en ligne, en direct avec le formateur : vous suivez les explications, posez vos questions et pratiquez pendant la séance, où que vous soyez. Le Solfège a lieu le lundi et le jeudi de 20 h 30 à 22 h, le Piano en ligne le lundi de 18 h à 19 h (heure d’Abidjan, GMT). Le Piano existe aussi en présentiel à Abidjan, le samedi de 8 h 30 à 13 h 30, à la paroisse Saint Jean-Paul II de Cocody Angré 8e tranche.',
   },
   {
     question: 'Ai-je besoin d’un piano ou d’un clavier ?',
@@ -34,16 +34,17 @@ export const faq: QuestionFaq[] = [
   {
     question: 'Comment payer ma formation ?',
     reponse:
-      'Le paiement en ligne par Mobile Money et carte bancaire sera bientôt disponible. En attendant, envoyez votre demande d’inscription : le formateur vous recontacte pour confirmer votre inscription et les modalités de paiement.',
+      'Envoyez votre demande d’inscription depuis le site : le formateur vous recontacte sur WhatsApp pour confirmer votre place et vous indiquer comment régler. Le paiement en ligne par Mobile Money et carte bancaire sera bientôt disponible.',
   },
   {
     question: 'Combien de temps dure une formation ?',
-    reponse: '',
+    reponse:
+      'Le programme de Solfège « Lire une partition musicale en 60 jours » dure 2 mois. La formation Piano dure de 6 à 8 mois. Le coaching individuel dure de 5 à 6 mois.',
   },
   {
     question: 'Je n’ai pas d’instrument. Puis-je suivre les formations ?',
     reponse:
-      'Oui pour le Solfège, la Lecture de partition, l’Harmonie et l’Oreille musicale : ces disciplines se travaillent sans instrument. Pour la formation Piano, il vous faut un piano ou un clavier, même d’entrée de gamme.',
+      'Oui pour le Solfège, l’Harmonie et l’Oreille musicale : ces disciplines se travaillent sans instrument. Pour le Piano en ligne, il vous faut un piano ou un clavier, même d’entrée de gamme ; en présentiel, l’instrument est sur place.',
   },
   {
     question: 'Je n’ai pas beaucoup de temps. Est-ce adapté ?',
@@ -56,7 +57,8 @@ export const faq: QuestionFaq[] = [
       'Chaque notion est expliquée pas à pas, puis mise en pratique. En cas de blocage, vous pouvez poser vos questions au formateur.',
   },
   {
-    question: 'Le prix est un frein pour moi. Que faire ?',
-    reponse: '',
+    question: 'Combien coûtent les formations ?',
+    reponse:
+      'Solfège (60 jours, en ligne) : 50 000 FCFA pour les 2 mois. Piano : 25 000 FCFA par mois en ligne, 30 000 FCFA par mois en présentiel. Coaching individuel : 250 000 FCFA pour 5 à 6 mois. Le piano se règle mois par mois.',
   },
 ];

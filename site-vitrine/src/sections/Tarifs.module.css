@@ -7,9 +7,10 @@
   align-items: stretch;
 }
 
-@media (min-width: 900px) {
+@media (min-width: 760px) {
   .grille {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 18px;
   }
 }
 
@@ -164,4 +165,64 @@
   color: var(--noir);
   font-size: 0.85rem;
   font-weight: 700;
+}
+
+.modalite {
+  align-self: flex-start;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--jaune-pale);
+  color: var(--noir);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.presentiel {
+  background: var(--noir);
+  color: var(--jaune);
+}
+
+.recommandee .presentiel,
+.recommandee .modalite {
+  background: var(--jaune);
+  color: var(--noir);
+}
+
+.details {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.details div {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.details dt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--texte-doux);
+  font-size: 0.86rem;
+}
+
+.details dt svg {
+  flex: none;
+  color: #b38300;
+}
+
+.recommandee .details dt svg {
+  color: var(--jaune);
+}
+
+.details dd {
+  margin: 0;
+  font-weight: 700;
+  font-size: 0.94rem;
+  min-width: 0;
 }

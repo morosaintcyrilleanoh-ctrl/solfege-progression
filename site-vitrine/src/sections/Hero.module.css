@@ -205,3 +205,35 @@
 .avatars span:nth-child(even) {
   background: #fff;
 }
+
+.annonce {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  padding: 6px 14px 6px 6px;
+  border: 1px solid rgba(254, 186, 1, 0.45);
+  border-radius: 999px;
+  background: rgba(254, 186, 1, 0.1);
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.annonce:hover {
+  background: rgba(254, 186, 1, 0.2);
+}
+
+.annonceBadge {
+  flex: none;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: var(--jaune);
+  color: var(--noir);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}

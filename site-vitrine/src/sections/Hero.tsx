@@ -4,9 +4,11 @@ import { BoutonAction } from '../components/BoutonAction';
 import { Emplacement } from '../components/Emplacement';
 import { Icone } from '../components/Icone';
 import { Portee } from '../components/Portee';
+import { href, useRouteur } from '../lib/router';
 import styles from './Hero.module.css';
 
 export function Hero() {
+  const { naviguer } = useRouteur();
   const photo = site.images.formateurAccueil;
 
   return (
@@ -15,6 +17,20 @@ export function Hero() {
       <Portee className={styles.portee} />
       <div className={`conteneur ${styles.grille}`}>
         <div className={styles.texte}>
+          {accueil.annonce.texte && (
+            <a
+              className={`${styles.annonce} apparition`}
+              href={href(accueil.annonce.chemin)}
+              onClick={(e) => {
+                e.preventDefault();
+                naviguer(accueil.annonce.chemin);
+              }}
+            >
+              <span className={styles.annonceBadge}>Nouveau</span>
+              {accueil.annonce.texte}
+              <Icone nom="fleche" taille={16} />
+            </a>
+          )}
           <span className="surtitre apparition">{accueil.surtitre}</span>
           <h1 id="titre-accueil" className={`${styles.titre} apparition apparition--2`}>
             {accueil.titre}

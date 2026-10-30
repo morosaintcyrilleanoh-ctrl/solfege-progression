@@ -15,6 +15,7 @@ export type NomIcone =
   | 'fleche'
   | 'chevron'
   | 'partage'
+  | 'calendrier'
   | 'croix'
   | 'ampoule'
   | 'telephone'
@@ -138,6 +139,13 @@ export function Icone({ nom, taille = 20, ...props }: Props) {
       return (
         <svg {...commun} viewBox="0 0 24 24">
           <path d="M6 9l6 6 6-6" {...trait} strokeWidth="1.8" />
+        </svg>
+      );
+    case 'calendrier':
+      return (
+        <svg {...commun} viewBox="0 0 24 24">
+          <rect x="3.5" y="5" width="17" height="15" rx="2" {...trait} />
+          <path d="M3.5 10h17M8 3v4M16 3v4" {...trait} />
         </svg>
       );
     case 'partage':

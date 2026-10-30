@@ -238,7 +238,7 @@
   display: grid;
   gap: 8px;
   width: 100%;
-  max-width: 520px;
+  max-width: 640px;
 }
 
 .formules li {
@@ -251,9 +251,27 @@
   border-radius: var(--rayon-petit);
 }
 
-.formules span {
+.formuleNom {
+  display: grid;
+  min-width: 0;
+}
+
+.formuleNom small {
+  color: var(--texte-doux);
+}
+
+.formulePrix {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 6px;
   color: var(--jaune);
-  font-weight: 700;
+  font-weight: 800;
+}
+
+.formulePrix small {
+  color: var(--texte-doux);
+  font-weight: 500;
 }
 
 .autres {

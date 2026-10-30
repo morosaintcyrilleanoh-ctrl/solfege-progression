@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { formations, trouverFormation } from '../config/formations';
-import { formaterPrix, offres, trouverOffre } from '../config/offres';
+import { formaterPrix, offresPour, trouverOffre } from '../config/offres';
 import { site } from '../config/site';
 import { Icone } from '../components/Icone';
 import { Logo } from '../components/Logo';
@@ -200,7 +200,10 @@ export function Inscription() {
             <Options
               nom="formation"
               valeur={formation}
-              onChange={setFormation}
+              onChange={(v) => {
+                setFormation(v);
+                if (offre && v && !trouverOffre(offre)?.formations.includes(v)) setOffre(null);
+              }}
               options={[
                 ...formations.map((f) => ({ valeur: f.id, libelle: f.titre, detail: `${f.niveau} · ${f.accroche}` })),
                 { valeur: '', libelle: 'Je ne sais pas encore', detail: 'Le formateur vous conseille' },
@@ -210,17 +213,17 @@ export function Inscription() {
         )}
 
         {etape === 2 && (
-          <Question titre="Quelle formule vous convient ?" aide="Les tarifs vous seront confirmés par le formateur.">
+          <Question titre="Quelle formule vous convient ?" aide="Horaires à l’heure d’Abidjan (GMT). Le formateur confirme votre place.">
             <Options
               nom="offre"
               valeur={offre}
               onChange={setOffre}
               options={[
-                ...offres.map((o) => ({
+                ...offresPour(formation).map((o) => ({
                   valeur: o.id,
                   libelle: o.nom,
-                  detail: o.prix ? formaterPrix(o.prix) : o.description,
-                  badge: o.recommandee ? 'Recommandée' : undefined,
+                  detail: [o.prix && `${formaterPrix(o.prix)} ${o.prix.mention ?? ''}`.trim(), o.modalite, o.horaires].filter(Boolean).join(' · '),
+                  badge: o.recommandee ? 'Programme phare' : undefined,
                 })),
                 { valeur: '', libelle: 'À définir avec le formateur', detail: 'Vous en discuterez ensemble' },
               ]}

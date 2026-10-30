@@ -38,7 +38,7 @@ export const site = {
     telephone: '+225 07 49 56 21 80',
     email: '',
     /** Ex. : 'Abidjan, Côte d’Ivoire'. */
-    localisation: '',
+    localisation: 'Abidjan, Côte d’Ivoire',
     /** Ex. : 'Du lundi au samedi, 9 h – 18 h (GMT)'. */
     horaires: '',
   },
@@ -95,6 +95,8 @@ export const site = {
 
 /** Accueil (bandeau principal). */
 export const accueil = {
+  /** Annonce cliquable au-dessus du titre (vide = masquée). */
+  annonce: { texte: 'Programme phare : Lire une partition en 60 jours', chemin: '/formations/solfege' },
   surtitre: 'Avec le Formateur Anoh Cyrille',
   titre: 'Lisez, comprenez et jouez la musique.',
   sousTitre:

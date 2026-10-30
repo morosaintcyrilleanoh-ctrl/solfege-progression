@@ -23,7 +23,7 @@ export function Catalogue() {
           id="titre-formations"
           surtitre="Catalogue"
           titre="Les formations"
-          introduction="Cinq formations complémentaires pour progresser étape par étape, des premières notes jusqu’à l’harmonie."
+          introduction="Des formations complémentaires pour progresser étape par étape, des premières notes jusqu’à l’harmonie. En ligne, et en présentiel à Abidjan pour le piano."
         />
 
         <ul className={styles.grille}>

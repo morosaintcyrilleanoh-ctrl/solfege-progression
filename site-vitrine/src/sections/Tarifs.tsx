@@ -23,7 +23,8 @@ export function Tarifs() {
         <ul className={styles.grille}>
           {offres.map((offre) => (
             <li key={offre.id} className={`${styles.offre} ${offre.recommandee ? styles.recommandee : ''}`}>
-              {offre.recommandee && <span className={styles.etiquette}>Recommandée</span>}
+              {offre.recommandee && <span className={styles.etiquette}>Programme phare</span>}
+              <span className={`${styles.modalite} ${offre.modalite === 'Présentiel' ? styles.presentiel : ''}`}>{offre.modalite}</span>
               <h3 className={styles.nom}>{offre.nom}</h3>
               <p className={styles.description}>{offre.description}</p>
               <div className={styles.prix}>
@@ -40,6 +41,28 @@ export function Tarifs() {
                 )}
               </div>
               {offre.plusieursFois && <p className={styles.plusieursFois}>{offre.plusieursFois}</p>}
+              <dl className={styles.details}>
+                <div>
+                  <dt>
+                    <Icone nom="horloge" taille={16} /> Durée
+                  </dt>
+                  <dd>{offre.duree}</dd>
+                </div>
+                <div>
+                  <dt>
+                    <Icone nom="calendrier" taille={16} /> Séances
+                  </dt>
+                  <dd>{offre.horaires}</dd>
+                </div>
+                {offre.lieu && (
+                  <div>
+                    <dt>
+                      <Icone nom="lieu" taille={16} /> Lieu
+                    </dt>
+                    <dd>{offre.lieu}</dd>
+                  </div>
+                )}
+              </dl>
               <ul className={styles.inclus}>
                 {offre.inclus.map((ligne) => (
                   <li key={ligne}>

@@ -1,5 +1,5 @@
 import { formations, type Formation as TypeFormation } from '../config/formations';
-import { formaterPrix, offres } from '../config/offres';
+import { formaterPrix, offresPour } from '../config/offres';
 import { site } from '../config/site';
 import { BoutonAction, messagePour } from '../components/BoutonAction';
 import { BoutonPartage } from '../components/BoutonPartage';
@@ -119,14 +119,21 @@ export function Formation({ formation }: { formation: TypeFormation }) {
               Commencez la formation {formation.titre}
             </h2>
             <ul className={styles.formules}>
-              {offres
-                .filter((o) => o.id !== 'accompagnement')
-                .map((o) => (
-                  <li key={o.id}>
+              {offresPour(formation.id).map((o) => (
+                <li key={o.id}>
+                  <span className={styles.formuleNom}>
                     <strong>{o.nom}</strong>
-                    <span>{o.prix ? formaterPrix(o.prix) : 'Tarif sur demande'}</span>
-                  </li>
-                ))}
+                    <small>
+                      {o.modalite} · {o.horaires}
+                      {o.lieu ? ` · ${o.lieu}` : ''}
+                    </small>
+                  </span>
+                  <span className={styles.formulePrix}>
+                    {o.prix ? formaterPrix(o.prix) : 'Tarif sur demande'}
+                    {o.prix?.mention && <small>{o.prix.mention}</small>}
+                  </span>
+                </li>
+              ))}
             </ul>
             <div className={styles.actions}>
               <BoutonAction bouton={inscription} icone={<Icone nom="fleche" />} />
