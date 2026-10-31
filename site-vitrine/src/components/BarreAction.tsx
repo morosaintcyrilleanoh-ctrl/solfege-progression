@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { barreAction } from '../config/conversion';
+import { masterclass } from '../config/masterclass';
 import { site } from '../config/site';
 import { useRouteur } from '../lib/router';
 import { lienWhatsApp } from '../lib/whatsapp';
@@ -35,9 +36,15 @@ export function BarreAction() {
   if (chemin === '/masterclass') {
     return (
       <div className={`${styles.barre} ${visible ? styles.visible : ''}`} aria-hidden={!visible}>
-        <a className="btn btn--large" href="#reserver" tabIndex={visible ? 0 : -1}>
-          Réserver ma place gratuite <Icone nom="fleche" />
-        </a>
+        {masterclass.lienGroupe ? (
+          <a className="btn btn--large" href={masterclass.lienGroupe} target="_blank" rel="noopener noreferrer" tabIndex={visible ? 0 : -1}>
+            <Icone nom="whatsapp" /> Rejoindre le groupe gratuit
+          </a>
+        ) : (
+          <a className="btn btn--large" href="#reserver" tabIndex={visible ? 0 : -1}>
+            Réserver ma place gratuite <Icone nom="fleche" />
+          </a>
+        )}
       </div>
     );
   }

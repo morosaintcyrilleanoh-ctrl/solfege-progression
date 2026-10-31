@@ -26,7 +26,7 @@ export const masterclass = {
    * Renseigné : « Réserver ma place » y mène directement.
    * Vide : l'inscription envoie un message WhatsApp au formateur.
    */
-  lienGroupe: '',
+  lienGroupe: 'https://chat.whatsapp.com/HEy0MsSUhmDDv1qjHr5PUQ',
   /** Lien du direct YouTube (ou de la chaîne). Affiché pendant et après l'événement. */
   lienYoutube: '',
   /** Lien du replay, si vous le publiez. */
