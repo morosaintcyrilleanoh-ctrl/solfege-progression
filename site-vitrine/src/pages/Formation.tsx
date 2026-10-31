@@ -1,5 +1,6 @@
 import { formations, type Formation as TypeFormation } from '../config/formations';
 import { formaterPrix, offresPour } from '../config/offres';
+import { Session } from '../sections/Tarifs';
 import { site } from '../config/site';
 import { BoutonAction, messagePour } from '../components/BoutonAction';
 import { BoutonPartage } from '../components/BoutonPartage';
@@ -116,29 +117,33 @@ export function Formation({ formation }: { formation: TypeFormation }) {
           <div className={`sombre ${styles.cta}`}>
             <span className="surtitre">Inscription</span>
             <h2 className={styles.sousTitre} id="titre-formules">
-              Commencez la formation {formation.titre}
+              Prochaines sessions : {formation.titre}
             </h2>
-            <ul className={styles.formules}>
+            <ul className={styles.sessions}>
               {offresPour(formation.id).map((o) => (
-                <li key={o.id}>
-                  <span className={styles.formuleNom}>
-                    <strong>{o.nom}</strong>
-                    <small>
-                      {o.modalite} · {o.horaires}
-                      {o.lieu ? ` · ${o.lieu}` : ''}
+                <li key={o.id} className={styles.sessionCarte}>
+                  {o.affiche && (
+                    <img src={o.affiche} alt={`Affiche : ${o.nom}`} width={800} height={800} loading="lazy" className={styles.sessionAffiche} />
+                  )}
+                  <div className={styles.sessionCorps}>
+                    <Session offre={o} />
+                    <strong className={styles.sessionNom}>{o.nom}</strong>
+                    <span className={styles.formulePrix}>
+                      {o.prix ? formaterPrix(o.prix) : 'Tarif sur demande'}
+                      {o.prix?.mention && <small>{o.prix.mention}</small>}
+                    </span>
+                    <small className={styles.sessionInfos}>
+                      {[o.modalite, o.periode, o.horaires, o.lieu].filter(Boolean).join(' · ')}
                     </small>
-                  </span>
-                  <span className={styles.formulePrix}>
-                    {o.prix ? formaterPrix(o.prix) : 'Tarif sur demande'}
-                    {o.prix?.mention && <small>{o.prix.mention}</small>}
-                  </span>
+                    <BoutonAction
+                      bouton={{ libelle: 'Réserver ma place', action: { type: 'inscription', formation: formation.id, offre: o.id } }}
+                      variante={o.affiche ? 'plein' : 'contour'}
+                      large
+                    />
+                  </div>
                 </li>
               ))}
             </ul>
-            <div className={styles.actions}>
-              <BoutonAction bouton={inscription} icone={<Icone nom="fleche" />} />
-              <BoutonAction bouton={{ libelle: 'Comparer les formules', action: { type: 'section', id: 'tarifs' } }} variante="contour" />
-            </div>
             <BoutonPartage
               variante="texte"
               chemin={`/formations/${formation.id}`}

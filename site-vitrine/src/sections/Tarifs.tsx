@@ -1,5 +1,5 @@
 import { site } from '../config/site';
-import { formaterPrix, offres, tarifs, type Offre } from '../config/offres';
+import { formaterPrix, joursAvantDebut, offres, tarifs, type Offre } from '../config/offres';
 import type { Bouton } from '../config/types';
 import { BoutonAction, messagePour } from '../components/BoutonAction';
 import { EnteteSection } from '../components/EnteteSection';
@@ -24,6 +24,17 @@ export function Tarifs() {
           {offres.map((offre) => (
             <li key={offre.id} className={`${styles.offre} ${offre.recommandee ? styles.recommandee : ''}`}>
               {offre.recommandee && <span className={styles.etiquette}>Programme phare</span>}
+              {offre.affiche && (
+                <img
+                  className={styles.affiche}
+                  src={offre.affiche}
+                  alt={`Affiche : ${offre.nom}${offre.periode ? `, ${offre.periode.toLowerCase()}` : ''}`}
+                  width={800}
+                  height={800}
+                  loading="lazy"
+                />
+              )}
+              <Session offre={offre} />
               <span className={`${styles.modalite} ${offre.modalite === 'Présentiel' ? styles.presentiel : ''}`}>{offre.modalite}</span>
               <h3 className={styles.nom}>{offre.nom}</h3>
               <p className={styles.description}>{offre.description}</p>
@@ -48,6 +59,14 @@ export function Tarifs() {
                   </dt>
                   <dd>{offre.duree}</dd>
                 </div>
+                {offre.periode && (
+                  <div>
+                    <dt>
+                      <Icone nom="calendrier" taille={16} /> Période
+                    </dt>
+                    <dd>{offre.periode}</dd>
+                  </div>
+                )}
                 <div>
                   <dt>
                     <Icone nom="calendrier" taille={16} /> Séances
@@ -87,5 +106,23 @@ export function Tarifs() {
         </div>
       </div>
     </section>
+  );
+}
+
+/** Pastilles de session : « Début dans X jours » et nombre de places. */
+export function Session({ offre }: { offre: Offre }) {
+  const jours = joursAvantDebut(offre);
+  if (jours === null && !offre.places) return null;
+  return (
+    <div className={styles.session}>
+      {jours !== null && (
+        <span className={styles.debut}>{jours === 0 ? 'Début aujourd’hui' : jours === 1 ? 'Début demain' : `Début dans ${jours} jours`}</span>
+      )}
+      {offre.places && (
+        <span className={styles.places}>
+          <Icone nom="personnes" taille={14} /> {offre.places} places par session
+        </span>
+      )}
+    </div>
   );
 }

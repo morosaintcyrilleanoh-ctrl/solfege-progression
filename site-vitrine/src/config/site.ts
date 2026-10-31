@@ -96,7 +96,7 @@ export const site = {
 /** Accueil (bandeau principal). */
 export const accueil = {
   /** Annonce cliquable au-dessus du titre (vide = masquée). */
-  annonce: { texte: 'Programme phare : Lire une partition en 60 jours', chemin: '/formations/solfege' },
+  annonce: { texte: 'Lire une partition en 60 jours : début le 1er décembre', chemin: '/formations/solfege' },
   surtitre: 'Avec le Formateur Anoh Cyrille',
   titre: 'Lisez, comprenez et jouez la musique.',
   sousTitre:
@@ -116,7 +116,7 @@ export const accueil = {
 export const formateur = {
   titre: 'Le formateur',
   nom: 'Anoh Cyrille',
-  role: 'Formateur en solfège, piano et harmonie',
+  role: 'Musicien, formateur et pédagogue passionné',
   /** Paragraphes de présentation. Remplacez-les par votre propre texte. */
   presentation: [
     'Je suis Anoh Cyrille, formateur spécialisé dans l’enseignement du solfège, de la lecture de partition, du piano, de l’harmonie et du développement de l’oreille musicale.',

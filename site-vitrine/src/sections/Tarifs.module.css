@@ -41,6 +41,7 @@
 
 .etiquette {
   position: absolute;
+  z-index: 1;
   top: -13px;
   left: 24px;
   padding: 4px 14px;
@@ -225,4 +226,45 @@
   font-weight: 700;
   font-size: 0.94rem;
   min-width: 0;
+}
+
+/* Affiche de la formation en tête de carte */
+.affiche {
+  width: calc(100% + 48px);
+  max-width: none;
+  height: auto;
+  aspect-ratio: 1;
+  margin: -30px -24px 4px;
+  border-radius: var(--rayon) var(--rayon) 0 0;
+  object-fit: cover;
+}
+
+.recommandee .affiche {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.session {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.debut,
+.places {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.debut {
+  background: var(--jaune);
+  color: var(--noir);
+}
+
+.places {
+  border: 1.5px solid currentColor;
 }

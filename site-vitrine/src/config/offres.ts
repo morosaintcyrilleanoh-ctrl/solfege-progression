@@ -1,4 +1,7 @@
 import type { Bouton, Prix } from './types';
+import affichePartition from '../assets/affiche-partition-60-jours.jpg';
+import affichePianoEnLigne from '../assets/affiche-piano-en-ligne.jpg';
+import affichePianoPresentiel from '../assets/affiche-piano-presentiel.jpg';
 
 /**
  * ============================================================
@@ -22,6 +25,14 @@ export type Offre = {
   horaires: string;
   /** Lieu (présentiel). */
   lieu?: string;
+  /** Période de la prochaine session, telle qu'affichée. */
+  periode?: string;
+  /** Date de début (AAAA-MM-JJ) : sert au « Début dans X jours ». */
+  debut?: string;
+  /** Nombre de places par session. */
+  places?: number;
+  /** Affiche de la formation (image carrée). */
+  affiche?: string;
   formations: string[];
   inclus: string[];
   /** Met l'offre en avant (carte noire). */
@@ -45,39 +56,66 @@ export const offres: Offre[] = [
   {
     id: 'partition-60-jours',
     nom: 'Lire une partition musicale en 60 jours',
-    description: 'Le programme de solfège pour apprendre à lire une partition, pas à pas, en direct avec le formateur.',
+    description: 'Un accompagnement pratique pour apprendre à déchiffrer une partition avec méthode.',
     prix: { montant: 50000, devise: 'FCFA', mention: 'pour les 2 mois' },
     modalite: 'En ligne',
     duree: '60 jours (2 mois)',
-    horaires: 'Lundi et jeudi, 20 h 30 – 22 h',
+    horaires: 'Lundi et jeudi, 20 h 30 – 22 h',
+    periode: 'Du 1er décembre 2026 au 31 janvier 2027',
+    debut: '2026-12-01',
+    places: 30,
+    affiche: affichePartition as string,
     formations: ['solfege'],
-    inclus: ['2 séances en direct par semaine', 'Notes, clés, rythme et mesures', 'Lecture de partition', 'Questions au formateur'],
+    inclus: [
+      'Les bases de la partition',
+      'Méthodes de déchiffrage en clé de sol et en clé de fa',
+      'Des lives d’apprentissage, 2 fois par semaine',
+      'Un groupe WhatsApp de suivi',
+    ],
     recommandee: true,
     bouton: { libelle: 'Je m’inscris', action: { type: 'inscription', formation: 'solfege', offre: 'partition-60-jours' } },
   },
   {
     id: 'piano-en-ligne',
     nom: 'Piano en ligne',
-    description: 'Apprendre le piano depuis chez vous, avec un cours en direct chaque semaine.',
+    description: 'Programme d’accompagnement : apprenez, pratiquez et progressez depuis chez vous, à votre rythme.',
     prix: { montant: 25000, devise: 'FCFA', mention: 'par mois' },
     modalite: 'En ligne',
-    duree: '6 à 8 mois',
-    horaires: 'Lundi, 18 h – 19 h',
+    duree: '5 mois',
+    horaires: 'Lundi, 18 h – 19 h',
+    periode: 'Du 10 janvier au 10 mai 2027',
+    debut: '2027-01-10',
+    places: 30,
+    affiche: affichePianoEnLigne as string,
     formations: ['piano'],
-    inclus: ['1 séance en direct par semaine', 'Position, coordination, accords', 'Accompagnement', 'Paiement mois par mois'],
+    inclus: [
+      'Vidéos de qualité et supports pédagogiques (PDF)',
+      'Bases, gammes, accords et accompagnement moderne',
+      'Suivi personnalisé et groupe WhatsApp de suivi',
+      'Attestation de formation',
+    ],
     bouton: { libelle: 'Choisir cette formule', action: { type: 'inscription', formation: 'piano', offre: 'piano-en-ligne' } },
   },
   {
     id: 'piano-presentiel',
     nom: 'Piano en présentiel',
-    description: 'Les cours de piano en salle, chaque samedi matin à Abidjan.',
+    description: 'Votre talent mérite une bonne formation : les cours de piano en salle, chaque samedi matin à Abidjan.',
     prix: { montant: 30000, devise: 'FCFA', mention: 'par mois' },
     modalite: 'Présentiel',
-    duree: '6 à 8 mois',
-    horaires: 'Samedi, 8 h 30 – 13 h 30',
+    duree: '5 mois',
+    horaires: 'Samedi, 8 h 30 – 13 h 30',
     lieu: 'Paroisse Saint Jean-Paul II, Cocody Angré 8e tranche, Abidjan',
+    periode: 'Du 10 janvier au 10 mai 2027',
+    debut: '2027-01-10',
+    places: 30,
+    affiche: affichePianoPresentiel as string,
     formations: ['piano'],
-    inclus: ['Cours chaque samedi matin', 'Pratique sur instrument', 'Position, accords, accompagnement', 'Paiement mois par mois'],
+    inclus: [
+      'Les bases du piano, les gammes et les accords',
+      'L’accompagnement moderne',
+      'Exercices d’indépendance des deux mains',
+      'Un groupe WhatsApp de suivi',
+    ],
     bouton: { libelle: 'Choisir cette formule', action: { type: 'inscription', formation: 'piano', offre: 'piano-presentiel' } },
   },
   {
@@ -107,4 +145,14 @@ export function offresPour(formationId: string | null | undefined) {
 export function formaterPrix(prix: Prix) {
   const montant = new Intl.NumberFormat('fr-FR').format(prix.montant).replace(/ | /g, ' ');
   return `${montant} ${prix.devise}`;
+}
+
+/** Nombre de jours avant le début de la session (null si pas de date ou déjà commencée). */
+export function joursAvantDebut(offre: Offre, aujourdHui = new Date()) {
+  if (!offre.debut) return null;
+  const [a, m, j] = offre.debut.split('-').map(Number);
+  const debut = Date.UTC(a ?? 0, (m ?? 1) - 1, j ?? 1);
+  const jour = Date.UTC(aujourdHui.getFullYear(), aujourdHui.getMonth(), aujourdHui.getDate());
+  const ecart = Math.round((debut - jour) / 86_400_000);
+  return ecart >= 0 ? ecart : null;
 }

@@ -26,7 +26,7 @@ export function Hero() {
                 naviguer(accueil.annonce.chemin);
               }}
             >
-              <span className={styles.annonceBadge}>Nouveau</span>
+              <span className={styles.annonceBadge}>Inscriptions ouvertes</span>
               {accueil.annonce.texte}
               <Icone nom="fleche" taille={16} />
             </a>

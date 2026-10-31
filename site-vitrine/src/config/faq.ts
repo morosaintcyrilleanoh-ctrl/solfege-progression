@@ -25,7 +25,7 @@ export const faq: QuestionFaq[] = [
   {
     question: 'Comment se déroulent les cours ?',
     reponse:
-      'Les cours ont lieu en ligne, en direct avec le formateur : vous suivez les explications, posez vos questions et pratiquez pendant la séance, où que vous soyez. Le Solfège a lieu le lundi et le jeudi de 20 h 30 à 22 h, le Piano en ligne le lundi de 18 h à 19 h (heure d’Abidjan, GMT). Le Piano existe aussi en présentiel à Abidjan, le samedi de 8 h 30 à 13 h 30, à la paroisse Saint Jean-Paul II de Cocody Angré 8e tranche.',
+      'Les cours ont lieu en ligne, en direct avec le formateur : vous suivez les explications, posez vos questions et pratiquez pendant la séance, où que vous soyez. Le Solfège a lieu le lundi et le jeudi de 20 h 30 à 22 h, le Piano en ligne le lundi de 18 h à 19 h (heure d’Abidjan, GMT). Le Piano existe aussi en présentiel à Abidjan, le samedi de 8 h 30 à 13 h 30, à la paroisse Saint Jean-Paul II de Cocody Angré 8e tranche.',
   },
   {
     question: 'Ai-je besoin d’un piano ou d’un clavier ?',
@@ -39,7 +39,7 @@ export const faq: QuestionFaq[] = [
   {
     question: 'Combien de temps dure une formation ?',
     reponse:
-      'Le programme de Solfège « Lire une partition musicale en 60 jours » dure 2 mois. La formation Piano dure de 6 à 8 mois. Le coaching individuel dure de 5 à 6 mois.',
+      'Le programme de Solfège « Lire une partition musicale en 60 jours » dure 2 mois (prochaine session du 1er décembre 2026 au 31 janvier 2027). La formation Piano dure 5 mois (prochaine session du 10 janvier au 10 mai 2027). Le coaching individuel dure de 5 à 6 mois.',
   },
   {
     question: 'Je n’ai pas d’instrument. Puis-je suivre les formations ?',
@@ -55,6 +55,14 @@ export const faq: QuestionFaq[] = [
     question: 'Et si je n’y arrive pas ?',
     reponse:
       'Chaque notion est expliquée pas à pas, puis mise en pratique. En cas de blocage, vous pouvez poser vos questions au formateur.',
+  },
+  {
+    question: 'Combien y a-t-il de places ?',
+    reponse: 'Chaque session est limitée à 30 places : réservez la vôtre dès que possible.',
+  },
+  {
+    question: 'Est-ce que je reçois une attestation ?',
+    reponse: 'Oui, la formation Piano en ligne est validée par une attestation de formation.',
   },
   {
     question: 'Combien coûtent les formations ?',
