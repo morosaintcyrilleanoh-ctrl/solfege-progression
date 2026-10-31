@@ -102,7 +102,7 @@ export const formations: Formation[] = [
       'Vous avez commencé seul et voulez une méthode claire',
     ],
     prerequis: 'Aucun ; le Solfège en parallèle aide à progresser plus vite.',
-    materiel: 'En ligne : un piano ou un clavier (même d’entrée de gamme). En présentiel : instrument sur place.',
+    materiel: 'En ligne : un piano ou un clavier (même d’entrée de gamme). En présentiel : pianos disponibles sur place, ou venez avec le vôtre.',
     format: '5 mois · du 10 janvier au 10 mai 2027 · en ligne le lundi (18 h – 19 h) ou en présentiel à Abidjan le samedi (8 h 30 – 13 h 30)',
     symbole: 'clavier',
     ...boutons('piano'),

@@ -268,3 +268,16 @@
 .places {
   border: 1.5px solid currentColor;
 }
+
+.note {
+  font-size: 0.86rem;
+  color: var(--texte-doux);
+  padding: 10px 12px;
+  border-radius: var(--rayon-petit);
+  background: rgba(254, 186, 1, 0.1);
+}
+
+.boutons {
+  display: grid;
+  gap: 8px;
+}

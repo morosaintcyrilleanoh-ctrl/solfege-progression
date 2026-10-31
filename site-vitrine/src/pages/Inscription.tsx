@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from 'react';
 import { formations, trouverFormation } from '../config/formations';
-import { formaterPrix, offresPour, trouverOffre } from '../config/offres';
+import { aLienPaiement, formaterPrix, offresPour, trouverOffre } from '../config/offres';
 import { site } from '../config/site';
 import { Icone } from '../components/Icone';
 import { Logo } from '../components/Logo';
@@ -228,6 +228,20 @@ export function Inscription() {
                 { valeur: '', libelle: 'À définir avec le formateur', detail: 'Vous en discuterez ensemble' },
               ]}
             />
+            {aLienPaiement(offreChoisie) && (
+              <div className={styles.paiementDirect}>
+                <p>
+                  <strong>Vous pouvez payer tout de suite</strong> et réserver votre place en ligne (Mobile Money ou carte), ou
+                  continuer pour envoyer votre demande au formateur.
+                </p>
+                {offreChoisie.notePaiement && <small>{offreChoisie.notePaiement}</small>}
+                <a className="btn btn--large" href={offreChoisie.lienPaiement}>
+                  {offreChoisie.libellePaiement ?? 'Payer et réserver ma place'}
+                  {offreChoisie.prix ? ` · ${formaterPrix(offreChoisie.prix)}` : ''}
+                  <Icone nom="fleche" />
+                </a>
+              </div>
+            )}
           </Question>
         )}
 

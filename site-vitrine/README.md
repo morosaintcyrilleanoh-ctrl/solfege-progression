@@ -73,6 +73,15 @@ FAQ). **Passez-le à `false` avant la mise en ligne** : ce qui est vide est alor
 Statuts de confirmation : `inscription-envoyee`, `inscription-whatsapp`, `apercu`,
 `paiement-en-attente`, `paiement-reussi`, `paiement-echoue`, `paiement-annule`.
 
+## Paiement via Chariow (le plus simple)
+
+Dans `src/config/offres.ts`, collez le lien de la page Chariow de chaque formule
+dans `lienPaiement` (ex. `lienPaiement: 'https://….chariow.com/…'`). Tous les
+boutons de réservation de cette formule (tarifs, page formation, inscription)
+mènent alors au paiement ; un bouton « Poser une question » (WhatsApp) reste
+à côté. Une formule sans lien garde l'inscription par formulaire + WhatsApp.
+Texte du bouton : `libellePaiement` ; explication sous le prix : `notePaiement`.
+
 ## Inscriptions et paiement : points d'intégration
 
 **Aucun paiement réel n'est effectué ni simulé.**

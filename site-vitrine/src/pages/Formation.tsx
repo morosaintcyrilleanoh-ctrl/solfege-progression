@@ -1,5 +1,5 @@
 import { formations, type Formation as TypeFormation } from '../config/formations';
-import { formaterPrix, offresPour } from '../config/offres';
+import { boutonReservation, formaterPrix, offresPour } from '../config/offres';
 import { Session } from '../sections/Tarifs';
 import { site } from '../config/site';
 import { BoutonAction, messagePour } from '../components/BoutonAction';
@@ -135,8 +135,12 @@ export function Formation({ formation }: { formation: TypeFormation }) {
                     <small className={styles.sessionInfos}>
                       {[o.modalite, o.periode, o.horaires, o.lieu].filter(Boolean).join(' · ')}
                     </small>
+                    {o.notePaiement && <small className={styles.sessionInfos}>{o.notePaiement}</small>}
                     <BoutonAction
-                      bouton={{ libelle: 'Réserver ma place', action: { type: 'inscription', formation: formation.id, offre: o.id } }}
+                      bouton={boutonReservation(
+                        { ...o, bouton: { ...o.bouton, action: { type: 'inscription', formation: formation.id, offre: o.id } } },
+                        'Réserver ma place',
+                      )}
                       variante={o.affiche ? 'plein' : 'contour'}
                       large
                     />

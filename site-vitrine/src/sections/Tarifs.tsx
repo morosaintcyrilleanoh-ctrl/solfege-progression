@@ -1,5 +1,5 @@
 import { site } from '../config/site';
-import { formaterPrix, joursAvantDebut, offres, tarifs, type Offre } from '../config/offres';
+import { aLienPaiement, boutonReservation, formaterPrix, joursAvantDebut, offres, tarifs, type Offre } from '../config/offres';
 import type { Bouton } from '../config/types';
 import { BoutonAction, messagePour } from '../components/BoutonAction';
 import { EnteteSection } from '../components/EnteteSection';
@@ -51,6 +51,7 @@ export function Tarifs() {
                   </>
                 )}
               </div>
+              {offre.notePaiement && <p className={styles.note}>{offre.notePaiement}</p>}
               {offre.plusieursFois && <p className={styles.plusieursFois}>{offre.plusieursFois}</p>}
               <dl className={styles.details}>
                 <div>
@@ -90,7 +91,21 @@ export function Tarifs() {
                   </li>
                 ))}
               </ul>
-              <BoutonAction bouton={avecMessage(offre.bouton, offre)} large variante={offre.recommandee ? 'plein' : 'contour'} />
+              <div className={styles.boutons}>
+                <BoutonAction
+                  bouton={avecMessage(boutonReservation(offre), offre)}
+                  large
+                  variante={offre.recommandee || aLienPaiement(offre) ? 'plein' : 'contour'}
+                />
+                {aLienPaiement(offre) && (
+                  <BoutonAction
+                    bouton={{ libelle: 'Poser une question', action: { type: 'whatsapp', message: messagePour(undefined, offre.id) } }}
+                    large
+                    variante="contour"
+                    taille="petit"
+                  />
+                )}
+              </div>
             </li>
           ))}
         </ul>
@@ -102,7 +117,7 @@ export function Tarifs() {
               <li key={m}>{m}</li>
             ))}
           </ul>
-          {!paiementEnLigneDisponible() && <p>{tarifs.mention}</p>}
+          {offres.some(aLienPaiement) ? <p>{tarifs.mentionPaiementEnLigne}</p> : !paiementEnLigneDisponible() && <p>{tarifs.mention}</p>}
         </div>
       </div>
     </section>

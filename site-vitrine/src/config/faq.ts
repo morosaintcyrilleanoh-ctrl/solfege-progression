@@ -44,7 +44,7 @@ export const faq: QuestionFaq[] = [
   {
     question: 'Je n’ai pas d’instrument. Puis-je suivre les formations ?',
     reponse:
-      'Oui pour le Solfège, l’Harmonie et l’Oreille musicale : ces disciplines se travaillent sans instrument. Pour le Piano en ligne, il vous faut un piano ou un clavier, même d’entrée de gamme ; en présentiel, l’instrument est sur place.',
+      'Oui pour le Solfège, l’Harmonie et l’Oreille musicale : ces disciplines se travaillent sans instrument. Pour le Piano en ligne, il vous faut un piano ou un clavier, même d’entrée de gamme ; en présentiel, des pianos sont disponibles sur place (vous pouvez aussi venir avec le vôtre).',
   },
   {
     question: 'Je n’ai pas beaucoup de temps. Est-ce adapté ?',
@@ -67,6 +67,6 @@ export const faq: QuestionFaq[] = [
   {
     question: 'Combien coûtent les formations ?',
     reponse:
-      'Solfège (60 jours, en ligne) : 50 000 FCFA pour les 2 mois. Piano : 25 000 FCFA par mois en ligne, 30 000 FCFA par mois en présentiel. Coaching individuel : 250 000 FCFA pour 5 à 6 mois. Le piano se règle mois par mois.',
+      'Solfège (60 jours, en ligne) : 50 000 FCFA pour les 2 mois. Piano : 25 000 FCFA par mois en ligne, 30 000 FCFA par mois en présentiel. Coaching individuel : 250 000 FCFA pour 5 à 6 mois. Pour le piano, le premier paiement couvre l’inscription et le premier mois ; ensuite, vous réglez le mois suivant à la fin de chaque mois.',
   },
 ];

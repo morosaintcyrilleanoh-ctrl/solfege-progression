@@ -39,6 +39,16 @@ export type Offre = {
   recommandee?: boolean;
   /** Paiement en plusieurs fois, si vous l'acceptez. Vide = rien n'est affiché. */
   plusieursFois?: string;
+  /**
+   * Lien de la page de paiement Chariow de cette formule (https://…).
+   * Renseigné : tous les boutons de réservation de la formule mènent au paiement.
+   * Vide : l'inscription passe par le formulaire et WhatsApp.
+   */
+  lienPaiement?: string;
+  /** Texte du bouton de paiement. */
+  libellePaiement?: string;
+  /** Explication du paiement affichée sous le prix (ex. paiement mensuel). */
+  notePaiement?: string;
   bouton: Bouton;
 };
 
@@ -50,6 +60,8 @@ export const tarifs = {
   moyensPaiement: ['Orange Money', 'MTN MoMo', 'Moov Money', 'Wave', 'Carte bancaire'],
   /** Mention affichée sous les offres. */
   mention: 'Le paiement en ligne sera activé prochainement. En attendant, l’inscription est confirmée directement avec le formateur.',
+  /** Mention affichée quand au moins une formule a son lien de paiement Chariow. */
+  mentionPaiementEnLigne: 'Paiement en ligne sécurisé par Mobile Money ou carte bancaire, via Chariow.',
 };
 
 export const offres: Offre[] = [
@@ -73,6 +85,8 @@ export const offres: Offre[] = [
       'Un groupe WhatsApp de suivi',
     ],
     recommandee: true,
+    lienPaiement: '',
+    libellePaiement: 'Payer et réserver ma place',
     bouton: { libelle: 'Je m’inscris', action: { type: 'inscription', formation: 'solfege', offre: 'partition-60-jours' } },
   },
   {
@@ -80,6 +94,8 @@ export const offres: Offre[] = [
     nom: 'Piano en ligne',
     description: 'Programme d’accompagnement : apprenez, pratiquez et progressez depuis chez vous, à votre rythme.',
     prix: { montant: 25000, devise: 'FCFA', mention: 'par mois' },
+    notePaiement:
+      'Le premier paiement de 25 000 FCFA couvre l’inscription et le premier mois de cours. Ensuite, 25 000 FCFA à la fin de chaque mois pour le mois suivant.',
     modalite: 'En ligne',
     duree: '5 mois',
     horaires: 'Lundi, 18 h – 19 h',
@@ -94,6 +110,8 @@ export const offres: Offre[] = [
       'Suivi personnalisé et groupe WhatsApp de suivi',
       'Attestation de formation',
     ],
+    lienPaiement: '',
+    libellePaiement: 'Payer le 1er mois et réserver',
     bouton: { libelle: 'Choisir cette formule', action: { type: 'inscription', formation: 'piano', offre: 'piano-en-ligne' } },
   },
   {
@@ -101,6 +119,8 @@ export const offres: Offre[] = [
     nom: 'Piano en présentiel',
     description: 'Votre talent mérite une bonne formation : les cours de piano en salle, chaque samedi matin à Abidjan.',
     prix: { montant: 30000, devise: 'FCFA', mention: 'par mois' },
+    notePaiement:
+      'Le premier paiement de 30 000 FCFA couvre l’inscription et le premier mois de cours. Ensuite, 30 000 FCFA à la fin de chaque mois pour le mois suivant.',
     modalite: 'Présentiel',
     duree: '5 mois',
     horaires: 'Samedi, 8 h 30 – 13 h 30',
@@ -114,8 +134,11 @@ export const offres: Offre[] = [
       'Les bases du piano, les gammes et les accords',
       'L’accompagnement moderne',
       'Exercices d’indépendance des deux mains',
+      'Pianos disponibles sur place (vous pouvez aussi venir avec le vôtre)',
       'Un groupe WhatsApp de suivi',
     ],
+    lienPaiement: '',
+    libellePaiement: 'Payer le 1er mois et réserver',
     bouton: { libelle: 'Choisir cette formule', action: { type: 'inscription', formation: 'piano', offre: 'piano-presentiel' } },
   },
   {
@@ -128,6 +151,8 @@ export const offres: Offre[] = [
     horaires: 'Créneaux fixés avec le formateur',
     formations: ['solfege', 'piano', 'harmonie', 'oreille-musicale'],
     inclus: ['Cours individuels en ligne', 'Programme sur mesure', 'Suivi personnalisé de votre progression'],
+    lienPaiement: '',
+    libellePaiement: 'Payer et réserver mon coaching',
     bouton: { libelle: 'Choisir le coaching', action: { type: 'inscription', offre: 'coaching' } },
   },
 ];
@@ -155,4 +180,20 @@ export function joursAvantDebut(offre: Offre, aujourdHui = new Date()) {
   const jour = Date.UTC(aujourdHui.getFullYear(), aujourdHui.getMonth(), aujourdHui.getDate());
   const ecart = Math.round((debut - jour) / 86_400_000);
   return ecart >= 0 ? ecart : null;
+}
+
+/** Une formule a-t-elle son lien de paiement Chariow ? */
+export function aLienPaiement(offre: Offre | undefined): offre is Offre & { lienPaiement: string } {
+  return Boolean(offre?.lienPaiement && /^https?:\/\//.test(offre.lienPaiement));
+}
+
+/**
+ * Bouton de réservation d'une formule : paiement Chariow si le lien existe,
+ * sinon le bouton d'inscription habituel (formulaire + WhatsApp).
+ */
+export function boutonReservation(offre: Offre, libelleSansLien?: string): Bouton {
+  if (aLienPaiement(offre)) {
+    return { libelle: offre.libellePaiement ?? 'Payer et réserver ma place', action: { type: 'lien', url: offre.lienPaiement } };
+  }
+  return libelleSansLien ? { ...offre.bouton, libelle: libelleSansLien } : offre.bouton;
 }
