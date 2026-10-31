@@ -94,3 +94,14 @@
 .description {
   color: var(--texte-doux);
 }
+
+/* Vidéo au format téléphone */
+.vertical {
+  aspect-ratio: 540 / 972;
+  width: min(100%, 340px);
+  justify-self: center;
+}
+
+.vertical .media {
+  object-fit: contain;
+}

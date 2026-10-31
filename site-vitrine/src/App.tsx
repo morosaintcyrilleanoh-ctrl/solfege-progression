@@ -9,6 +9,7 @@ import { Confirmation } from './pages/Confirmation';
 import { Formation } from './pages/Formation';
 import { trouverFormation } from './config/formations';
 import { Inscription } from './pages/Inscription';
+import { Masterclass } from './pages/Masterclass';
 import { Introuvable } from './pages/Introuvable';
 
 /** Table des pages : ajoutez ici une nouvelle page (ex. '/mentions-legales'). */
@@ -16,6 +17,7 @@ const pages: Record<string, { composant: () => React.JSX.Element; titre?: string
   '/': { composant: Accueil },
   '/inscription': { composant: Inscription, titre: 'Inscription' },
   '/confirmation': { composant: Confirmation, titre: 'Confirmation' },
+  '/masterclass': { composant: Masterclass, titre: 'Masterclass gratuite' },
 };
 
 function Page() {

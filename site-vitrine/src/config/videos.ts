@@ -1,3 +1,6 @@
+import videoMasterclass from '../assets/masterclass-video.mp4';
+import posterMasterclass from '../assets/masterclass-poster.jpg';
+
 /**
  * ============================================================
  *  VIDÉOS DE PRÉSENTATION ET DÉMONSTRATIONS
@@ -16,6 +19,8 @@ export type Video = {
   fichier?: string;
   /** Image d'aperçu pour une vidéo en fichier, ex. '/images/video-1.jpg'. */
   miniature?: string;
+  /** Vidéo verticale (format téléphone, 9:16). */
+  vertical?: boolean;
 };
 
 export const sectionVideos = {
@@ -24,6 +29,13 @@ export const sectionVideos = {
 };
 
 export const videos: Video[] = [
+  {
+    titre: 'Masterclass gratuite : lire une partition sans se perdre',
+    description: 'En une minute : la méthode « UN PAS » et le programme de la masterclass du 8 novembre.',
+    fichier: videoMasterclass as string,
+    miniature: posterMasterclass as string,
+    vertical: true,
+  },
   { titre: 'Présentation des formations', description: 'Le Formateur Anoh Cyrille présente la méthode et le contenu des formations.', youtube: '' },
   { titre: 'Démonstration : lire une partition', description: 'Une démonstration pédagogique de lecture de notes et de rythme.', youtube: '' },
   { titre: 'Démonstration : au piano', description: 'Une démonstration au clavier : accords et accompagnement.', youtube: '' },

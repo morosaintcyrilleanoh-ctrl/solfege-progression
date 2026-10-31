@@ -1,5 +1,6 @@
 import { accueil, site } from '../config/site';
 import { temoignages } from '../config/temoignages';
+import { etatMasterclass, masterclass } from '../config/masterclass';
 import { BoutonAction } from '../components/BoutonAction';
 import { Emplacement } from '../components/Emplacement';
 import { Icone } from '../components/Icone';
@@ -9,6 +10,10 @@ import styles from './Hero.module.css';
 
 export function Hero() {
   const { naviguer } = useRouteur();
+  const masterclassAVenir = masterclass.actif && etatMasterclass() !== 'termine';
+  const annonce = masterclassAVenir
+    ? { badge: 'Gratuit', texte: 'Masterclass en direct · dim. 8 novembre, 20 h 30', chemin: '/masterclass' }
+    : { badge: 'Inscriptions ouvertes', ...accueil.annonce };
   const photo = site.images.formateurAccueil;
 
   return (
@@ -17,17 +22,17 @@ export function Hero() {
       <Portee className={styles.portee} />
       <div className={`conteneur ${styles.grille}`}>
         <div className={styles.texte}>
-          {accueil.annonce.texte && (
+          {annonce.texte && (
             <a
               className={`${styles.annonce} apparition`}
-              href={href(accueil.annonce.chemin)}
+              href={href(annonce.chemin)}
               onClick={(e) => {
                 e.preventDefault();
-                naviguer(accueil.annonce.chemin);
+                naviguer(annonce.chemin);
               }}
             >
-              <span className={styles.annonceBadge}>Inscriptions ouvertes</span>
-              {accueil.annonce.texte}
+              <span className={styles.annonceBadge}>{annonce.badge}</span>
+              {annonce.texte}
               <Icone nom="fleche" taille={16} />
             </a>
           )}

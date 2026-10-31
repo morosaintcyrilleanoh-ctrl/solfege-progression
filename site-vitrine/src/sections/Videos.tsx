@@ -21,7 +21,7 @@ export function Videos() {
         <ul className={styles.grille}>
           {visibles.map((v, i) => (
             <li key={`${v.titre}-${i}`} className={`${styles.element} ${i === 0 ? styles.principale : ''}`}>
-              <div className={styles.cadre}>
+              <div className={`${styles.cadre} ${v.vertical ? styles.vertical : ''}`}>
                 <Lecteur video={v} />
               </div>
               <h3 className={styles.titre}>{v.titre}</h3>

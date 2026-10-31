@@ -9,7 +9,7 @@ export default defineConfig({
   build: {
     target: 'es2020',
     // Aperçu intégré (fichier unique) : images incluses directement dans le code.
-    assetsInlineLimit: process.env.VITE_ROUTEUR === 'memoire' ? 1_000_000 : 4096,
+    assetsInlineLimit: process.env.VITE_ROUTEUR === 'memoire' ? 5_000_000 : 4096,
     cssCodeSplit: false,
   },
 });

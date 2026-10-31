@@ -75,6 +75,11 @@ export function Entete() {
                   </a>
                 </li>
               ))}
+              <li>
+                <a href={href('/masterclass')} onClick={allerA('/masterclass')} className={styles.pointJaune}>
+                  Masterclass
+                </a>
+              </li>
             </ul>
             <BoutonAction bouton={{ libelle: 'S’inscrire', action: { type: 'inscription' } }} taille="petit" />
           </nav>
@@ -99,6 +104,11 @@ export function Entete() {
             <li>
               <a href={href('/')} onClick={allerA('/')}>
                 Accueil
+              </a>
+            </li>
+            <li>
+              <a href={href('/masterclass')} onClick={allerA('/masterclass')} className={styles.lienMasterclass}>
+                Masterclass gratuite <span>8 nov.</span>
               </a>
             </li>
             {liens.map((lien) =>

@@ -1,0 +1,39 @@
+.compte {
+  display: flex;
+  gap: 8px;
+}
+
+.unite {
+  display: grid;
+  justify-items: center;
+  min-width: 62px;
+  padding: 10px 8px;
+  border-radius: 14px;
+  background: var(--jaune);
+  color: var(--noir);
+}
+
+.unite strong {
+  font-family: var(--police-titre);
+  font-weight: 800;
+  font-size: 1.6rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.unite small {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.compact .unite {
+  min-width: 50px;
+  padding: 7px 6px;
+  border-radius: 12px;
+}
+
+.compact .unite strong {
+  font-size: 1.25rem;
+}

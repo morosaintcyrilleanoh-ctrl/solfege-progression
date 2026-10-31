@@ -30,6 +30,7 @@ npm run preview    # teste la version compilée
 | `temoignages.ts` | Témoignages (vides au départ : n'ajoutez que de vrais témoignages) |
 | `faq.ts` | Questions fréquentes (dont les objections : instrument, temps, prix…) |
 | `quiz.ts` | Quiz « Quelle formation est faite pour moi ? » : questions et points par formation |
+| `masterclass.ts` | Masterclass gratuite : date, lien du groupe WhatsApp, lien YouTube, replay, textes |
 | `conversion.ts` | « Pour qui ? », « Vos difficultés, nos solutions », barre d'action fixe, message de partage |
 
 ### Boutons configurables
@@ -66,6 +67,7 @@ FAQ). **Passez-le à `false` avant la mise en ligne** : ce qui est vide est alor
 | Adresse | Rôle |
 |---|---|
 | `/` | Accueil (toutes les sections) |
+| `/masterclass` | Masterclass gratuite (compte à rebours, réservation, méthode UN PAS, vidéo) |
 | `/formations/piano` | Page détaillée d'une formation (objectifs, pour qui, programme, inscription) |
 | `/inscription?formation=piano&offre=parcours-complet` | Formulaire d'inscription pré-rempli |
 | `/confirmation?statut=…&ref=…` | Confirmation après inscription ou retour de paiement |

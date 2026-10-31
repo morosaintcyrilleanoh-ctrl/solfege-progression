@@ -32,6 +32,16 @@ export function BarreAction() {
     ? { ...barreAction.bouton, action: { ...barreAction.bouton.action, formation } }
     : barreAction.bouton;
 
+  if (chemin === '/masterclass') {
+    return (
+      <div className={`${styles.barre} ${visible ? styles.visible : ''}`} aria-hidden={!visible}>
+        <a className="btn btn--large" href="#reserver" tabIndex={visible ? 0 : -1}>
+          Réserver ma place gratuite <Icone nom="fleche" />
+        </a>
+      </div>
+    );
+  }
+
   const whatsapp = barreAction.afficherWhatsApp && (url || site.afficherEmplacements);
   const proprietesWhatsApp = url
     ? { href: url, target: '_blank', rel: 'noopener noreferrer' }
