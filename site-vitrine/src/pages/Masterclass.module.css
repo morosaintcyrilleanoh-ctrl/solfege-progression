@@ -250,7 +250,7 @@
 
 .video video {
   width: 100%;
-  aspect-ratio: 540 / 972;
+  aspect-ratio: 9 / 16;
   border-radius: var(--rayon);
   background: var(--noir);
   box-shadow: var(--ombre);

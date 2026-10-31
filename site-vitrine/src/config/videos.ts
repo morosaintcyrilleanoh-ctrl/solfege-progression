@@ -31,7 +31,7 @@ export const sectionVideos = {
 export const videos: Video[] = [
   {
     titre: 'Masterclass gratuite : lire une partition sans se perdre',
-    description: 'En une minute : la méthode « UN PAS » et le programme de la masterclass du 8 novembre.',
+    description: 'En une minute : pourquoi on se perd devant une partition, la méthode « UN PAS » et le rendez-vous du 8 novembre.',
     fichier: videoMasterclass as string,
     miniature: posterMasterclass as string,
     vertical: true,

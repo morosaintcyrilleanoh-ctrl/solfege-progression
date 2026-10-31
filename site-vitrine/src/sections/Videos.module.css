@@ -97,7 +97,7 @@
 
 /* Vidéo au format téléphone */
 .vertical {
-  aspect-ratio: 540 / 972;
+  aspect-ratio: 9 / 16;
   width: min(100%, 340px);
   justify-self: center;
 }
