@@ -33,6 +33,8 @@ export type Formation = {
   /** Symbole affiché sur la carte. */
   symbole: 'cle-sol' | 'partition' | 'clavier' | 'accord' | 'oreille';
   image?: string;
+  /** Vidéo de présentation YouTube (identifiant, ex. '3Qpkmcd4Dic' pour https://youtu.be/3Qpkmcd4Dic). */
+  videoYoutube?: string;
   bouton: Bouton;
   boutonSecondaire?: Bouton;
 };
@@ -74,6 +76,7 @@ export const formations: Formation[] = [
     materiel: 'Un téléphone ou un ordinateur avec internet, un cahier et un crayon.',
     format: 'En ligne · 60 jours · du 1er décembre 2026 au 31 janvier 2027 · lundi et jeudi, 20 h 30 – 22 h (GMT)',
     symbole: 'cle-sol',
+    videoYoutube: '3Qpkmcd4Dic',
     ...boutons('solfege'),
   },
   {
