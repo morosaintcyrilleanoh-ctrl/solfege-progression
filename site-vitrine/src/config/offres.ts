@@ -85,7 +85,7 @@ export const offres: Offre[] = [
       'Un groupe WhatsApp de suivi',
     ],
     recommandee: true,
-    lienPaiement: '',
+    lienPaiement: 'https://anohcyrille.mychariow.com/solfege02/checkout',
     libellePaiement: 'Payer et réserver ma place',
     bouton: { libelle: 'Je m’inscris', action: { type: 'inscription', formation: 'solfege', offre: 'partition-60-jours' } },
   },
