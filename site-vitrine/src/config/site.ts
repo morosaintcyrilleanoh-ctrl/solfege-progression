@@ -23,7 +23,7 @@ export const site = {
    * vidéos, témoignages, tarifs et coordonnées qui ne sont pas encore renseignés.
    * Passez à false avant la mise en ligne : les emplacements vides seront masqués.
    */
-  afficherEmplacements: true,
+  afficherEmplacements: false,
 
   /** Langue et référencement. */
   seo: {
@@ -63,7 +63,9 @@ export const site = {
   /** Lien vers la plateforme d'exercices en ligne (laboratoires), si vous souhaitez l'afficher. */
   plateforme: {
     url: 'https://music-progression-lab.vercel.app',
-    libelle: 'Music Progression Lab',
+    libelle: 'Essayer gratuitement les exercices',
+    /** Petite description sous le lien (pied de page). */
+    detail: 'Music Progression Lab · accès libre',
     /**
      * Adresse du test de niveau gratuit de la plateforme
      * (ex. 'https://votre-plateforme.vercel.app/test-de-positionnement').
@@ -75,7 +77,9 @@ export const site = {
   /** L'École de la musique (espace des élèves). Vide = masquée. */
   ecole: {
     url: 'https://lecole-de-la-musique.vercel.app',
-    libelle: 'L’École de la musique',
+    libelle: 'Espace élèves (réservé aux inscrits)',
+    /** Petite description sous le lien (pied de page). */
+    detail: 'L’École de la musique · formations, lives, devoirs',
   },
 
   /**
