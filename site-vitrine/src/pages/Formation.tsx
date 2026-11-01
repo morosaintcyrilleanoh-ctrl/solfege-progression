@@ -1,6 +1,7 @@
 import { formations, type Formation as TypeFormation } from '../config/formations';
 import { boutonReservation, formaterPrix, offresPour } from '../config/offres';
 import { Session } from '../sections/Tarifs';
+import { Lecteur } from '../sections/Videos';
 import { site } from '../config/site';
 import { BoutonAction, messagePour } from '../components/BoutonAction';
 import { BoutonPartage } from '../components/BoutonPartage';
@@ -95,7 +96,24 @@ export function Formation({ formation }: { formation: TypeFormation }) {
         </div>
       </section>
 
-      <section className="section section--grise" aria-labelledby="titre-programme">
+      {formation.videoYoutube && (
+        <section className="section section--grise" aria-labelledby="titre-video-formation">
+          <div className={`conteneur ${styles.blocVideo}`}>
+            <div>
+              <span className="surtitre">En vidéo</span>
+              <h2 className={styles.sousTitre} id="titre-video-formation">
+                Découvrez la formation {formation.titre}
+              </h2>
+              <p className="intro-section">Le Formateur Anoh Cyrille vous présente le programme, la méthode et le déroulement des cours.</p>
+            </div>
+            <div className={styles.video}>
+              <Lecteur video={{ titre: `Présentation : ${formation.titre}`, description: '', youtube: formation.videoYoutube }} />
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section className={`section ${formation.videoYoutube ? '' : 'section--grise'}`} aria-labelledby="titre-programme">
         <div className="conteneur">
           <span className="surtitre">Programme</span>
           <h2 className={styles.sousTitre} id="titre-programme">

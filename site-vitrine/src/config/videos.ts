@@ -36,6 +36,11 @@ export const videos: Video[] = [
     miniature: posterMasterclass as string,
     vertical: true,
   },
+  {
+    titre: 'Lire une partition musicale en 60 jours',
+    description: 'Le Formateur Anoh Cyrille présente le programme de solfège en ligne.',
+    youtube: '3Qpkmcd4Dic',
+  },
   { titre: 'Présentation des formations', description: 'Le Formateur Anoh Cyrille présente la méthode et le contenu des formations.', youtube: '' },
   { titre: 'Démonstration : lire une partition', description: 'Une démonstration pédagogique de lecture de notes et de rythme.', youtube: '' },
   { titre: 'Démonstration : au piano', description: 'Une démonstration au clavier : accords et accompagnement.', youtube: '' },

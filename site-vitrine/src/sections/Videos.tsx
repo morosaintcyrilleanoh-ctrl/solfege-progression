@@ -38,7 +38,7 @@ export function Videos() {
  * Lecteur léger : pour YouTube, seule la miniature est chargée ;
  * le lecteur complet ne se charge qu'au clic (économie de données mobiles).
  */
-function Lecteur({ video }: { video: Video }) {
+export function Lecteur({ video }: { video: Video }) {
   const [actif, setActif] = useState(false);
 
   if (video.fichier) {
@@ -64,6 +64,10 @@ function Lecteur({ video }: { video: Video }) {
           src={video.miniature || `https://i.ytimg.com/vi/${encodeURIComponent(video.youtube)}/hqdefault.jpg`}
           alt=""
           loading="lazy"
+          onError={(e) => {
+            // Miniature indisponible (connexion faible) : on garde le fond noir et le bouton lecture.
+            e.currentTarget.style.visibility = 'hidden';
+          }}
         />
         <span className={styles.lecture}>
           <Icone nom="lecture" taille={28} />
