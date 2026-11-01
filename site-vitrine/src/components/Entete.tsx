@@ -143,15 +143,15 @@ export function Entete() {
           </ul>
           {(site.ecole.url || site.plateforme.url) && (
             <div className={styles.plateformes}>
-              <span>Déjà élève ?</span>
-              {site.ecole.url && (
-                <a href={site.ecole.url} target="_blank" rel="noopener noreferrer">
-                  {site.ecole.libelle} ↗
-                </a>
-              )}
+              <span>Nos plateformes :</span>
               {site.plateforme.url && (
                 <a href={site.plateforme.url} target="_blank" rel="noopener noreferrer">
                   {site.plateforme.libelle} ↗
+                </a>
+              )}
+              {site.ecole.url && (
+                <a href={site.ecole.url} target="_blank" rel="noopener noreferrer">
+                  {site.ecole.libelle} ↗
                 </a>
               )}
             </div>

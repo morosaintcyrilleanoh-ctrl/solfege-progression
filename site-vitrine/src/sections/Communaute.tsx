@@ -62,15 +62,15 @@ export function Communaute() {
 
         <div className={styles.actions}>
           <BoutonAction bouton={communaute.bouton} icone={<Icone nom="personnes" />} />
-          {site.ecole.url && (
-            <BoutonAction
-              bouton={{ libelle: site.ecole.libelle, action: { type: 'lien', url: site.ecole.url, nouvelOnglet: true } }}
-              variante="contour"
-            />
-          )}
           {plateforme.url && (
             <BoutonAction
               bouton={{ libelle: plateforme.libelle, action: { type: 'lien', url: plateforme.url, nouvelOnglet: true } }}
+              variante="contour"
+            />
+          )}
+          {site.ecole.url && (
+            <BoutonAction
+              bouton={{ libelle: site.ecole.libelle, action: { type: 'lien', url: site.ecole.url, nouvelOnglet: true } }}
               variante="contour"
             />
           )}
