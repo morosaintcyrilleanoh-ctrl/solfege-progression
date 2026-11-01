@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { partage } from '../config/conversion';
+import { site } from '../config/site';
 import { Icone } from './Icone';
 
 type Props = { libelle?: string; message?: string; chemin?: string; className?: string; variante?: 'contour' | 'texte' };
@@ -10,7 +11,7 @@ type Props = { libelle?: string; message?: string; chemin?: string; className?: 
  */
 export function BoutonPartage({ libelle = 'Partager à un ami', message = partage.message, chemin = '/', className, variante = 'contour' }: Props) {
   const [copie, setCopie] = useState(false);
-  const adresse = new URL(chemin, window.location.origin).toString();
+  const adresse = new URL(chemin, site.url || window.location.origin).toString();
   const texte = `${message} ${adresse}`;
   const lienWhatsApp = `https://wa.me/?text=${encodeURIComponent(texte)}`;
 

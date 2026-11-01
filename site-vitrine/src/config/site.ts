@@ -15,6 +15,8 @@ export const site = {
   formateur: 'Anoh Cyrille',
   titreFormateur: 'Formateur Anoh Cyrille',
   slogan: 'Apprendre la musique avec méthode.',
+  /** Adresse publique du site. */
+  url: 'https://apprendre-la-musique.vercel.app',
 
   /**
    * Mode aperçu : affiche des emplacements « à compléter » pour les photos,
