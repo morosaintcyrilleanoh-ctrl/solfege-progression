@@ -60,14 +60,20 @@ export const site = {
 
   /** Lien vers la plateforme d'exercices en ligne (laboratoires), si vous souhaitez l'afficher. */
   plateforme: {
-    url: '',
-    libelle: 'Accéder à la plateforme d’exercices',
+    url: 'https://music-progression-lab.vercel.app',
+    libelle: 'Music Progression Lab',
     /**
      * Adresse du test de niveau gratuit de la plateforme
      * (ex. 'https://votre-plateforme.vercel.app/test-de-positionnement').
      * Renseignée, elle ajoute le bouton « Tester mon niveau gratuitement ».
      */
     testNiveau: '',
+  },
+
+  /** L'École de la musique (espace des élèves). Vide = masquée. */
+  ecole: {
+    url: 'https://lecole-de-la-musique.vercel.app',
+    libelle: 'L’École de la musique',
   },
 
   /**

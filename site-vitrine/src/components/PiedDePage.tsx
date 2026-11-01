@@ -59,6 +59,34 @@ export function PiedDePage() {
           </ul>
         </div>
 
+        {(site.plateforme.url || site.ecole.url) && (
+          <div>
+            <h2 className={styles.titre}>Nos plateformes</h2>
+            <ul className={styles.liste}>
+              {site.ecole.url && (
+                <li>
+                  <a href={site.ecole.url} target="_blank" rel="noopener noreferrer">
+                    <span className={styles.plateforme}>
+                      <strong>{site.ecole.libelle}</strong>
+                      <small>Votre espace élève</small>
+                    </span>
+                  </a>
+                </li>
+              )}
+              {site.plateforme.url && (
+                <li>
+                  <a href={site.plateforme.url} target="_blank" rel="noopener noreferrer">
+                    <span className={styles.plateforme}>
+                      <strong>{site.plateforme.libelle}</strong>
+                      <small>Exercices et laboratoires en ligne</small>
+                    </span>
+                  </a>
+                </li>
+              )}
+            </ul>
+          </div>
+        )}
+
         <div>
           <h2 className={styles.titre}>Contact</h2>
           <ul className={styles.liste}>

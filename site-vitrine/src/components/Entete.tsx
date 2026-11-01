@@ -1,5 +1,6 @@
 import { useEffect, useState, type MouseEvent } from 'react';
 import { formations } from '../config/formations';
+import { site } from '../config/site';
 import { href, useRouteur } from '../lib/router';
 import { BoutonAction } from './BoutonAction';
 import { Icone } from './Icone';
@@ -140,6 +141,21 @@ export function Entete() {
               ),
             )}
           </ul>
+          {(site.ecole.url || site.plateforme.url) && (
+            <div className={styles.plateformes}>
+              <span>Déjà élève ?</span>
+              {site.ecole.url && (
+                <a href={site.ecole.url} target="_blank" rel="noopener noreferrer">
+                  {site.ecole.libelle} ↗
+                </a>
+              )}
+              {site.plateforme.url && (
+                <a href={site.plateforme.url} target="_blank" rel="noopener noreferrer">
+                  {site.plateforme.libelle} ↗
+                </a>
+              )}
+            </div>
+          )}
           <div className={styles.panneauActions} onClick={fermer}>
             <BoutonAction bouton={{ libelle: 'Nous contacter', action: { type: 'section', id: 'contact' } }} variante="contour" large />
             <BoutonAction bouton={{ libelle: 'S’inscrire à une formation', action: { type: 'inscription' } }} large />

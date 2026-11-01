@@ -12,7 +12,13 @@
 
 @media (min-width: 760px) {
   .grille {
-    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1040px) {
+  .grille {
+    grid-template-columns: 1.4fr 1fr 1fr 1fr;
   }
 }
 
@@ -105,4 +111,18 @@
   .pied {
     padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px));
   }
+}
+
+.plateforme {
+  display: grid !important;
+  gap: 0 !important;
+  line-height: 1.35;
+}
+
+.plateforme strong {
+  color: var(--texte);
+}
+
+.plateforme small {
+  color: var(--texte-doux);
 }
