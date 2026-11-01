@@ -1,0 +1,79 @@
+/* ---------- Téléphone : barre en bas ---------- */
+.barre {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 55;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px var(--gouttiere-d) calc(12px + env(safe-area-inset-bottom, 0px)) var(--gouttiere);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--gris-ligne);
+  box-shadow: 0 -10px 30px -18px rgba(14, 14, 14, 0.35);
+  transform: translateY(110%);
+  transition: transform 0.3s ease;
+  /* La barre garde les couleurs claires, même au-dessus d'une zone sombre */
+  --texte: var(--noir);
+  --fond: var(--blanc);
+  color: var(--noir);
+}
+
+.visible {
+  transform: none;
+}
+
+.barre :global(.btn) {
+  flex: 1;
+}
+
+.whatsapp {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--whatsapp);
+  color: #fff;
+}
+
+/* ---------- Ordinateur : bouton rond flottant ---------- */
+.flottant {
+  display: none;
+}
+
+@media (min-width: 1040px) {
+  .barre {
+    display: none;
+  }
+
+  .flottant {
+    position: fixed;
+    right: max(24px, calc(env(safe-area-inset-right, 0px) + 16px));
+    bottom: max(24px, calc(env(safe-area-inset-bottom, 0px) + 16px));
+    z-index: 55;
+    display: grid;
+    place-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--whatsapp);
+    color: #fff;
+    box-shadow: 0 0 0 8px rgba(37, 211, 102, 0.22), 0 14px 30px -10px rgba(0, 0, 0, 0.45);
+    transition: transform 0.2s ease;
+  }
+
+  .flottant:hover {
+    transform: scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barre {
+    transition: none;
+  }
+}

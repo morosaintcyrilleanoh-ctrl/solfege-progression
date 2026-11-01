@@ -1,0 +1,283 @@
+.grille {
+  list-style: none;
+  margin: 0;
+  padding: 14px 0 0;
+  display: grid;
+  gap: 18px;
+  align-items: stretch;
+}
+
+@media (min-width: 760px) {
+  .grille {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 18px;
+  }
+}
+
+.offre {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 30px 24px 24px;
+  border: 1px solid var(--gris-ligne);
+  border-radius: var(--rayon);
+  background: var(--blanc);
+  box-shadow: var(--ombre-douce);
+}
+
+/* Offre recommandée : carte noire */
+.recommandee {
+  --texte: #fff;
+  --texte-doux: rgba(255, 255, 255, 0.72);
+  --ligne: rgba(255, 255, 255, 0.14);
+  border-color: var(--noir);
+  background:
+    radial-gradient(90% 50% at 100% 0%, rgba(254, 186, 1, 0.28), transparent 70%),
+    var(--noir);
+  color: #fff;
+  box-shadow: var(--ombre);
+}
+
+.etiquette {
+  position: absolute;
+  z-index: 1;
+  top: -13px;
+  left: 24px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--jaune);
+  color: var(--noir);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.nom {
+  font-size: 1.5rem;
+}
+
+.description {
+  color: var(--texte-doux);
+}
+
+.prix {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+  padding-block: 14px;
+  border-block: 1px dashed var(--ligne, var(--gris-ligne));
+}
+
+.montant {
+  font-family: var(--police-titre);
+  font-weight: 800;
+  font-size: 2.2rem;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.mention {
+  color: var(--texte-doux);
+  font-size: 0.9rem;
+}
+
+.surDemande {
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.inclus {
+  list-style: none;
+  margin: 0 0 8px;
+  padding: 0;
+  display: grid;
+  gap: 9px;
+  flex: 1;
+  align-content: start;
+}
+
+.inclus li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.inclus svg {
+  flex: none;
+  margin-top: 3px;
+  padding: 2px;
+  border-radius: 50%;
+  background: var(--jaune);
+  color: var(--noir);
+}
+
+.recommandee :global(.btn--contour) {
+  --couleur-btn: #fff;
+  --bord-btn: #fff;
+}
+
+.paiement {
+  display: grid;
+  gap: 12px;
+  margin-top: 32px;
+  padding: 20px 22px;
+  border-radius: var(--rayon);
+  background: var(--blanc);
+  border: 1px solid var(--gris-ligne);
+  color: var(--texte-doux);
+  font-size: 0.92rem;
+}
+
+.paiementTitre {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--noir);
+}
+
+.paiement ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.paiement li {
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: var(--jaune-pale);
+  color: var(--noir);
+  font-weight: 700;
+  font-size: 0.84rem;
+}
+
+.plusieursFois {
+  justify-self: start;
+  align-self: flex-start;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--jaune-pale);
+  color: var(--noir);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.modalite {
+  align-self: flex-start;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--jaune-pale);
+  color: var(--noir);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.presentiel {
+  background: var(--noir);
+  color: var(--jaune);
+}
+
+.recommandee .presentiel,
+.recommandee .modalite {
+  background: var(--jaune);
+  color: var(--noir);
+}
+
+.details {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.details div {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.details dt {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--texte-doux);
+  font-size: 0.86rem;
+}
+
+.details dt svg {
+  flex: none;
+  color: #b38300;
+}
+
+.recommandee .details dt svg {
+  color: var(--jaune);
+}
+
+.details dd {
+  margin: 0;
+  font-weight: 700;
+  font-size: 0.94rem;
+  min-width: 0;
+}
+
+/* Affiche de la formation en tête de carte */
+.affiche {
+  width: calc(100% + 48px);
+  max-width: none;
+  height: auto;
+  aspect-ratio: 1;
+  margin: -30px -24px 4px;
+  border-radius: var(--rayon) var(--rayon) 0 0;
+  object-fit: cover;
+}
+
+.recommandee .affiche {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.session {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.debut,
+.places {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.debut {
+  background: var(--jaune);
+  color: var(--noir);
+}
+
+.places {
+  border: 1.5px solid currentColor;
+}
+
+.note {
+  font-size: 0.86rem;
+  color: var(--texte-doux);
+  padding: 10px 12px;
+  border-radius: var(--rayon-petit);
+  background: rgba(254, 186, 1, 0.1);
+}
+
+.boutons {
+  display: grid;
+  gap: 8px;
+}

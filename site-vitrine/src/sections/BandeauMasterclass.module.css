@@ -1,0 +1,62 @@
+.section {
+  padding-block: clamp(36px, 6vw, 56px) 0;
+}
+
+.carte {
+  display: grid;
+  gap: 20px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 28px;
+  background:
+    radial-gradient(60% 80% at 100% 0%, rgba(254, 186, 1, 0.3), transparent 70%),
+    var(--noir);
+  color: #fff;
+  --texte: #fff;
+  --fond: var(--noir);
+  box-shadow: var(--ombre);
+}
+
+@media (min-width: 760px) {
+  .carte {
+    grid-template-columns: 260px 1fr;
+    gap: 32px;
+    padding: 20px 32px 20px 20px;
+  }
+}
+
+.affiche {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  border-radius: 18px;
+}
+
+.texte {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+  padding: 0 6px 6px;
+  min-width: 0;
+}
+
+.badge {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--jaune);
+  color: var(--noir);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.texte h2 {
+  font-size: clamp(1.5rem, 5.5vw, 2.2rem);
+  font-weight: 800;
+}
+
+.texte p {
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 600;
+}

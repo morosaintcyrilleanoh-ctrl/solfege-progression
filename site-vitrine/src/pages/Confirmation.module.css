@@ -1,0 +1,127 @@
+.page {
+  min-height: 80vh;
+  display: grid;
+  align-items: center;
+  padding-top: calc(var(--hauteur-entete) + env(safe-area-inset-top, 0px) + 40px);
+  background: radial-gradient(60% 40% at 50% 0%, rgba(254, 186, 1, 0.18), transparent 70%), var(--blanc);
+}
+
+.carte {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  max-width: 680px;
+  text-align: center;
+}
+
+.pastille {
+  display: grid;
+  place-items: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 10px rgba(254, 186, 1, 0.18);
+}
+
+.succes,
+.apercu {
+  background: var(--jaune);
+  color: var(--noir);
+}
+
+.attente {
+  background: var(--noir);
+  color: var(--jaune);
+}
+
+.erreur {
+  background: #fde8e4;
+  color: var(--erreur);
+  box-shadow: 0 0 0 10px rgba(194, 65, 45, 0.1);
+}
+
+.titre {
+  font-size: clamp(2rem, 7vw, 3rem);
+  font-weight: 800;
+}
+
+.texte {
+  color: var(--texte-doux);
+  font-size: 1.08rem;
+  max-width: 54ch;
+}
+
+.reference {
+  display: grid;
+  gap: 4px;
+  padding: 14px 22px;
+  border: 1.5px dashed #d8d4c6;
+  border-radius: var(--rayon-petit);
+}
+
+.reference strong {
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+  font-family: var(--police-titre);
+  font-variant-numeric: tabular-nums;
+}
+
+.reference small {
+  color: var(--texte-doux);
+}
+
+.recap {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 18px;
+  margin: 0;
+  padding: 16px 20px;
+  border-radius: var(--rayon-petit);
+  background: var(--gris-fond);
+  text-align: left;
+  width: min(100%, 420px);
+}
+
+.recap dt {
+  color: var(--texte-doux);
+}
+
+.recap dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.signature {
+  margin-top: 16px;
+  font-weight: 600;
+  color: var(--texte-doux);
+}
+
+.suite {
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+  width: 100%;
+  margin-top: 12px;
+  padding-top: 24px;
+  border-top: 1px solid var(--gris-ligne);
+}
+
+.suite h2 {
+  font-size: 1.15rem;
+}
+
+.suiteActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}

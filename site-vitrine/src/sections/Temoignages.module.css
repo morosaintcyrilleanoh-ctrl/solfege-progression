@@ -1,0 +1,114 @@
+.section {
+  background:
+    radial-gradient(50% 40% at 0% 0%, rgba(254, 186, 1, 0.16), transparent 70%),
+    var(--noir);
+}
+
+/* Colonnes « mosaïque » : les messages de longueurs différentes s'emboîtent */
+.grille {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  columns: 1;
+  column-gap: 16px;
+}
+
+@media (min-width: 720px) {
+  .grille {
+    columns: 2;
+  }
+}
+
+@media (min-width: 1080px) {
+  .grille {
+    columns: 3;
+  }
+}
+
+.carte {
+  break-inside: avoid;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 24px 22px;
+  border-radius: var(--rayon);
+  background: var(--blanc);
+  color: var(--noir);
+}
+
+.etoiles {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: var(--jaune);
+}
+
+.texte {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.6;
+}
+
+.auteur {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid var(--gris-ligne);
+}
+
+.auteur img,
+.initiale {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: none;
+}
+
+.initiale {
+  display: grid;
+  place-items: center;
+  background: var(--noir);
+  color: var(--jaune);
+  font-family: var(--police-titre);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+
+.auteur span {
+  display: grid;
+  line-height: 1.35;
+}
+
+.auteur small {
+  color: var(--gris-texte);
+}
+
+.plus {
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.grilleVide {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 760px) {
+  .grilleVide {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.emplacement {
+  min-height: 220px;
+  height: 100%;
+}

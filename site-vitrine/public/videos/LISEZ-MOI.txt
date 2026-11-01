@@ -1,0 +1,4 @@
+Vidéos hébergées sur le site (facultatif). Préférez YouTube pour les vidéos longues :
+c'est plus rapide pour vos visiteurs et cela ne consomme pas la bande passante du site.
+
+Exemple dans src/config/videos.ts :  fichier: '/videos/presentation.mp4'

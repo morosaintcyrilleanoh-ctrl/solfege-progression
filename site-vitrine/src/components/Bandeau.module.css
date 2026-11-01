@@ -1,0 +1,50 @@
+.bandeau {
+  position: relative;
+  overflow: hidden;
+  background: var(--jaune);
+  color: var(--noir);
+  border-block: 2px solid var(--noir);
+}
+
+.piste {
+  display: flex;
+  width: max-content;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .piste {
+    animation: defilement 28s linear infinite;
+  }
+}
+
+@keyframes defilement {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.liste li {
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+  padding: 14px 22px 14px 0;
+  font-family: var(--police-titre);
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.plus {
+  font-weight: 600;
+  font-size: 1.3rem;
+  line-height: 1;
+}

@@ -1,0 +1,125 @@
+.haut {
+  display: grid;
+  gap: 8px 56px;
+  align-items: end;
+}
+
+@media (min-width: 900px) {
+  .haut {
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 48px;
+  }
+  .haut > header {
+    margin-bottom: 0;
+  }
+}
+
+.visuel {
+  margin-bottom: 32px;
+}
+
+@media (min-width: 900px) {
+  .visuel {
+    margin-bottom: 0;
+  }
+}
+
+.photo {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: var(--rayon);
+}
+
+/* Carrousel horizontal sur téléphone, grille sur grand écran */
+.piliers {
+  list-style: none;
+  margin: 0 calc(-1 * var(--gouttiere-d)) 0 calc(-1 * var(--gouttiere));
+  padding: 4px var(--gouttiere-d) 18px var(--gouttiere);
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(78%, 300px);
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--gouttiere);
+  scrollbar-width: none;
+}
+
+.piliers::-webkit-scrollbar {
+  display: none;
+}
+
+.pilier {
+  scroll-snap-align: start;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  padding: 22px;
+  border: 1px solid var(--gris-ligne);
+  border-radius: var(--rayon);
+  background: linear-gradient(180deg, var(--gris-fond), var(--blanc) 70%);
+}
+
+.pilierHaut {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.icone {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  background: var(--noir);
+  color: var(--jaune);
+}
+
+.pilier h3 {
+  font-size: 1.25rem;
+}
+
+.pilier p {
+  color: var(--texte-doux);
+}
+
+.barre {
+  height: 4px;
+  margin-top: 6px;
+  border-radius: 4px;
+  background: var(--gris-ligne);
+  overflow: hidden;
+}
+
+.barre span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: var(--jaune);
+  transition: width 0.15s linear;
+}
+
+@media (min-width: 760px) {
+  .piliers {
+    margin: 0;
+    padding: 0;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    overflow: visible;
+  }
+  .barre {
+    display: none;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}

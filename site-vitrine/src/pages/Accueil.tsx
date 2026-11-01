@@ -1,0 +1,34 @@
+import { Hero } from '../sections/Hero';
+import { Bandeau } from '../components/Bandeau';
+import { BandeauMasterclass } from '../sections/BandeauMasterclass';
+import { Formateur } from '../sections/Formateur';
+import { Catalogue } from '../sections/Catalogue';
+import { PourQui } from '../sections/PourQui';
+import { Quiz } from '../sections/Quiz';
+import { Communaute } from '../sections/Communaute';
+import { Videos } from '../sections/Videos';
+import { Temoignages } from '../sections/Temoignages';
+import { Tarifs } from '../sections/Tarifs';
+import { Faq } from '../sections/Faq';
+import { AppelAction } from '../sections/AppelAction';
+
+/** Ordre des sections de la page d'accueil : réorganisez-les librement. */
+export function Accueil() {
+  return (
+    <>
+      <Hero />
+      <Bandeau />
+      <BandeauMasterclass />
+      <PourQui />
+      <Catalogue />
+      <Temoignages />
+      <Quiz />
+      <Formateur />
+      <Communaute />
+      <Videos />
+      <Tarifs />
+      <Faq />
+      <AppelAction />
+    </>
+  );
+}

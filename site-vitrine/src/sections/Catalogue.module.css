@@ -1,0 +1,132 @@
+.grille {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+@media (min-width: 680px) {
+  .grille {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+.carte {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 24px 22px 22px;
+  border: 1px solid var(--gris-ligne);
+  border-radius: var(--rayon);
+  background: var(--blanc);
+  box-shadow: var(--ombre-douce);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  min-width: 0;
+}
+
+@media (hover: hover) {
+  .carte:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--ombre);
+  }
+}
+
+.image {
+  width: calc(100% + 44px);
+  max-width: none;
+  margin: -24px -22px 8px;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: var(--rayon) var(--rayon) 0 0;
+}
+
+.haut {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-self: stretch;
+  gap: 12px;
+}
+
+/* Icône dans un carré jaune pâle */
+.symbole {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  background: var(--jaune-pale);
+  color: var(--noir);
+}
+
+.numero {
+  font-family: var(--police-titre);
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #e9e4d3;
+  letter-spacing: -0.02em;
+}
+
+.titre {
+  font-size: 1.6rem;
+}
+
+.titre a {
+  text-decoration: none;
+}
+
+.titre a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--jaune);
+  text-decoration-thickness: 3px;
+}
+
+.accroche {
+  font-weight: 700;
+  color: #9a7100;
+}
+
+.description {
+  color: var(--texte-doux);
+}
+
+.programme {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 14px 0 0;
+  border-top: 1px dashed var(--gris-ligne);
+  display: grid;
+  gap: 7px;
+  font-size: 0.93rem;
+  align-self: stretch;
+}
+
+.programme li {
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+}
+
+.programme svg {
+  flex: none;
+  margin-top: 3px;
+  padding: 2px;
+  border-radius: 50%;
+  background: var(--jaune);
+}
+
+.actions {
+  margin-top: auto;
+  padding-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-self: stretch;
+}
+
+.actions > * {
+  flex: 1 1 auto;
+}
