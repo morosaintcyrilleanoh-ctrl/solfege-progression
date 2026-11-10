@@ -54,10 +54,10 @@ export const site = {
 
   /** Réseaux sociaux : collez l'adresse complète de vos pages. */
   reseaux: {
-    facebook: '',
-    youtube: '',
+    facebook: 'https://www.facebook.com/share/1AVK5NmLEF/',
+    youtube: 'https://www.youtube.com/@morosaintcyrilleanoh1439',
     instagram: '',
-    tiktok: '',
+    tiktok: 'https://www.tiktok.com/@anohsaintcyrille',
   },
 
   /** Lien vers la plateforme d'exercices en ligne (laboratoires), si vous souhaitez l'afficher. */

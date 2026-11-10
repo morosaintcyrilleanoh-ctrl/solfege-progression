@@ -1,3 +1,4 @@
+import { etatMasterclass } from '../config/masterclass';
 import { useEffect, useState, type MouseEvent } from 'react';
 import { formations } from '../config/formations';
 import { site } from '../config/site';
@@ -109,7 +110,15 @@ export function Entete() {
             </li>
             <li>
               <a href={href('/masterclass')} onClick={allerA('/masterclass')} className={styles.lienMasterclass}>
-                Masterclass gratuite <span>8 nov.</span>
+                {etatMasterclass() === 'termine' ? (
+                  <>
+                    Masterclass <span>rediffusion</span>
+                  </>
+                ) : (
+                  <>
+                    Masterclass gratuite <span>8 nov.</span>
+                  </>
+                )}
               </a>
             </li>
             {liens.map((lien) =>
