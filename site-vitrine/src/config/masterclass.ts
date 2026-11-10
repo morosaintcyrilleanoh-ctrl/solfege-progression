@@ -1,6 +1,7 @@
 import afficheMasterclass from '../assets/affiche-masterclass.jpg';
 import videoMasterclass from '../assets/masterclass-video.mp4';
 import posterMasterclass from '../assets/masterclass-poster.jpg';
+import couvertureCahier from '../assets/cahier-pratique-solfege.jpg';
 
 /**
  * ============================================================
@@ -30,7 +31,21 @@ export const masterclass = {
   /** Lien du direct YouTube (ou de la chaîne). Affiché pendant et après l'événement. */
   lienYoutube: '',
   /** Lien du replay, si vous le publiez. */
-  lienReplay: '',
+  lienReplay: 'https://www.youtube.com/live/YMd2mqDvNNk',
+  /** Identifiant YouTube du replay (affiché dans la page). */
+  replayYoutube: 'YMd2mqDvNNk',
+
+  /**
+   * Offre réservée aux participants, affichée après la masterclass jusqu'à `finLe`
+   * (heure d'Abidjan = GMT) : un cadeau pour toute inscription au programme 60 jours.
+   */
+  offreParticipants: {
+    cadeau: 'Cahier pratique de solfège',
+    descriptionCadeau: 'Lire les notes, maîtriser les rythmes, développer sa lecture musicale : exercices progressifs, clé de sol et clé de fa, lecture rythmique et chantée.',
+    image: couvertureCahier as string,
+    finLe: '2026-11-30T23:59:00Z',
+    finTexte: 'lundi 30 novembre 2026 à minuit',
+  },
 
   affiche: afficheMasterclass as string,
   video: videoMasterclass as string,
@@ -67,6 +82,11 @@ export function etatMasterclass(maintenant = Date.now()): EtatEvenement {
   if (maintenant < Date.parse(masterclass.debut)) return 'a-venir';
   if (maintenant < Date.parse(masterclass.fin)) return 'en-direct';
   return 'termine';
+}
+
+/** L'offre réservée aux participants est-elle encore valable ? */
+export function offreParticipantsActive(maintenant = Date.now()): boolean {
+  return etatMasterclass(maintenant) === 'termine' && maintenant < Date.parse(masterclass.offreParticipants.finLe);
 }
 
 /** Lien « Ajouter à mon agenda » (Google Agenda). */

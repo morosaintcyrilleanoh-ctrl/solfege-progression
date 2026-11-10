@@ -1,6 +1,6 @@
 import { accueil, site } from '../config/site';
 import { temoignages } from '../config/temoignages';
-import { etatMasterclass, masterclass } from '../config/masterclass';
+import { etatMasterclass, masterclass, offreParticipantsActive } from '../config/masterclass';
 import { BoutonAction } from '../components/BoutonAction';
 import { Emplacement } from '../components/Emplacement';
 import { Icone } from '../components/Icone';
@@ -13,7 +13,9 @@ export function Hero() {
   const masterclassAVenir = masterclass.actif && etatMasterclass() !== 'termine';
   const annonce = masterclassAVenir
     ? { badge: 'Gratuit', texte: 'Masterclass en direct · dim. 8 novembre, 20 h 30', chemin: '/masterclass' }
-    : { badge: 'Inscriptions ouvertes', ...accueil.annonce };
+    : offreParticipantsActive()
+      ? { badge: 'Cadeau', texte: 'Rediffusion de la masterclass + ebook offert', chemin: '/masterclass' }
+      : { badge: 'Inscriptions ouvertes', ...accueil.annonce };
   const photo = site.images.formateurAccueil;
 
   return (

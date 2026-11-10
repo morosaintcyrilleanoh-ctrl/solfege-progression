@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { barreAction } from '../config/conversion';
-import { masterclass } from '../config/masterclass';
+import { etatMasterclass, masterclass, offreParticipantsActive } from '../config/masterclass';
 import { site } from '../config/site';
 import { useRouteur } from '../lib/router';
 import { lienWhatsApp } from '../lib/whatsapp';
@@ -32,6 +32,20 @@ export function BarreAction() {
   const bouton = formation && barreAction.bouton.action.type === 'inscription'
     ? { ...barreAction.bouton, action: { ...barreAction.bouton.action, formation } }
     : barreAction.bouton;
+
+  if (chemin === '/masterclass' && etatMasterclass() === 'termine') {
+    return (
+      <div className={`${styles.barre} ${visible ? styles.visible : ''}`} aria-hidden={!visible}>
+        {offreParticipantsActive() ? (
+          <a className="btn btn--large" href="#offre" tabIndex={visible ? 0 : -1}>
+            Mon ebook offert <Icone nom="fleche" />
+          </a>
+        ) : (
+          <BoutonAction bouton={{ libelle: 'Programme 60 jours', action: { type: 'page', chemin: '/formations/solfege' } }} large icone={<Icone nom="fleche" />} />
+        )}
+      </div>
+    );
+  }
 
   if (chemin === '/masterclass') {
     return (

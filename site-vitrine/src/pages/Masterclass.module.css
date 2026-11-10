@@ -374,3 +374,87 @@
 .suite p {
   color: var(--gris-texte);
 }
+
+/* ---------- Rediffusion ---------- */
+.replay {
+  margin: 0;
+  width: 100%;
+}
+
+.replay iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: var(--rayon);
+  background: #000;
+  box-shadow: 0 30px 60px -30px rgba(254, 186, 1, 0.5);
+}
+
+.replay figcaption {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  opacity: 0.75;
+  text-align: center;
+}
+
+/* ---------- Offre réservée aux participants ---------- */
+.offre {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .offre {
+    grid-template-columns: 0.8fr 1.2fr;
+  }
+}
+
+.offreImage {
+  margin: 0;
+  justify-self: center;
+  width: min(100%, 420px);
+}
+
+.offreImage img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--rayon);
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.45);
+}
+
+.offreTexte {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+
+.offreCadeau {
+  margin: 0;
+  opacity: 0.85;
+}
+
+.offreInfos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.offreInfos li {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.offreFin {
+  margin: 6px 0 0;
+  font-weight: 700;
+}
+
+.offreNote {
+  opacity: 0.75;
+}

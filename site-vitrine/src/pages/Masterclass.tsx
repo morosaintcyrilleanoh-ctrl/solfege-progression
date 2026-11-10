@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react';
-import { etatMasterclass, lienAgenda, masterclass } from '../config/masterclass';
+import { etatMasterclass, lienAgenda, masterclass, offreParticipantsActive } from '../config/masterclass';
 import { trouverOffre } from '../config/offres';
 import { site } from '../config/site';
 import { BoutonAction } from '../components/BoutonAction';
@@ -17,10 +17,15 @@ export function Masterclass() {
   const [inscrit, setInscrit] = useState<{ prenom: string; lien: string | null } | null>(null);
   const [erreur, setErreur] = useState('');
   const programme = trouverOffre('partition-60-jours');
+  const offre = masterclass.offreParticipants;
+  const [offreActive, setOffreActive] = useState(() => offreParticipantsActive());
 
   // L'état (à venir / en direct / terminé) se met à jour tout seul.
   useEffect(() => {
-    const minuteur = window.setInterval(() => setEtat(etatMasterclass()), 30_000);
+    const minuteur = window.setInterval(() => {
+      setEtat(etatMasterclass());
+      setOffreActive(offreParticipantsActive());
+    }, 30_000);
     return () => window.clearInterval(minuteur);
   }, []);
 
@@ -66,6 +71,7 @@ export function Masterclass() {
             <div className={styles.badges}>
               <span className={styles.badgeGratuit}>Masterclass 100 % gratuite</span>
               {etat === 'en-direct' && <span className={styles.badgeDirect}>● En direct maintenant</span>}
+              {etat === 'termine' && masterclass.replayYoutube && <span className={styles.badgeDirect}>▶ Rediffusion disponible</span>}
             </div>
             <h1 id="titre-masterclass" className={styles.titre}>
               {masterclass.titre}
@@ -107,21 +113,91 @@ export function Masterclass() {
             )}
             {etat === 'termine' && (
               <div className={styles.actions}>
+                {offreActive ? (
+                  <a className="btn" href="#offre">
+                    <Icone nom="fleche" /> Mon cadeau : {offre.cadeau}
+                  </a>
+                ) : (
+                  <BoutonAction bouton={{ libelle: 'Continuer avec le programme 60 jours', action: { type: 'page', chemin: '/formations/solfege' } }} />
+                )}
                 {(masterclass.lienReplay || masterclass.lienYoutube) && (
                   <a className="btn btn--contour" href={masterclass.lienReplay || masterclass.lienYoutube} target="_blank" rel="noopener noreferrer">
-                    <Icone nom="lecture" /> Voir le replay
+                    <Icone nom="lecture" /> Voir sur YouTube
                   </a>
                 )}
-                <BoutonAction bouton={{ libelle: 'Continuer avec le programme 60 jours', action: { type: 'page', chemin: '/formations/solfege' } }} />
               </div>
             )}
           </div>
 
-          <figure className={styles.affiche}>
-            <img src={masterclass.affiche} alt={`Affiche : masterclass gratuite, ${masterclass.titre}`} width={800} height={800} />
-          </figure>
+          {etat === 'termine' && masterclass.replayYoutube ? (
+            <figure className={styles.replay}>
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${masterclass.replayYoutube}?rel=0`}
+                title={`Rediffusion de la masterclass : ${masterclass.titre}`}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                loading="lazy"
+              />
+              <figcaption>Rediffusion de la masterclass du {masterclass.dateTexte.toLowerCase()}</figcaption>
+            </figure>
+          ) : (
+            <figure className={styles.affiche}>
+              <img src={masterclass.affiche} alt={`Affiche : masterclass gratuite, ${masterclass.titre}`} width={800} height={800} />
+            </figure>
+          )}
         </div>
       </section>
+
+      {/* ---------- Offre réservée aux participants ---------- */}
+      {etat === 'termine' && offreActive && programme && (
+        <section id="offre" className="section section--grise" aria-labelledby="titre-offre">
+          <div className={`conteneur ${styles.offre}`}>
+            <figure className={styles.offreImage}>
+              <img src={offre.image} alt={`Couverture de l’ebook ${offre.cadeau}`} width={900} height={899} loading="lazy" />
+            </figure>
+            <div className={styles.offreTexte}>
+              <span className="surtitre">Offre réservée aux participants</span>
+              <h2 className="titre-section" id="titre-offre">
+                Votre ebook « {offre.cadeau} » offert
+              </h2>
+              <p className="intro-section">
+                Inscrivez-vous au programme <strong>« {programme.nom} »</strong> avant le {offre.finTexte} : l’ebook <strong>{offre.cadeau}</strong> vous est
+                offert.
+              </p>
+              <p className={styles.offreCadeau}>{offre.descriptionCadeau}</p>
+              <ul className={styles.offreInfos}>
+                {programme.periode && (
+                  <li>
+                    <Icone nom="calendrier" /> {programme.periode}
+                  </li>
+                )}
+                <li>
+                  <Icone nom="horloge" /> {programme.horaires} · {programme.modalite.toLowerCase()}
+                </li>
+                {programme.places && (
+                  <li>
+                    <Icone nom="coche" /> {programme.places} places seulement
+                  </li>
+                )}
+                {programme.prix && (
+                  <li>
+                    <Icone nom="coche" /> {programme.prix.montant.toLocaleString('fr-FR')} {programme.prix.devise} {programme.prix.mention}
+                  </li>
+                )}
+              </ul>
+              <p className={styles.offreFin}>L’offre se termine dans :</p>
+              <CompteARebours jusqua={offre.finLe} />
+              <div className={styles.actions}>
+                <BoutonAction bouton={{ ...programme.bouton, libelle: 'Je m’inscris et je reçois mon cadeau' }} />
+                <a className="btn btn--contour" href="https://lecole-de-la-musique.vercel.app/partition-60-jours" target="_blank" rel="noopener noreferrer">
+                  Voir les places restantes
+                </a>
+              </div>
+              <small className={styles.offreNote}>Après votre paiement, envoyez votre reçu sur WhatsApp : le formateur vous ajoute à la promotion et vous envoie votre ebook.</small>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ---------- Le problème ---------- */}
       <section className="section" aria-labelledby="titre-probleme">
@@ -206,7 +282,10 @@ export function Masterclass() {
                 <h2 className={styles.carteTitre} id="titre-reserver">
                   La masterclass est terminée
                 </h2>
-                <p>Merci à tous les participants ! Pour aller plus loin, rejoignez le programme « Lire une partition musicale en 60 jours ».</p>
+                <p>
+                  Merci à tous les participants ! Pour aller plus loin, rejoignez le programme « Lire une partition musicale en 60 jours »
+                  {offreActive ? ` : l’ebook « ${offre.cadeau} » vous est offert jusqu’au ${offre.finTexte}.` : '.'}
+                </p>
                 <BoutonAction bouton={{ libelle: 'Découvrir le programme 60 jours', action: { type: 'page', chemin: '/formations/solfege' } }} large />
               </>
             ) : inscrit ? (
