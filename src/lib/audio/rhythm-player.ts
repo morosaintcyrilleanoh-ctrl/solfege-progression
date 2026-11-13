@@ -1,7 +1,7 @@
 /** Lecture sonore d'un rythme : une mesure de décompte, puis les figures (les silences restent muets). */
 import { toNumber } from '@/lib/music/fraction';
 import { type RhythmEvent, type TimeSignature, eventDuration, onsets, pulse } from '@/lib/rhythm';
-import { getAudioContext, scheduleClick, scheduleNote } from './context';
+import { getAudioContext, masterOutput, scheduleClick, scheduleNote } from './context';
 import { beatSeconds } from './metronome';
 
 export interface PlaybackPlan {
@@ -45,7 +45,7 @@ export function playRhythm(measures: RhythmEvent[][], ts: TimeSignature, bpm: nu
   const plan = planRhythm(measures, ts, bpm);
   const t0 = ac.currentTime + 0.1;
   const master = ac.createGain();
-  master.connect(ac.destination);
+  master.connect(masterOutput(ac));
   plan.countIn.forEach((t, i) => scheduleClick(ac, t0 + t, i === 0, 0.35, master));
   plan.notes.forEach((n) => scheduleNote(ac, t0 + n.time, n.duration, 523.25, 0.3, master));
   return {

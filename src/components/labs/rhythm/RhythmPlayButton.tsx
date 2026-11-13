@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { buttonClasses } from '@/components/ui/primitives';
 import { Icon } from '@/components/ui/Icon';
 import { playRhythm } from '@/lib/audio/rhythm-player';
+import { usePianoWarmup } from '@/lib/audio/use-piano-warmup';
 import type { RhythmEvent, TimeSignature } from '@/lib/rhythm';
 
 /** Écouter un rythme (après une mesure de décompte). Facultatif : l'exercice se fait sans le son. */
@@ -13,6 +14,7 @@ export function RhythmPlayButton({ measures, timeSignature }: { measures: Rhythm
   const [unavailable, setUnavailable] = useState(false);
   const stopRef = useRef<(() => void) | null>(null);
   const timer = useRef<number | null>(null);
+  usePianoWarmup();
 
   const stop = () => {
     stopRef.current?.();

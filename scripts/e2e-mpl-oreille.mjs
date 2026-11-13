@@ -265,6 +265,14 @@ async function main() {
     await page.locator('#ear-start').click();
     await page.locator('.choice').first().waitFor({ timeout: 15000 });
     check((await page.locator('.choice').allInnerTexts()).join('|').includes('Cadence parfaite'), 'cadences : parfaite / demi-cadence');
+    // Après la réponse : « Réécouter l'exercice » rejoue la question
+    await page.locator('.choice').first().click();
+    const again = page.locator('#ear-stage [data-action="replay"]', { hasText: 'Réécouter l’exercice' });
+    await again.waitFor({ timeout: 10000 });
+    await again.click();
+    check(await again.isDisabled(), '« Réécouter l’exercice » après la correction : lecture en cours');
+    await page.waitForFunction(() => !document.querySelector('#ear-stage .next-row [data-action="replay"]')?.disabled, null, { timeout: 15000 });
+    check(true, '« Réécouter l’exercice » de nouveau disponible après la lecture');
     await finish(page);
     const inst = await page.evaluate(async () => {
       const { playInstrument, INSTRUMENTS } = await import('/js/ear/sounds.js');

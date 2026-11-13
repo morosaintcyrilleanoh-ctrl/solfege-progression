@@ -3,39 +3,24 @@
  * Toutes les fonctions échouent silencieusement si l'audio n'est pas disponible :
  * l'application reste utilisable sans son.
  */
-import { getAudioContext } from './context';
+import { getAudioContext, masterOutput } from './context';
+import { loadPianoSamples, schedulePianoSample } from './piano-samples';
 
 export function isAudioSupported(): boolean {
   return typeof window !== 'undefined' && ('AudioContext' in window || 'webkitAudioContext' in window);
 }
 
 // ---------------------------------------------------------------------------
-// Piano synthétisé : harmoniques légèrement inharmoniques (comme une corde),
-// attaque de marteau, extinction naturelle (plus rapide dans l'aigu), timbre qui
-// s'adoucit après l'attaque. Un compresseur commun rend le son fort et clair
-// sans saturer quand les notes se chevauchent.
+// Piano : enregistré quand le volet est servi par Music Progression Lab, sinon
+// synthétisé (harmoniques de corde, attaque de marteau, extinction naturelle).
+// Tous les sons passent par la sortie commune (compresseur + plafond doux).
 // ---------------------------------------------------------------------------
-const outputs = new WeakMap<BaseAudioContext, AudioNode>();
+const pianoOutput = (ac: AudioContext) => masterOutput(ac);
 
-function pianoOutput(ac: AudioContext): AudioNode {
-  let out = outputs.get(ac);
-  if (!out) {
-    // Entrée amplifiée → compresseur-limiteur → sortie : fort, sans saturation
-    const input = ac.createGain();
-    input.gain.value = 1.8;
-    const comp = ac.createDynamicsCompressor();
-    comp.threshold.value = -16;
-    comp.knee.value = 6;
-    comp.ratio.value = 12;
-    comp.attack.value = 0.002;
-    comp.release.value = 0.2;
-    const master = ac.createGain();
-    master.gain.value = 1.05; // le compresseur du navigateur ajoute déjà un gain automatique
-    input.connect(comp).connect(master).connect(ac.destination);
-    out = input;
-    outputs.set(ac, out);
-  }
-  return out;
+/** Commence à charger le piano enregistré (à appeler à l'ouverture d'un exercice). */
+export function preloadPiano(): void {
+  const ac = getAudioContext();
+  if (ac) loadPianoSamples(ac);
 }
 
 let noiseBuffer: AudioBuffer | null = null;
@@ -51,6 +36,7 @@ function hammerNoise(ac: AudioContext): AudioBuffer {
 /** Programme une note de piano à l'instant `when` (horloge audio). `duration` : touche enfoncée. */
 function schedulePiano(ac: AudioContext, frequency: number, when: number, duration: number, volume: number) {
   const out = pianoOutput(ac);
+  if (schedulePianoSample(ac, out, frequency, when, duration, volume)) return;
   // Plus la note est aiguë, plus elle s'éteint vite (comme un vrai piano)
   const sustain = Math.min(3.2, Math.max(0.8, 2.2 * Math.pow(261.63 / frequency, 0.45)));
   const release = when + duration;

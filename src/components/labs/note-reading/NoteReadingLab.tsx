@@ -8,6 +8,7 @@ import { prefetchVexFlowForOffline } from '@/components/notation/vexflow-loader'
 import { Badge, ProgressBar, buttonClasses } from '@/components/ui/primitives';
 import { Icon } from '@/components/ui/Icon';
 import { isAudioSupported, playTone } from '@/lib/audio/synth';
+import { usePianoWarmup } from '@/lib/audio/use-piano-warmup';
 import { formatPitch, frequency, midiNumber, pitchFromMidi } from '@/lib/music/pitch';
 import { CLEFS, staffPosition } from '@/lib/music/staff';
 import {
@@ -67,6 +68,7 @@ export function NoteReadingLab() {
   const topRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => prefetchVexFlowForOffline(), []);
+  usePianoWarmup();
 
   // Lecture du stockage local après le montage (le serveur ne le connaît pas).
   useEffect(() => {

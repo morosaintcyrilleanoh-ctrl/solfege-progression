@@ -5,6 +5,7 @@ import { ScoreView } from '@/components/notation/ScoreView';
 import { Card, SegmentedControl, buttonClasses } from '@/components/ui/primitives';
 import { Icon } from '@/components/ui/Icon';
 import { playSequence } from '@/lib/audio/synth';
+import { usePianoWarmup } from '@/lib/audio/use-piano-warmup';
 import type { Notation } from '@/lib/exercises/types';
 import { type Mode, fifthsOf, isStandardKey, keyName, keySignatureAccidentals, relativeKey } from '@/lib/music/keys';
 import { type Accidental, type Letter, FRENCH_NAMES, LETTERS, frequency, formatPitch } from '@/lib/music/pitch';
@@ -13,6 +14,7 @@ import { type ScaleType, SCALE_NAMES_FR, ScaleSpellingError, arpeggio, buildScal
 const TYPES: ScaleType[] = ['major', 'natural-minor', 'harmonic-minor', 'melodic-minor'];
 
 export function ScaleExplorer() {
+  usePianoWarmup();
   const [letter, setLetter] = useState<Letter>('C');
   const [accidental, setAccidental] = useState<Accidental>(0);
   const [type, setType] = useState<ScaleType>('major');
