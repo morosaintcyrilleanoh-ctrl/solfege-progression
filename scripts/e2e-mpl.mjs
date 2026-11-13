@@ -79,7 +79,7 @@ async function main() {
     check((await page.locator('#nav a[href="/solfege/"]').innerText()).trim() === 'Solfège', 'lien « Solfège » dans le menu du Lab');
     check((await page.locator('main a[href="/solfege/"]').count()) === 1, 'carte « Solfège » sur l’accueil du Lab');
     const tabs = (await page.locator('#tabbar a').allInnerTexts()).map((s) => s.trim());
-    check(tabs.join('|') === 'Accueil|Oreille|Solfège|Compte', `barre du bas du Lab : ${tabs.join('|')}`);
+    check(tabs.join('|') === 'Accueil|Oreille|Harmonie|Solfège|Compte', `barre du bas du Lab : ${tabs.join('|')}`);
     if (shots) await page.screenshot({ path: join(shots, 'lab-accueil.png'), fullPage: true });
     await page.locator('#tabbar a[href="/solfege/"]').click();
     await page.waitForURL(`${base}/solfege/`);
@@ -87,7 +87,7 @@ async function main() {
     check((await page.locator('header').innerText()).includes('Music Progression'), 'en-tête aux couleurs du Lab');
     check(await page.locator('header img').evaluate((img) => img.complete && img.naturalWidth > 0), 'logo du Lab affiché');
     const solfegeTabs = (await page.getByRole('navigation', { name: 'Navigation mobile' }).locator('a').allInnerTexts()).map((s) => s.trim());
-    check(solfegeTabs.join('|') === 'Accueil|Oreille|Solfège|Compte', `barre du bas du solfège : ${solfegeTabs.join('|')}`);
+    check(solfegeTabs.join('|') === 'Accueil|Oreille|Harmonie|Solfège|Compte', `barre du bas du solfège : ${solfegeTabs.join('|')}`);
 
     console.log('• Pages du solfège');
     for (const p of PAGES) {
