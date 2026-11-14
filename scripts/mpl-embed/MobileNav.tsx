@@ -13,6 +13,13 @@ const ICONS: Record<string, React.ReactNode> = {
       <circle cx="15" cy="12" r="2.6" fill="currentColor" />
     </>
   ),
+  chords: (
+    <>
+      <rect x="3" y="4" width="18" height="16" rx="2" />
+      <path d="M8 4v16M13 4v16M18 4v16" />
+      <path d="M8 4v9M13 4v9" strokeWidth="4" />
+    </>
+  ),
   user: (
     <>
       <circle cx="12" cy="8" r="4" />
@@ -29,7 +36,7 @@ export function MobileNav() {
       aria-label="Navigation mobile"
       className="fixed inset-x-0 bottom-0 z-30 border-t border-slate-200 bg-white/95 pb-[env(safe-area-inset-bottom)] shadow-[0_-6px_20px_rgba(11,37,69,0.06)] md:hidden"
     >
-      <ul className="grid grid-cols-4">
+      <ul className="grid grid-cols-5">
         {TAB_ITEMS.map((item) => {
           const active = isActive(pathname, item.href);
           const cls = `flex min-h-16 flex-col items-center justify-center gap-0.5 text-[11px] font-semibold ${active ? 'text-electric-600' : 'text-slate-500'}`;

@@ -3,7 +3,7 @@ export interface NavItem {
   label: string;
   /** Libellé court pour la barre de navigation mobile. */
   short: string;
-  icon: 'home' | 'dashboard' | 'labs' | 'history' | 'user' | 'ear' | 'staff';
+  icon: 'home' | 'dashboard' | 'labs' | 'history' | 'user' | 'ear' | 'staff' | 'chords';
   /** Lien vers le reste de Music Progression Lab (hors du dossier /solfege). */
   external?: boolean;
 }
@@ -15,6 +15,7 @@ export const LAB_HOME = '/#/';
 export const TAB_ITEMS: NavItem[] = [
   { href: LAB_HOME, label: 'Accueil', short: 'Accueil', icon: 'home', external: true },
   { href: '/#/programme', label: 'Oreille', short: 'Oreille', icon: 'ear', external: true },
+  { href: '/#/harmonie', label: 'Harmonie', short: 'Harmonie', icon: 'chords', external: true },
   { href: '/', label: 'Solfège', short: 'Solfège', icon: 'staff' },
   { href: '/#/tableau-de-bord', label: 'Compte', short: 'Compte', icon: 'user', external: true },
 ];
