@@ -345,6 +345,20 @@ async function main() {
     const zone = await page.locator('#ear-zone').innerText();
     check(zone.includes('Joue l’accord') && zone.includes('Toutes les tonalités'), 'fiche élève : résultats harmonie et accords');
 
+    console.log('• Menu sur ordinateur : jamais sur le titre');
+    for (const w of [1280, 1366, 1440, 1600, 1920]) {
+      await page.setViewportSize({ width: w, height: 800 });
+      await page.waitForTimeout(150);
+      const m = await page.evaluate(() => {
+        const brand = document.querySelector('.brand').getBoundingClientRect();
+        const links = [...document.querySelectorAll('#nav-links > *')].map((x) => x.getBoundingClientRect()).filter((r) => r.width && getComputedStyle(document.getElementById('nav-links')).display !== 'none');
+        const b = document.querySelector('.brand');
+        return { overlap: b.scrollWidth > b.clientWidth + 1 || links.some((r) => r.left < brand.right && r.top < brand.bottom), overflow: document.documentElement.scrollWidth - innerWidth, folded: getComputedStyle(document.getElementById('nav-toggle')).display !== 'none' };
+      });
+      check(!m.overlap && m.overflow <= 1, `${w}px : menu ${m.folded ? 'replié' : 'complet'}, sans chevauchement`);
+    }
+    await page.setViewportSize({ width: 390, height: 844 });
+
     console.log('• Base pas encore prête');
     await signIn(page, STUDENT, 'student');
     await page.evaluate(() => localStorage.setItem('__fake_missing', '1'));
